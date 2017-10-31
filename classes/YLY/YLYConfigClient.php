@@ -1,6 +1,9 @@
 <?php
 
-class YLYConfigClient{
+namespace Ecjia\App\Printer\YLY;
+
+class YLYConfigClient
+{
 
     static $YLYClientId = '';
     static $YLYClientSecret = '';

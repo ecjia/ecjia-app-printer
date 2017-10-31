@@ -1,6 +1,9 @@
 <?php
-require_once (__DIR__.'/YLYConfigClient.php');
-class YLYSignAndUuidClient{
+
+namespace Ecjia\App\Printer\YLY;
+
+class YLYSignAndUuidClient
+{
 
 
     public static function GetSign($timestamp)

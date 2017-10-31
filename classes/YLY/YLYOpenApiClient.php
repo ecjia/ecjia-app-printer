@@ -1,9 +1,9 @@
 <?php
 
-require_once (__DIR__.'/YLYConfigClient.php');
-require_once (__DIR__.'/YLYSignAndUuidClient.php');
-require_once (__DIR__.'/YLYHttpClient.php');
-class YLYOpenApiClient {
+namespace Ecjia\App\Printer\YLY;
+
+class YLYOpenApiClient 
+{
 
     /**
      * 自有应用模式下的授权终端,扫码绑定请把msign参数改成qr_key

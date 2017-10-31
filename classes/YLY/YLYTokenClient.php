@@ -1,8 +1,9 @@
 <?php
-require_once (__DIR__.'/YLYConfigClient.php');
-require_once (__DIR__.'/YLYSignAndUuidClient.php');
-require_once (__DIR__.'/YLYHttpClient.php');
-class YLYTokenClient{
+
+namespace Ecjia\App\Printer\YLY;
+
+class YLYTokenClient
+{
 
     private static $requestUrl = 'https://open-api.10ss.net/oauth/oauth';
 

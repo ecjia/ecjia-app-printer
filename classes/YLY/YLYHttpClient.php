@@ -1,6 +1,9 @@
 <?php
 
-class YLYHttpClient{
+namespace Ecjia\App\Printer\YLY;
+
+class YLYHttpClient
+{
 
     public static function push($requestInfo,$url)
     {
