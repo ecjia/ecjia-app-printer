@@ -2,7 +2,10 @@
 
 namespace Royalcms\Component\Printer\Commands;
 
-class PrinterSetSound
+use Royalcms\Component\Printer\Contracts\Command;
+use Royalcms\Component\Printer\Request;
+
+class PrinterSetSound extends Request implements Command
 {
     
     /**

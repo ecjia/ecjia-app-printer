@@ -2,7 +2,10 @@
 
 namespace Royalcms\Component\Printer\Commands;
 
-class PrinterCancelAll
+use Royalcms\Component\Printer\Contracts\Command;
+use Royalcms\Component\Printer\Request;
+
+class PrinterCancelAll extends Request implements Command
 {
     
     /**

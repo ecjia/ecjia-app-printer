@@ -2,7 +2,10 @@
 
 namespace Royalcms\Component\Printer\Commands;
 
-class PrinterShutdownRestart
+use Royalcms\Component\Printer\Contracts\Command;
+use Royalcms\Component\Printer\Request;
+
+class PrinterShutdownRestart extends Request implements Command
 {
     
     /**

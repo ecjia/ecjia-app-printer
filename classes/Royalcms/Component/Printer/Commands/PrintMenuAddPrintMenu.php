@@ -2,7 +2,10 @@
 
 namespace Royalcms\Component\Printer\Commands;
 
-class PrintMenuAddPrintMenu
+use Royalcms\Component\Printer\Contracts\Command;
+use Royalcms\Component\Printer\Request;
+
+class PrintMenuAddPrintMenu extends Request implements Command
 {
     
     /**
