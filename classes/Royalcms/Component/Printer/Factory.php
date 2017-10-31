@@ -3,20 +3,86 @@
 namespace Royalcms\Component\Printer;
 
 use Exception;
+use InvalidArgumentException;
+use RC_Cache;
+use RC_Hook;
 
 class Factory
 {
-    protected $royalcms;
     
     /**
      * 配置
      * @var array
      */
     protected $config = [];
-
-    public function __construct($royalcms)
+    
+    protected $cacheKey = 'printer_command_factories';
+    
+    protected static $factories;
+    
+    public function __construct()
     {
-        $this->royalcms = $royalcms;
+        self::$factories = $this->getFactories();
+    }
+
+    public function getFactories()
+    {
+    
+        $factories = RC_Cache::app_cache_get($this->cacheKey, 'printer');
+    
+        if (empty($factories)) {
+    
+            $dir = __DIR__ . '/Commands';
+    
+            $platforms = royalcms('files')->files($dir);
+    
+            $factories = [];
+    
+            foreach ($platforms as $key => $value) {
+                $value = str_replace($dir . '/', '', $value);
+                $value = str_replace('.php', '', $value);
+                $className = __NAMESPACE__ . '\Commands\\' . $value;
+    
+                $key = with(new $className)->getMethod();
+                $factories[$key] = $className;
+            }
+    
+            RC_Cache::app_cache_set($this->cacheKey, $factories, 'printer', 10080);
+        }
+    
+        return RC_Hook::apply_filters('royalcms_printer_command_filter', $factories);
+    }
+    
+    /**
+     * 获取所有支持接口
+     * @return array
+     */
+    public function getCommands()
+    {
+        $platforms = [];
+    
+        foreach (self::$factories as $key => $value) {
+            $platforms[$key] = new $value;
+        }
+    
+        return $platforms;
+    }
+    
+    /**
+     * 获取某个接口操作对象
+     * @param string $method  接口名称
+     * @throws InvalidArgumentException
+     * @return \Royalcms\Component\Printer\Contract\Command
+     */
+    public function command($method)
+    {
+        if (!array_key_exists($method, self::$factories)) {
+            throw new InvalidArgumentException("Printer command '$method' is not supported.");
+        }
+    
+        $className = self::$factories[$method];
+    
+        return new $className();
     }
 
     /**
@@ -36,19 +102,11 @@ class Factory
      */
     protected function getMethodClassName($method)
     {
-        $methods = explode('.', $method);
-    
-        if (!is_array($methods)) {
-            return false;
+        if (!array_key_exists($method, self::$factories)) {
+            throw new InvalidArgumentException("Printer command '$method' is not supported.");
         }
     
-        $tmp = array();
-    
-        foreach ($methods as $value) {
-            $tmp[] = ucwords($value);
-        }
-    
-        $className = implode('', $tmp);
+        $className = self::$factories[$method];
     
         return $className;
     }
