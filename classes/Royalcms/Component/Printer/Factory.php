@@ -127,7 +127,7 @@ class Factory
         }
     
         // B. 获取带命名空间的类
-        $classNameSpace = __NAMESPACE__ . '\\Commands\\' . $classname;
+        $classNameSpace = $classname;
     
         if (! class_exists($classNameSpace)) {
             throw new Exception("request method does not exist");

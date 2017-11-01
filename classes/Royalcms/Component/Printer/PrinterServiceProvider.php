@@ -19,21 +19,8 @@ class PrinterServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-    {
-//         $this->setupConfig();
+    {}
 
-//         $this->royalcms['printer']->configure($this->royalcms['config']->get('alidayu::config'));
-    }
-    
-//     /**
-//      * Setup the config.
-//      *
-//      * @return void
-//      */
-//     protected function setupConfig()
-//     {
-//         $this->package('royalcms/alidayu');
-//     }
 
     /**
      * Register the application services.
@@ -43,7 +30,7 @@ class PrinterServiceProvider extends ServiceProvider
     public function register()
     {
         $this->royalcms->singleton('printer', function () {
-            return new Factory($this->royalcms);
+            return new Factory();
         });
     }
 
@@ -54,6 +41,6 @@ class PrinterServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['alidayu'];
+        return ['printer'];
     }
 }
