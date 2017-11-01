@@ -12,7 +12,7 @@ class PrinterAddPrinter extends Request implements Command
      * 接口名称
      * @var string
      */
-    protected $method = 'printer/addprinter';
+    protected $method = 'yly/printer/addprinter';
     
     
     /**

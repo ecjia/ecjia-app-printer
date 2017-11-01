@@ -12,7 +12,7 @@ class PrinterGetVersion extends Request implements Command
      * 接口名称
      * @var string
      */
-    protected $method = 'printer/getversion';
+    protected $method = 'yly/printer/getversion';
     
     
     /**

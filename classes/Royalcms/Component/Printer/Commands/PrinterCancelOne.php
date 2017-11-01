@@ -12,7 +12,7 @@ class PrinterCancelOne extends Request implements Command
      * 接口名称
      * @var string
      */
-    protected $method = 'printer/cancelone';
+    protected $method = 'yly/printer/cancelone';
     
     
     /**

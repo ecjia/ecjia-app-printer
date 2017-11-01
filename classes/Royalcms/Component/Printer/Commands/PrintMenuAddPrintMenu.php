@@ -12,7 +12,7 @@ class PrintMenuAddPrintMenu extends Request implements Command
      * 接口名称
      * @var string
      */
-    protected $method = 'printmenu/addprintmenu';
+    protected $method = 'yly/printmenu/addprintmenu';
     
     
     /**

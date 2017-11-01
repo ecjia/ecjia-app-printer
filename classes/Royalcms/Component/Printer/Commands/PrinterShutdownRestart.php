@@ -12,7 +12,7 @@ class PrinterShutdownRestart extends Request implements Command
      * 接口名称
      * @var string
      */
-    protected $method = 'printer/shutdownrestart';
+    protected $method = 'yly/printer/shutdownrestart';
     
     
     /**
