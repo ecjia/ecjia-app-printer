@@ -55,7 +55,11 @@ class printer_store_menu_api extends Component_Event_Api {
 	public function call(&$options) {	
 	    $store_id = royalcms('request')->query('store_id');
 	    
-        return ecjia_admin::make_admin_menu('store_printer', '打印机管理', RC_Uri::url('printer/admin/init', array('store_id' => $store_id)), 10)->add_purview('printer_manage');
+	    $menus = array(
+	    	ecjia_admin::make_admin_menu('store_printer', '打印机管理', RC_Uri::url('printer/admin/init', array('store_id' => $store_id)), 10)->add_purview('printer_manage'),
+	    	ecjia_admin::make_admin_menu('store_printer_record', '打印记录', RC_Uri::url('printer/admin/record_list', array('store_id' => $store_id)), 11)->add_purview('printer_record_manage')
+	    );
+        return $menus;
 	}
 }
 
