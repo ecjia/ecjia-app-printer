@@ -228,6 +228,9 @@ class admin extends ecjia_admin
         $this->assign('statics_url', $statics_url);
         $this->assign('control_url', RC_Uri::url('printer/admin/voice_control', array('id' => $id, 'store_id' => $store_id)));
 
+        $count = $this->get_print_count();
+        $this->assign('count', $count);
+        
         $this->display('printer_view.dwt');
     }
 
@@ -375,6 +378,37 @@ class admin extends ecjia_admin
         $data  = $db_printer_view->selectRaw('p.*, m.printer_name')->take(10)->skip($page->start_id - 1)->orderBy('id', 'desc')->get();
 
         return array('item' => $data, 'page' => $page->show(2), 'desc' => $page->page_desc());
+    }
+
+    private function get_print_count()
+    {
+        $week_start_time     = RC_Time::local_mktime(0, 0, 0, RC_Time::local_date("m"), RC_Time::local_date("d") - RC_Time::local_date("w") + 1, RC_Time::local_date("Y"));
+        $count['week_count'] = RC_DB::table('printer_printlist')
+            ->where('store_id', $store_id)
+            ->where('printer_code', $info['printer_code'])
+            ->where('status', 1)
+            ->where('print_time', '>', $week_start_time)
+            ->where('print_time', '<', RC_Time::gmtime())
+            ->SUM('print_count');
+
+        $now                        = RC_Time::gmtime();
+        $start                      = RC_Time::local_mktime(0, 0, 0, RC_Time::local_date("m", $now), RC_Time::local_date("d", $now), RC_Time::local_date("Y", $now));
+        $count['today_print_count'] = RC_DB::table('printer_printlist')
+            ->where('store_id', $store_id)
+            ->where('printer_code', $info['printer_code'])
+            ->where('status', 1)
+            ->where('print_time', '>', $start)
+            ->where('print_time', '<', RC_Time::gmtime())
+            ->SUM('print_count');
+        $count['today_unprint_count'] = RC_DB::table('printer_printlist')
+            ->where('store_id', $store_id)
+            ->where('printer_code', $info['printer_code'])
+            ->where('status', '!=', 1)
+            ->where('print_time', '>', $start)
+            ->where('print_time', '<', RC_Time::gmtime())
+            ->SUM('print_count');
+
+        return $count;
     }
 }
 

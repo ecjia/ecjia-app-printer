@@ -81,17 +81,17 @@
 			<div class="stats_content">
 				<div class="stats-item">
 					<div class="item-li"><img src="{$statics_url}images/week_print.png" /></div>
-					<div class="item-li count">2000</div>
-					<div class="item-li name">周打印量</div>
+					<div class="item-li count">{$count.week_count}</div>
+					<div class="item-li name">本周打印量</div>
 				</div>
 				<div class="stats-item">
 					<div class="item-li"><img src="{$statics_url}images/today_print.png" /></div>
-					<div class="item-li count">420</div>
+					<div class="item-li count">{$count.today_print_count}</div>
 					<div class="item-li name">今日打印量</div>
 				</div>
 				<div class="stats-item">
 					<div class="item-li"><img src="{$statics_url}images/unprint.png" /></div>
-					<div class="item-li count">160</div>
+					<div class="item-li count">{$count.today_unprint_count}</div>
 					<div class="item-li name">今日未打印量</div>
 				</div>
 			</div>
