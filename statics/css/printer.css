@@ -26,6 +26,7 @@
 .box.printer_control{margin-right:0}
 .box .info_content{height:173px;padding:15px;position:relative}
 .box .info_left{width:120px;text-align:center;height:173px;float:left}
+.box .info_left .printer_logo{border-radius:50%;width:100px;height:100px;}
 
 .info_left .left_bottom{padding-top:20px;overflow:hidden}
 .left_bottom .close_img{width:35px;height:35px;float:left;padding-left:10px}

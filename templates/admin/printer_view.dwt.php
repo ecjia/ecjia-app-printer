@@ -22,7 +22,7 @@
 			<div class="title">基本信息</div>
 			<div class="info_content">
 				<div class="info_left">
-					<img src="{$statics_url}images/click_upload.png" />
+					<a data-toggle="modal" href="#uploadLogo"><img class="printer_logo" src="{if $info.printer_logo}{$info.printer_logo}{else}{$statics_url}images/click_upload.png{/if}" /></a>
 					<div class="left_bottom">
 						<a data-toggle="ajaxremove" data-msg="您确定要关闭该打印机吗？" href='{RC_Uri::url("printer/admin/close", "id={$info.id}&store_id={$info.store_id}")}'>
 							<img class="close_img" src="{$statics_url}images/close.png" />
@@ -98,4 +98,45 @@
 		</div>
     </div>
 </div>
+
+<div class="modal hide fade" id="uploadLogo">
+	<div class="modal-header">
+		<button class="close" data-dismiss="modal">×</button>
+		<h3>{t}上传打印LOGO{/t}</h3>
+	</div>
+	<div class="modal-body">
+		<div class="row-fluid">
+			<div class="span12">
+			<form class="form-horizontal" method="post" name="theForm" action="{url path='printer/admin/upload_logo'}">
+				<fieldset>
+					<div class="control-group formSep">
+						<label class="control-label">上传LOGO：</label>
+						<div class="controls">
+							<div class="fileupload {if $info.printer_logo}fileupload-exists{else}fileupload-new{/if}" data-provides="fileupload">
+								<div class="fileupload-preview fileupload-exists thumbnail" style="width: 80px; height: 80px; line-height: 80px;">
+									{if $info.printer_logo}
+									<img src="{$info.printer_logo}"/>
+									{/if}
+								</div>
+								<span class="btn btn-file">
+								<span class="fileupload-new">浏览</span>
+								<span class="fileupload-exists">修改</span>
+								<input type='file' name='printer_logo' />
+								</span>
+								<a class="btn fileupload-exists remove_logo" {if !$info.printer_logo}data-dismiss="fileupload" href="javascript:;"{else}data-toggle="ajaxremove" data-msg="您确定要删除该打印机logo吗？" href='{url path="printer/admin/del_file" args="id={$info.id}&store_id={$info.store_id}"}' title="{lang key='system::system.drop'}"{/if}>删除</a>
+							</div>
+						</div>
+					</div>
+					<div class="control-group t_c">
+						<button class="btn btn-gebo" type="submit">{t}确定{/t}</button>
+						<input type="hidden" name="store_id" value="{$info.store_id}"/>
+						<input type="hidden" name="id" value="{$info.id}"/>
+					</div>
+				</fieldset>
+			</form>
+			</div>
+		</div>
+	</div>
+</div>
+	
 <!-- {/block} -->

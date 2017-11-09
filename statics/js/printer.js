@@ -5,6 +5,7 @@
         	 app.printer.form();
         	 app.printer.toggleButton();
         	 app.printer.slider();
+        	 app.printer.remove_logo();
         },
         
         form: function () {
@@ -106,7 +107,13 @@
                    	});
                 }
             });
-        } 
+        },
+        
+        remove_logo: function() {
+        	$('.remove_logo').off('click').on('click', function() {
+        		$('#uploadLogo').modal('hide');
+        	});
+        }
     };  
 })(ecjia.admin, jQuery);
  

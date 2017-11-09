@@ -65,6 +65,7 @@ class admin extends ecjia_admin
         RC_Style::enqueue_style('uniform-aristo');
         RC_Script::enqueue_script('bootstrap-editable.min', RC_Uri::admin_url('statics/lib/x-editable/bootstrap-editable/js/bootstrap-editable.min.js'));
         RC_Style::enqueue_style('bootstrap-editable', RC_Uri::admin_url('statics/lib/x-editable/bootstrap-editable/css/bootstrap-editable.css'));
+        RC_Script::enqueue_script('bootstrap-placeholder', RC_Uri::admin_url('statics/lib/dropper-upload/bootstrap-placeholder.js'), array(), false, true);
 
         RC_Script::enqueue_script('jquery.toggle.buttons', RC_Uri::admin_url('statics/lib/toggle_buttons/jquery.toggle.buttons.js'));
         RC_Style::enqueue_style('bootstrap-toggle-buttons', RC_Uri::admin_url('statics/lib/toggle_buttons/bootstrap-toggle-buttons.css'));
@@ -209,7 +210,9 @@ class admin extends ecjia_admin
         $id       = intval($_GET['id']);
         $store    = RC_DB::table('store_franchisee')->where('store_id', $store_id)->first();
         $info     = RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->first();
-
+        if (!empty($info['printer_logo'])) {
+            $info['printer_logo'] = RC_Upload::upload_url($info['printer_logo']);
+        }
         ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here($store['merchants_name'], RC_Uri::url('store/admin/preview', array('store_id' => $store_id))));
         ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('查看打印机'));
 
@@ -316,6 +319,50 @@ class admin extends ecjia_admin
         }
         RC_DB::table('printer_machine')->where('id', $id)->update(array('printer_mobile' => $printer_mobile));
         $this->showmessage('手机卡号修改成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+    }
+
+    public function upload_logo()
+    {
+        $store_id = !empty($_POST['store_id']) ? intval($_POST['store_id']) : 0;
+        $id       = !empty($_POST['id']) ? intval($_POST['id']) : 0;
+
+        $file_name = '';
+        /* 处理上传的LOGO图片 */
+        if ((isset($_FILES['printer_logo']['error']) && $_FILES['printer_logo']['error'] == 0) || (!isset($_FILES['printer_logo']['error']) && isset($_FILES['printer_logo']['tmp_name']) && $_FILES['printer_logo']['tmp_name'] != 'none')) {
+            $upload     = RC_Upload::uploader('image', array('save_path' => 'data/printer', 'auto_sub_dirs' => false));
+            $image_info = $upload->upload($_FILES['printer_logo']);
+
+            if (!empty($image_info)) {
+                $file_name = $upload->get_position($image_info);
+            } else {
+                return $this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            }
+        }
+
+        $info = RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->first();
+        //删除旧logo
+        if (!empty($info['printer_logo'])) {
+            $disk = RC_Filesystem::disk();
+            $disk->delete(RC_Upload::upload_path() . $info['printer_logo']);
+        }
+
+        RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->update(array('printer_logo' => $file_name));
+        $this->showmessage('上传成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin/view', array('id' => $id, 'store_id' => $store_id))));
+    }
+
+    public function del_file()
+    {
+        $store_id = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
+        $id       = !empty($_GET['id']) ? intval($_GET['id']) : 0;
+
+        $info = RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->first();
+        if (!empty($info['printer_logo'])) {
+            $disk = RC_Filesystem::disk();
+            $disk->delete(RC_Upload::upload_path() . $info['printer_logo']);
+        }
+
+        RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->update(array('printer_logo' => ''));
+        $this->showmessage('删除成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin/view', array('id' => $id, 'store_id' => $store_id))));
     }
 
     private function get_record_list()
