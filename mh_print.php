@@ -170,7 +170,8 @@ class mh_print extends ecjia_merchant
 
         $record_list = $this->get_record_list();
         $this->assign('record_list', $record_list);
-
+        $this->assign('type', 'printer_record');
+        
         $this->display('printer_record_list.dwt');
     }
 
@@ -254,7 +255,8 @@ class mh_print extends ecjia_merchant
     private function get_record_list()
     {
         $db_printer_view = RC_DB::table('printer_printlist as p')
-            ->leftJoin('printer_machine as m', RC_DB::raw('p.printer_code'), '=', RC_DB::raw('m.printer_code'));
+            ->leftJoin('printer_machine as m', RC_DB::raw('p.printer_code'), '=', RC_DB::raw('m.printer_code'))
+        	->where(RC_DB::raw('p.store_id'), $_SESSION['store_id']);
 
         $count = $db_printer_view->count();
         $page  = new ecjia_page($count, 10, 5);

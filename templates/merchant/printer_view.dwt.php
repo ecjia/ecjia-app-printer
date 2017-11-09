@@ -104,9 +104,6 @@
     </div>
 </div>
 
-
-										
-
 <div class="modal fade" id="uploadLogo">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -145,5 +142,4 @@
 		</div>
 	</div>
 </div>
-	
 <!-- {/block} -->
