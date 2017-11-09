@@ -44,8 +44,7 @@
 .voice_type .toggle-button{margin-left:72px}
 #voice-slider{width:100%;height:10px;background-color:#fff;margin-top:20px}
 .noUi-handle:after,.noUi-handle:before{display:none}
-.noUi-horizontal .noUi-handle{border-radius:50%;width:20px;height:20px;box-shadow:inset 0 0 1px #fff,inset 0 1px 7px #fff,0 3px 6px -3px #fff;outline-color:#fff}
-.noUi-horizontal .noUi-handle.noUi-active{outline-color:#fff}
+.noUi-horizontal .noUi-handle{border-radius:50%;width:20px;height:20px;box-shadow:inset 0 0 1px #fff,inset 0 1px 7px #fff,0 3px 6px -3px #fff;}
 .noUi-base{background:none repeat scroll 0 0 #3EB7D5;box-shadow:none}
 .noUi-origin{background:none repeat scroll 0 0 #fff;box-shadow:none}
 .info_content .help-block{margin-top:10px}
