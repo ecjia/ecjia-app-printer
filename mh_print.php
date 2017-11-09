@@ -270,8 +270,8 @@ class mh_print extends ecjia_merchant
             ->where(RC_DB::raw('p.store_id'), $_SESSION['store_id']);
 
         $count = $db_printer_view->count();
-        $page  = new ecjia_merchant_page($count, 1, 5);
-        $data  = $db_printer_view->selectRaw('p.*, m.printer_name')->take(1)->skip($page->start_id - 1)->orderBy('id', 'desc')->get();
+        $page  = new ecjia_merchant_page($count, 10, 5);
+        $data  = $db_printer_view->selectRaw('p.*, m.printer_name')->take(10)->skip($page->start_id - 1)->orderBy('id', 'desc')->get();
 
         return array('item' => $data, 'page' => $page->show(2), 'desc' => $page->page_desc());
     }
