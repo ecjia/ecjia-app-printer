@@ -230,6 +230,8 @@ class admin extends ecjia_admin
 
     public function cancel()
     {
+        $this->admin_priv('store_staff_update', ecjia::MSGTYPE_JSON);
+
         $store_id = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
         $id       = !empty($_GET['id']) ? intval($_GET['id']) : 0;
 
@@ -248,8 +250,8 @@ class admin extends ecjia_admin
             RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->update(array('voice_type' => $type));
             $this->showmessage('响铃类型修改成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin/view', array('id' => $id, 'store_id' => $store_id))));
         } else if (!empty($voice)) {
-        	RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->update(array('voice' => $voice));
-        	$this->showmessage('音量修改成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin/view', array('id' => $id, 'store_id' => $store_id))));
+            RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->update(array('voice' => $voice));
+            $this->showmessage('音量修改成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin/view', array('id' => $id, 'store_id' => $store_id))));
         }
     }
 
@@ -279,6 +281,30 @@ class admin extends ecjia_admin
         $this->assign('record_list', $record_list);
 
         $this->display('printer_record_list.dwt');
+    }
+
+    public function edit_printer_name()
+    {
+        $this->admin_priv('store_staff_update', ecjia::MSGTYPE_JSON);
+        $id           = !empty($_POST['pk']) ? intval($_POST['pk']) : 0;
+        $printer_name = !empty($_POST['value']) ? trim($_POST['value']) : '';
+        if (empty($printer_name)) {
+            return $this->showmessage('请输入打印机名称', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        }
+        RC_DB::table('printer_machine')->where('id', $id)->update(array('printer_name' => $printer_name));
+        $this->showmessage('打印机名称修改成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+    }
+
+    public function edit_printer_mobile()
+    {
+        $this->admin_priv('store_staff_update', ecjia::MSGTYPE_JSON);
+        $id             = !empty($_POST['pk']) ? intval($_POST['pk']) : 0;
+        $printer_mobile = !empty($_POST['value']) ? trim($_POST['value']) : '';
+        if (empty($printer_mobile)) {
+            return $this->showmessage('请输入手机卡号', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        }
+        RC_DB::table('printer_machine')->where('id', $id)->update(array('printer_mobile' => $printer_mobile));
+        $this->showmessage('手机卡号修改成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
     }
 
     private function get_record_list()
