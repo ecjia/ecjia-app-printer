@@ -41,47 +41,46 @@
 						<div class="clearfix"></div>
   					</h3>
   					<div class="panel-body panel-body-small">
-						<section class="panel">
-							<table class="table table-striped table-hover table-hide-edit ecjiaf-tlf">
-								<thead>
-									<tr>
-		                                <th class="w100">订单编号</th>
-		                                <th class="w120">打印机名称</th>
-		                                <th class="w150">内容</th>
-		                                <th class="w120">打印时间</th>
-		                                <th class="w60">打印状态</th>
-		                            </tr>
-								</thead>
-								<tbody>
-					            	<!-- {foreach from=$record_list.item item=list} -->
-		                            <tr>
-		                                <td class="hide-edit-area">
-		                                	{$list.order_sn}
-		                                	<div class="edit-list">
-		                                		<a class="data-pjax" href="javascript:;">重新打印</a>
-		                                	</div>
-		                                </td>
-		                                <td>{$list.printer_name}</td>
-		                                <td>{$list.content}</td>
-		                                <td>{RC_Time::local_date('Y-m-d H:i:s', $list['print_time'])}</td>
-		                                <td>
-		                                	{if $list.status eq 0}
-		                                	待打印
-		                                	{else if $list.status eq 1}
-		                                	打印完成
-		                                	{else if $list.status eq 2}
-		                                	打印异常
-		                                	{else if $list.status eq 3}
-		                                	取消打印
-		                                	{/if}
-		                                </td>
-		                            </tr>
-		                            <!-- {foreachelse} -->
-		                            <tr><td class="no-records" colspan="5">{lang key='system::system.no_records'}</td></tr>
-		                            <!-- {/foreach} -->
-								</tbody>
-							</table>
-						</section>
+						<table class="table table-striped smpl_tbl table-hide-edit">
+							<thead>
+								<tr>
+	                                <th class="w100">订单编号</th>
+	                                <th class="w120">打印机名称</th>
+	                                <th class="w150">内容</th>
+	                                <th class="w120">打印时间</th>
+	                                <th class="w60">打印状态</th>
+	                            </tr>
+							</thead>
+							<tbody>
+				            	<!-- {foreach from=$record_list.item item=list} -->
+	                            <tr>
+	                                <td class="hide-edit-area">
+	                                	{$list.order_sn}
+	                                	<div class="edit-list">
+	                                		<a class="data-pjax" href="javascript:;">重新打印</a>
+	                                	</div>
+	                                </td>
+	                                <td>{$list.printer_name}</td>
+	                                <td>{$list.content}</td>
+	                                <td>{RC_Time::local_date('Y-m-d H:i:s', $list['print_time'])}</td>
+	                                <td>
+	                                	{if $list.status eq 0}
+	                                	待打印
+	                                	{else if $list.status eq 1}
+	                                	打印完成
+	                                	{else if $list.status eq 2}
+	                                	打印异常
+	                                	{else if $list.status eq 3}
+	                                	取消打印
+	                                	{/if}
+	                                </td>
+	                            </tr>
+	                            <!-- {foreachelse} -->
+	                            <tr><td class="no-records" colspan="5">{lang key='system::system.no_records'}</td></tr>
+	                            <!-- {/foreach} -->
+							</tbody>
+						</table>
+						<!-- {$record_list.page} -->
 					</div>
             	</div>
         	</div>
