@@ -59,13 +59,13 @@ class mh_print extends ecjia_merchant
         RC_Script::enqueue_script('jquery-form');
         RC_Script::enqueue_script('smoke');
         RC_Style::enqueue_style('uniform-aristo');
-        
+
         RC_Script::enqueue_script('bootstrap-editable-script', dirname(RC_App::app_dir_url(__FILE__)) . '/merchant/statics/assets/bootstrap-fileupload/bootstrap-fileupload.js', array());
         RC_Style::enqueue_style('bootstrap-fileupload', dirname(RC_App::app_dir_url(__FILE__)) . '/merchant/statics/assets/bootstrap-fileupload/bootstrap-fileupload.css', array(), false, false);
-                
+
         RC_Script::enqueue_script('ecjia-mh-editable-js');
         RC_Style::enqueue_style('ecjia-mh-editable-css');
-        
+
         RC_Script::enqueue_script('jquery.toggle.buttons', RC_Uri::admin_url('statics/lib/toggle_buttons/jquery.toggle.buttons.js'));
         RC_Style::enqueue_style('bootstrap-toggle-buttons', RC_Uri::admin_url('statics/lib/toggle_buttons/bootstrap-toggle-buttons.css'));
 
@@ -165,13 +165,13 @@ class mh_print extends ecjia_merchant
 
     public function record_list()
     {
-        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('打印记录'));
-        $this->assign('ur_here', '打印记录');
+        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('小票打印设置'));
+        $this->assign('ur_here', '小票打印设置');
 
         $record_list = $this->get_record_list();
         $this->assign('record_list', $record_list);
         $this->assign('type', 'printer_record');
-        
+
         $this->display('printer_record_list.dwt');
     }
 
@@ -251,17 +251,23 @@ class mh_print extends ecjia_merchant
         RC_DB::table('printer_machine')->where('store_id', $_SESSION['store_id'])->where('id', $id)->update(array('printer_logo' => ''));
         $this->showmessage('删除成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/view', array('id' => $id))));
     }
-    
-    public function order_ticket() {
-    	
-    	$this->display('printer_order_ticket.dwt');
+
+    public function order_ticket()
+    {
+        $this->admin_priv('store_printer_manage');
+
+        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('小票打印设置'));
+
+        $this->assign('ur_here', '小票打印设置');
+
+        $this->display('printer_order_ticket.dwt');
     }
 
     private function get_record_list()
     {
         $db_printer_view = RC_DB::table('printer_printlist as p')
             ->leftJoin('printer_machine as m', RC_DB::raw('p.printer_code'), '=', RC_DB::raw('m.printer_code'))
-        	->where(RC_DB::raw('p.store_id'), $_SESSION['store_id']);
+            ->where(RC_DB::raw('p.store_id'), $_SESSION['store_id']);
 
         $count = $db_printer_view->count();
         $page  = new ecjia_page($count, 10, 5);
