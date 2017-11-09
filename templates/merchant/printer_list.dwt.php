@@ -2,7 +2,7 @@
 <!-- {extends file="ecjia-merchant.dwt.php"} -->
 <!-- {block name="footer"} -->
 <script type="text/javascript">
-//     ecjia.admin.printer.init();
+//     ecjia.merchant.printer.init();
 </script>
 <!-- {/block} -->
 <!-- {block name="home-content"} -->
@@ -27,10 +27,10 @@
                         </ul>
                         <ul class="nav nav-list m_t10 change">
                         	<li class="nav-list-title">小票分类模版</li>
-                        	<li><a class="setting-group-item data-pjax" href='{url path="printer/mh_print/init"}'>普通订单小票</a></li>
-                        	<li><a class="setting-group-item data-pjax m_t5" href='{url path="printer/mh_print/record_list"}'>外卖订单小票</a></li>
-                        	<li><a class="setting-group-item data-pjax m_t5" href='{url path="printer/mh_print/record_list"}'>到店购物小票</a></li>
-                        	<li><a class="setting-group-item data-pjax m_t5" href='{url path="printer/mh_print/record_list"}'>优惠买单小票</a></li>
+                        	<li><a class="setting-group-item data-pjax {if $smarty.get.type eq 'normal'}llv-active{/if}" href='{url path="printer/mh_print/order_ticket" args="type=normal"}'>普通订单小票</a></li>
+                        	<li><a class="setting-group-item data-pjax m_t5 {if $smarty.get.type eq 'take_out'}llv-active{/if}" href='{url path="printer/mh_print/order_ticket" args="type=take_out"}'>外卖订单小票</a></li>
+                        	<li><a class="setting-group-item data-pjax m_t5 {if $smarty.get.type eq 'store_buy'}llv-active{/if}" href='{url path="printer/mh_print/order_ticket" args="type=store_buy"}'>到店购物小票</a></li>
+                        	<li><a class="setting-group-item data-pjax m_t5 {if $smarty.get.type eq 'pay_bill'}llv-active{/if}" href='{url path="printer/mh_print/order_ticket" args="type=pay_bill"}'>优惠买单小票</a></li>
                         </ul>
                     </div>
                 </div>

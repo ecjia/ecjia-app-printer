@@ -251,6 +251,11 @@ class mh_print extends ecjia_merchant
         RC_DB::table('printer_machine')->where('store_id', $_SESSION['store_id'])->where('id', $id)->update(array('printer_logo' => ''));
         $this->showmessage('删除成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/view', array('id' => $id))));
     }
+    
+    public function order_ticket() {
+    	
+    	$this->display('printer_order_ticket.dwt');
+    }
 
     private function get_record_list()
     {
