@@ -70,7 +70,7 @@ class admin extends ecjia_admin
         RC_Style::enqueue_style('bootstrap-toggle-buttons', RC_Uri::admin_url('statics/lib/toggle_buttons/bootstrap-toggle-buttons.css'));
         RC_Style::enqueue_style('nouislider', RC_App::apps_url('statics/css/jquery.nouislider.css', __FILE__), array());
         RC_Script::enqueue_script('nouislider', RC_App::apps_url('statics/js/jquery.nouislider.min.js', __FILE__), array(), false, false);
-        
+
         RC_Style::enqueue_style('printer', RC_App::apps_url('statics/css/printer.css', __FILE__), array());
         RC_Script::enqueue_script('printer', RC_App::apps_url('statics/js/printer.js', __FILE__), array(), false, false);
         //时间控件
@@ -241,50 +241,56 @@ class admin extends ecjia_admin
         $store_id = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
         $id       = !empty($_GET['id']) ? intval($_GET['id']) : 0;
         $type     = isset($_POST['type']) ? trim($_POST['type']) : '';
+        $voice    = isset($_POST['voice']) ? intval($_POST['voice']) : 0;
 
         if (!empty($type)) {
             $type = $type == 'buzzer' ? 'horn' : 'buzzer';
             RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->update(array('voice_type' => $type));
-            $this->showmessage('操作成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin/view', array('id' => $id, 'store_id' => $store_id))));
+            $this->showmessage('响铃类型修改成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin/view', array('id' => $id, 'store_id' => $store_id))));
+        } else if (!empty($voice)) {
+        	RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->update(array('voice' => $voice));
+        	$this->showmessage('音量修改成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin/view', array('id' => $id, 'store_id' => $store_id))));
         }
     }
-    
-    public function record_list() {
-    	$store_id = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
-    	if (empty($store_id)) {
-    		return $this->showmessage(__('请选择您要操作的店铺'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
-    	}
-    	$store = RC_DB::table('store_franchisee')->where('store_id', $store_id)->first();
-    	
-    	ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here($store['merchants_name'], RC_Uri::url('store/admin/preview', array('store_id' => $store_id))));
-    	ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('打印记录'));
-    	
-    	ecjia_screen::get_current_screen()->set_sidebar_display(false);
-    	ecjia_screen::get_current_screen()->add_option('store_name', $store['merchants_name']);
-    	ecjia_screen::get_current_screen()->add_option('current_code', 'store_printer_record');
-    	
-    	if ($store['manage_mode'] == 'self') {
-    		$this->assign('action_link', array('href' => RC_Uri::url('store/admin/init'), 'text' => '自营店铺列表'));
-    	} else {
-    		$this->assign('action_link', array('href' => RC_Uri::url('store/admin/join'), 'text' => RC_Lang::get('store::store.store_list')));
-    	}
-    	$this->assign('ur_here', $store['merchants_name'] . ' - ' . '打印记录');
-    	
-    	$record_list = $this->get_record_list();
-    	$this->assign('record_list', $record_list);
-    	
-    	$this->display('printer_record_list.dwt');
+
+    public function record_list()
+    {
+        $store_id = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
+        if (empty($store_id)) {
+            return $this->showmessage(__('请选择您要操作的店铺'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        }
+        $store = RC_DB::table('store_franchisee')->where('store_id', $store_id)->first();
+
+        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here($store['merchants_name'], RC_Uri::url('store/admin/preview', array('store_id' => $store_id))));
+        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('打印记录'));
+
+        ecjia_screen::get_current_screen()->set_sidebar_display(false);
+        ecjia_screen::get_current_screen()->add_option('store_name', $store['merchants_name']);
+        ecjia_screen::get_current_screen()->add_option('current_code', 'store_printer_record');
+
+        if ($store['manage_mode'] == 'self') {
+            $this->assign('action_link', array('href' => RC_Uri::url('store/admin/init'), 'text' => '自营店铺列表'));
+        } else {
+            $this->assign('action_link', array('href' => RC_Uri::url('store/admin/join'), 'text' => RC_Lang::get('store::store.store_list')));
+        }
+        $this->assign('ur_here', $store['merchants_name'] . ' - ' . '打印记录');
+
+        $record_list = $this->get_record_list();
+        $this->assign('record_list', $record_list);
+
+        $this->display('printer_record_list.dwt');
     }
-    
-    private function get_record_list() {
-    	$db_printer_view = RC_DB::table('printer_printlist as p')
-    		->leftJoin('printer_machine as m', RC_DB::raw('p.printer_code'), '=', RC_DB::raw('m.printer_code'));
-    	
-    	$count = $db_printer_view->count();
-    	$page = new ecjia_page($count, 10, 5);
-    	$data = $db_printer_view->selectRaw('p.*, m.printer_name')->take(10)->skip($page->start_id-1)->orderBy('id', 'desc')->get();
-    	
-    	return array('item' => $data, 'page' => $page->show(2), 'desc' => $page->page_desc());
+
+    private function get_record_list()
+    {
+        $db_printer_view = RC_DB::table('printer_printlist as p')
+            ->leftJoin('printer_machine as m', RC_DB::raw('p.printer_code'), '=', RC_DB::raw('m.printer_code'));
+
+        $count = $db_printer_view->count();
+        $page  = new ecjia_page($count, 10, 5);
+        $data  = $db_printer_view->selectRaw('p.*, m.printer_name')->take(10)->skip($page->start_id - 1)->orderBy('id', 'desc')->get();
+
+        return array('item' => $data, 'page' => $page->show(2), 'desc' => $page->page_desc());
     }
 }
 

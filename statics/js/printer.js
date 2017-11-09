@@ -68,8 +68,9 @@
         
         slider: function() {
         	var voiceSlider = document.getElementById('voice-slider');
+        	var v = parseInt($('.voice_value').html());
             noUiSlider.create(voiceSlider, {
-                start: 1,
+                start: v,
                 step: 1,
                 range: {
                     'min': 0,
@@ -77,11 +78,32 @@
                 }
             });
             voiceSlider.noUiSlider.on('change', function ( values, handle ) {
-                if ( values[handle] < 1 ) {
-                	voiceSlider.noUiSlider.set(1);
-                    $('.voice_value').html(1);
+            	var url = $('.info-toggle-button').attr('data-url');
+            	if (values[handle] < 1 && v == 1) {
+            		voiceSlider.noUiSlider.set(1);
+            		return false;
+            	} else if (values[handle] < 1) {
+                    var info = {
+                    	'voice': 1
+                    }
+                   	$.post(url, info, function(data) {
+                   		ecjia.admin.showmessage(data);
+                   		if (data.state == 'success') {
+                   			voiceSlider.noUiSlider.set(1);
+                   			$('.voice_value').html(1);
+                   		}
+                   	});
                 } else {
-                    $('.voice_value').html(parseInt(values[handle]));
+                	var voice = parseInt(values[handle]);
+                    var info = {
+                      'voice': voice
+                    }
+                   	$.post(url, info, function(data) {
+                   		ecjia.admin.showmessage(data);
+                   		if (data.state == 'success') {
+                   			$('.voice_value').html(voice);
+                   		}
+                   	});
                 }
             });
         } 
