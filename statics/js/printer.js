@@ -4,6 +4,7 @@
         init: function () {
         	 app.printer.form();
         	 app.printer.toggleButton();
+        	 app.printer.slider();
         },
         
         form: function () {
@@ -63,9 +64,28 @@
                    	});
                 },  
             });
-        }
+        },
+        
+        slider: function() {
+        	var voiceSlider = document.getElementById('voice-slider');
+            noUiSlider.create(voiceSlider, {
+                start: 1,
+                step: 1,
+                range: {
+                    'min': 0,
+                    'max': 3
+                }
+            });
+            voiceSlider.noUiSlider.on('change', function ( values, handle ) {
+                if ( values[handle] < 1 ) {
+                	voiceSlider.noUiSlider.set(1);
+                    $('.voice_value').html(1);
+                } else {
+                    $('.voice_value').html(parseInt(values[handle]));
+                }
+            });
+        } 
     };  
- 
 })(ecjia.admin, jQuery);
  
 // end

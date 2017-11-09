@@ -32,15 +32,22 @@
 .left_bottom .refresh_img{width:35px;height:35px;float:right;padding-right:10px}
 
 .box .info_right{position:absolute;left:150px;max-width:60%}
-.info_right .name{font-size:18px;display:block;text-align:left;font-weight:700;padding:5px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.info_right .name{font-size:18px;display:block;text-align:left;font-weight:700;padding:5px 0 10px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.info_right .edit_icon{width:20px;height:20px;margin-left:10px;}
 .info_right .right-item{font-size:15px;line-height:30px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .info_status{position:absolute;right:20px;top:0;text-align:center;line-height:22px}
 
-.voice-item{font-size:15px;line-height:50px;margin-top:20px}
+.voice-item{font-size:15px;line-height:50px;}
 .voice-item span{padding-left:10px}
-.voice_type{position:relative}
-.voice_type .label_type{position:absolute;left:0;top:7px;font-size:15px;}
+.voice_type{position:relative;padding:10px 0;}
+.voice_type .label_type{position:absolute;left:0;top:16px;font-size:15px;}
 .voice_type .toggle-button{margin-left:72px}
+#voice-slider{width:100%;height:10px;background-color:#fff;margin-top:20px}
+.noUi-handle:after,.noUi-handle:before{display:none}
+.noUi-horizontal .noUi-handle{border-radius:50%;width:20px;height:20px;box-shadow:inset 0 0 1px #fff,inset 0 1px 7px #fff,0 3px 6px -3px #fff;outline-color:#fff}
+.noUi-horizontal .noUi-handle.noUi-active{outline-color:#fff}
+.noUi-base{background:none repeat scroll 0 0 #3EB7D5;box-shadow:none}
+.noUi-origin{background:none repeat scroll 0 0 #fff;box-shadow:none}
 .info_content .help-block{margin-top:10px}
 
 .stats_content{width:100%;height:213px}

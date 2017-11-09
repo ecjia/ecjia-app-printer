@@ -30,10 +30,10 @@
 				</div>
 				
 				<div class="info_right">
-					<div class="name">{$info.printer_name}</div>
+					<div class="name">{$info.printer_name}<img class="edit_icon" src="{$statics_url}images/edit.png" /></div>
 					<div class="right-item">终端编号：{$info.printer_code}</div>
 					<div class="right-item">终端密钥：{$info.printer_key}</div>
-					<div class="right-item">手机卡号：{$info.printer_mobile}</div>
+					<div class="right-item">手机卡号：{$info.printer_mobile}<img class="edit_icon" src="{$statics_url}images/edit.png" /></div>
 					<div class="right-item">打印机型：{$info.version}</div>
 					<div class="right-item">添加时间：{RC_Time::local_date('Y-m-d H:i:s', $info['add_time'])}</div>
 				</div>
@@ -59,7 +59,8 @@
 		                <input class="nouniform" name="voice_type" type="checkbox" {if $info.voice_type eq 'buzzer'}checked{/if} value="{$info.voice_type}"/>
 		            </div>
 	            </div>
-				<div class="voice-item">音量调节<span>{$info.voice}</span></div>
+				<div class="voice-item">音量调节<span class="voice_value">{$info.voice}</span></div>
+				<div id="voice-slider"></div>
 			</div>
 		</div>
 		
