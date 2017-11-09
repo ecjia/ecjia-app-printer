@@ -299,10 +299,16 @@ class admin extends ecjia_admin
 
         $this->display('printer_record_list.dwt');
     }
+    
+    public function reprint() {
+    	$this->admin_priv('store_staff_update', ecjia::MSGTYPE_JSON);
+    	
+    }
 
     public function edit_printer_name()
     {
         $this->admin_priv('store_staff_update', ecjia::MSGTYPE_JSON);
+        
         $id           = !empty($_POST['pk']) ? intval($_POST['pk']) : 0;
         $printer_name = !empty($_POST['value']) ? trim($_POST['value']) : '';
         if (empty($printer_name)) {
@@ -326,6 +332,8 @@ class admin extends ecjia_admin
 
     public function upload_logo()
     {
+    	$this->admin_priv('store_staff_update', ecjia::MSGTYPE_JSON);
+    	
         $store_id = !empty($_POST['store_id']) ? intval($_POST['store_id']) : 0;
         $id       = !empty($_POST['id']) ? intval($_POST['id']) : 0;
 
@@ -355,6 +363,8 @@ class admin extends ecjia_admin
 
     public function del_file()
     {
+    	$this->admin_priv('store_staff_update', ecjia::MSGTYPE_JSON);
+    	
         $store_id = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
         $id       = !empty($_GET['id']) ? intval($_GET['id']) : 0;
 
