@@ -24,8 +24,12 @@
 				<div class="info_left">
 					<img src="{$statics_url}images/click_upload.png" />
 					<div class="left_bottom">
-						<img class="close_img" src="{$statics_url}images/close.png" />
-						<img class="refresh_img" src="{$statics_url}images/refresh.png" />
+						<a data-toggle="ajaxremove" data-msg="您确定要关闭该打印机吗？" href='{RC_Uri::url("printer/admin/close", "id={$info.id}&store_id={$info.store_id}")}'>
+							<img class="close_img" src="{$statics_url}images/close.png" />
+						</a>
+						<a class="data-pjax" href='{url path="printer/admin/view" args="id={$info.id}&store_id={$info.store_id}"}'>
+							<img class="refresh_img" src="{$statics_url}images/refresh.png" />
+						</a>
 					</div>
 				</div>
 				
@@ -42,9 +46,9 @@
 					{if $info.online_status eq 1}
         			<span class="status">在线</span>
         			{else if $info.online_status eq 2}
-        			<span class="status error">离线</span>
-        			{else if $info.online_status eq 0}
         			<span class="status error">缺纸</span>
+        			{else if $info.online_status eq 0}
+        			<span class="status error">离线</span>
         			{/if}
 				</div>
 			</div>

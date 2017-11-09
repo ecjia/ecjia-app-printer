@@ -33,9 +33,9 @@
         						{if $val.online_status eq 1}
         						<span class="status">在线</span>
         						{else if $val.online_status eq 2}
-        						<span class="status error">离线</span>
-        						{else if $val.online_status eq 0}
         						<span class="status error">缺纸</span>
+        						{else if $val.online_status eq 0}
+        						<span class="status error">离线</span>
         						{/if}
         					</div>
         				</div>

@@ -238,6 +238,17 @@ class admin extends ecjia_admin
         $this->showmessage('取消成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin/view', array('id' => $id, 'store_id' => $store_id))));
     }
 
+    public function close()
+    {
+        $this->admin_priv('store_staff_update', ecjia::MSGTYPE_JSON);
+
+        $store_id = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
+        $id       = !empty($_GET['id']) ? intval($_GET['id']) : 0;
+
+        RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->update(array('online_status' => 0));
+        $this->showmessage('关闭成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin/view', array('id' => $id, 'store_id' => $store_id))));
+    }
+
     public function voice_control()
     {
         $store_id = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
