@@ -74,9 +74,6 @@ class admin extends ecjia_admin
 
         RC_Style::enqueue_style('printer', RC_App::apps_url('statics/css/printer.css', __FILE__), array());
         RC_Script::enqueue_script('printer', RC_App::apps_url('statics/js/printer.js', __FILE__), array(), false, false);
-        //时间控件
-        RC_Script::enqueue_script('bootstrap-datepicker', RC_Uri::admin_url('statics/lib/datepicker/bootstrap-datepicker.min.js'));
-        RC_Style::enqueue_style('datepicker', RC_Uri::admin_url('statics/lib/datepicker/datepicker.css'));
 
         $store_id   = intval($_GET['store_id']);
         $store_info = RC_DB::table('store_franchisee')->where('store_id', $store_id)->first();
@@ -94,7 +91,7 @@ class admin extends ecjia_admin
      */
     public function init()
     {
-        $this->admin_priv('store_staff_manage');
+        $this->admin_priv('store_printer_manage');
 
         $store_id = intval($_GET['store_id']);
         if (empty($store_id)) {
@@ -131,7 +128,7 @@ class admin extends ecjia_admin
      */
     public function add()
     {
-        $this->admin_priv('store_staff_update');
+        $this->admin_priv('store_printer_update');
 
         $store_id = intval($_GET['store_id']);
         $store    = RC_DB::table('store_franchisee')->where('store_id', $store_id)->first();
@@ -156,7 +153,7 @@ class admin extends ecjia_admin
      */
     public function insert()
     {
-        $this->admin_priv('store_staff_update', ecjia::MSGTYPE_JSON);
+        $this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
 
         $printer_name   = !empty($_POST['printer_name']) ? trim($_POST['printer_name']) : '';
         $printer_code   = !empty($_POST['printer_code']) ? trim($_POST['printer_code']) : '';
@@ -193,7 +190,7 @@ class admin extends ecjia_admin
 
     public function delete()
     {
-        $this->admin_priv('store_staff_update', ecjia::MSGTYPE_JSON);
+        $this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
 
         $store_id = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
         $id       = !empty($_GET['id']) ? intval($_GET['id']) : 0;
@@ -204,7 +201,7 @@ class admin extends ecjia_admin
 
     public function view()
     {
-        $this->admin_priv('store_staff_update');
+        $this->admin_priv('store_printer_update');
 
         $store_id = intval($_GET['store_id']);
         $id       = intval($_GET['id']);
@@ -228,15 +225,15 @@ class admin extends ecjia_admin
         $this->assign('statics_url', $statics_url);
         $this->assign('control_url', RC_Uri::url('printer/admin/voice_control', array('id' => $id, 'store_id' => $store_id)));
 
-        $count = $this->get_print_count();
+        $count = $this->get_print_count($store_id, $info['printer_code']);
         $this->assign('count', $count);
-        
+
         $this->display('printer_view.dwt');
     }
 
     public function cancel()
     {
-        $this->admin_priv('store_staff_update', ecjia::MSGTYPE_JSON);
+        $this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
 
         $store_id = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
         $id       = !empty($_GET['id']) ? intval($_GET['id']) : 0;
@@ -246,7 +243,7 @@ class admin extends ecjia_admin
 
     public function close()
     {
-        $this->admin_priv('store_staff_update', ecjia::MSGTYPE_JSON);
+        $this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
 
         $store_id = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
         $id       = !empty($_GET['id']) ? intval($_GET['id']) : 0;
@@ -274,6 +271,8 @@ class admin extends ecjia_admin
 
     public function record_list()
     {
+        $this->admin_priv('store_printer_record_manage');
+
         $store_id = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
         if (empty($store_id)) {
             return $this->showmessage(__('请选择您要操作的店铺'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
@@ -299,16 +298,17 @@ class admin extends ecjia_admin
 
         $this->display('printer_record_list.dwt');
     }
-    
-    public function reprint() {
-    	$this->admin_priv('store_staff_update', ecjia::MSGTYPE_JSON);
-    	
+
+    public function reprint()
+    {
+        $this->admin_priv('store_staff_update', ecjia::MSGTYPE_JSON);
+
     }
 
     public function edit_printer_name()
     {
-        $this->admin_priv('store_staff_update', ecjia::MSGTYPE_JSON);
-        
+        $this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
+
         $id           = !empty($_POST['pk']) ? intval($_POST['pk']) : 0;
         $printer_name = !empty($_POST['value']) ? trim($_POST['value']) : '';
         if (empty($printer_name)) {
@@ -320,7 +320,7 @@ class admin extends ecjia_admin
 
     public function edit_printer_mobile()
     {
-        $this->admin_priv('store_staff_update', ecjia::MSGTYPE_JSON);
+        $this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
         $id             = !empty($_POST['pk']) ? intval($_POST['pk']) : 0;
         $printer_mobile = !empty($_POST['value']) ? trim($_POST['value']) : '';
         if (empty($printer_mobile)) {
@@ -332,8 +332,8 @@ class admin extends ecjia_admin
 
     public function upload_logo()
     {
-    	$this->admin_priv('store_staff_update', ecjia::MSGTYPE_JSON);
-    	
+        $this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
+
         $store_id = !empty($_POST['store_id']) ? intval($_POST['store_id']) : 0;
         $id       = !empty($_POST['id']) ? intval($_POST['id']) : 0;
 
@@ -363,8 +363,8 @@ class admin extends ecjia_admin
 
     public function del_file()
     {
-    	$this->admin_priv('store_staff_update', ecjia::MSGTYPE_JSON);
-    	
+        $this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
+
         $store_id = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
         $id       = !empty($_GET['id']) ? intval($_GET['id']) : 0;
 
@@ -390,12 +390,12 @@ class admin extends ecjia_admin
         return array('item' => $data, 'page' => $page->show(2), 'desc' => $page->page_desc());
     }
 
-    private function get_print_count()
+    private function get_print_count($store_id, $printer_code)
     {
         $week_start_time     = RC_Time::local_mktime(0, 0, 0, RC_Time::local_date("m"), RC_Time::local_date("d") - RC_Time::local_date("w") + 1, RC_Time::local_date("Y"));
         $count['week_count'] = RC_DB::table('printer_printlist')
             ->where('store_id', $store_id)
-            ->where('printer_code', $info['printer_code'])
+            ->where('printer_code', $printer_code)
             ->where('status', 1)
             ->where('print_time', '>', $week_start_time)
             ->where('print_time', '<', RC_Time::gmtime())
@@ -405,14 +405,14 @@ class admin extends ecjia_admin
         $start                      = RC_Time::local_mktime(0, 0, 0, RC_Time::local_date("m", $now), RC_Time::local_date("d", $now), RC_Time::local_date("Y", $now));
         $count['today_print_count'] = RC_DB::table('printer_printlist')
             ->where('store_id', $store_id)
-            ->where('printer_code', $info['printer_code'])
+            ->where('printer_code', $printer_code)
             ->where('status', 1)
             ->where('print_time', '>', $start)
             ->where('print_time', '<', RC_Time::gmtime())
             ->SUM('print_count');
         $count['today_unprint_count'] = RC_DB::table('printer_printlist')
             ->where('store_id', $store_id)
-            ->where('printer_code', $info['printer_code'])
+            ->where('printer_code', $printer_code)
             ->where('status', '!=', 1)
             ->where('print_time', '>', $start)
             ->where('print_time', '<', RC_Time::gmtime())

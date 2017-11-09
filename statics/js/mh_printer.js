@@ -30,12 +30,13 @@
                      $("form[name='theForm']").ajaxSubmit({
                          dataType: "json",
                          success: function (data) {
-                             ecjia.admin.showmessage(data);
+                        	 $('#uploadLogo').modal('hide');
+                             ecjia.merchant.showmessage(data);
                          }
                      });
                  }
              }
-             var options = $.extend(ecjia.admin.defaultOptions.validate, option);
+             var options = $.extend(ecjia.merchant.defaultOptions.validate, option);
              $("form[name='theForm']").validate(options);
         },
         
@@ -61,7 +62,7 @@
                     	'type': type
                     }
                    	$.post(url, info, function(data) {
-                   		ecjia.admin.showmessage(data);
+                   		ecjia.merchant.showmessage(data);
                    	});
                 },  
             });
@@ -89,7 +90,7 @@
 	                    	'voice': 1
 	                    }
 	                   	$.post(url, info, function(data) {
-	                   		ecjia.admin.showmessage(data);
+	                   		ecjia.merchant.showmessage(data);
 	                   		if (data.state == 'success') {
 	                   			voiceSlider.noUiSlider.set(1);
 	                   			$('.voice_value').html(1);
@@ -101,7 +102,7 @@
 	                      'voice': voice
 	                    }
 	                   	$.post(url, info, function(data) {
-	                   		ecjia.admin.showmessage(data);
+	                   		ecjia.merchant.showmessage(data);
 	                   		if (data.state == 'success') {
 	                   			$('.voice_value').html(voice);
 	                   		}
@@ -117,6 +118,6 @@
         	});
         }
     };  
-})(ecjia.admin, jQuery);
+})(ecjia.merchant, jQuery);
  
 // end

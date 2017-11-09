@@ -16,9 +16,9 @@
     </h3>
 </div>
 
-<div class="row-fluid">
+<div class="row-fluid m_b20">
     <div class="span12">
-		<div class="box basic_info">
+		<div class="printer_box basic_info">
 			<div class="title">基本信息</div>
 			<div class="info_content">
 				<div class="info_left">
@@ -54,7 +54,7 @@
 			</div>
 		</div>
 		
-		<div class="box voice_handle">
+		<div class="printer_box voice_handle">
 			<div class="title">声音调节</div>
 			<div class="info_content">
 				<div class="voice_type">
@@ -68,7 +68,7 @@
 			</div>
 		</div>
 		
-		<div class="box printer_control">
+		<div class="printer_box printer_control">
 			<div class="title">打印控制</div>
 			<div class="info_content">
 				<a class="btn btn-info" data-toggle="ajaxremove" data-msg="您确定要取消所有未打印吗？" href='{RC_Uri::url("printer/admin/cancel", "id={$info.id}&store_id={$info.store_id}")}'>取消所有未打印</a>
@@ -76,7 +76,7 @@
 			</div>
 		</div>
 		
-		<div class="box print_stats">
+		<div class="printer_box print_stats">
 			<div class="title">打印统计</div>
 			<div class="stats_content">
 				<div class="stats-item">
@@ -107,33 +107,33 @@
 	<div class="modal-body">
 		<div class="row-fluid">
 			<div class="span12">
-			<form class="form-horizontal" method="post" name="theForm" action="{url path='printer/admin/upload_logo'}">
-				<fieldset>
-					<div class="control-group formSep">
-						<label class="control-label">上传LOGO：</label>
-						<div class="controls">
-							<div class="fileupload {if $info.printer_logo}fileupload-exists{else}fileupload-new{/if}" data-provides="fileupload">
-								<div class="fileupload-preview fileupload-exists thumbnail" style="width: 80px; height: 80px; line-height: 80px;">
-									{if $info.printer_logo}
-									<img src="{$info.printer_logo}"/>
-									{/if}
+				<form class="form-horizontal" method="post" name="theForm" action="{url path='printer/admin/upload_logo'}">
+					<fieldset>
+						<div class="control-group formSep">
+							<label class="control-label">上传LOGO：</label>
+							<div class="controls">
+								<div class="fileupload {if $info.printer_logo}fileupload-exists{else}fileupload-new{/if}" data-provides="fileupload">
+									<div class="fileupload-preview fileupload-exists thumbnail" style="width: 80px; height: 80px; line-height: 80px;">
+										{if $info.printer_logo}
+										<img src="{$info.printer_logo}"/>
+										{/if}
+									</div>
+									<span class="btn btn-file">
+									<span class="fileupload-new">浏览</span>
+									<span class="fileupload-exists">修改</span>
+									<input type='file' name='printer_logo' />
+									</span>
+									<a class="btn fileupload-exists {if $info.printer_logo}remove_logo{/if}" {if !$info.printer_logo}data-dismiss="fileupload" href="javascript:;"{else}data-toggle="ajaxremove" data-msg="您确定要删除该打印机logo吗？" href='{url path="printer/admin/del_file" args="id={$info.id}&store_id={$info.store_id}"}' title="{lang key='system::system.drop'}"{/if}>删除</a>
 								</div>
-								<span class="btn btn-file">
-								<span class="fileupload-new">浏览</span>
-								<span class="fileupload-exists">修改</span>
-								<input type='file' name='printer_logo' />
-								</span>
-								<a class="btn fileupload-exists remove_logo" {if !$info.printer_logo}data-dismiss="fileupload" href="javascript:;"{else}data-toggle="ajaxremove" data-msg="您确定要删除该打印机logo吗？" href='{url path="printer/admin/del_file" args="id={$info.id}&store_id={$info.store_id}"}' title="{lang key='system::system.drop'}"{/if}>删除</a>
 							</div>
 						</div>
-					</div>
-					<div class="control-group t_c">
-						<button class="btn btn-gebo" type="submit">{t}确定{/t}</button>
-						<input type="hidden" name="store_id" value="{$info.store_id}"/>
-						<input type="hidden" name="id" value="{$info.id}"/>
-					</div>
-				</fieldset>
-			</form>
+						<div class="control-group t_c">
+							<button class="btn btn-gebo" type="submit">{t}确定{/t}</button>
+							<input type="hidden" name="store_id" value="{$info.store_id}"/>
+							<input type="hidden" name="id" value="{$info.id}"/>
+						</div>
+					</fieldset>
+				</form>
 			</div>
 		</div>
 	</div>

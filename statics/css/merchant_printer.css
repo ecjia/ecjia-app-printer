@@ -1,0 +1,52 @@
+.setting-group-title {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    color: #555;
+	font-weight: 400;
+    font-size: 15px;
+    background: #e7e7e7;
+	border-radius: 4px; 
+}
+.setting-group-item {
+    position: relative;
+    display: block;
+    padding: 5px 15px;
+    color: #555;
+	border-radius:4px;
+}
+.setting-group-item.llv-active, .setting-group-item.llv-active:focus, .setting-group-item.llv-active:hover {
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #337ab7;
+}
+.setting-group a:hover {
+    color: #555;
+    text-decoration: inherit;
+    background-color: #f2f2f2;
+	border-radius: 4px; 
+}
+.change > li > a {
+    display: block;
+    padding: 5px 15px;
+    position: relative;
+}
+.nav > li > a:hover {
+   background-color: #e7e7e7;
+}
+.nav-list-title {
+	margin: 5px 0;
+    padding-left: 15px;
+    color: #999;
+}
+
+.printer_list.wookmark ul {
+	width: 100%;
+    overflow: hidden;
+    display: block;
+    -webkit-padding-start: 0;
+}
+.no_printer {
+	margin-top: 100px;
+}
