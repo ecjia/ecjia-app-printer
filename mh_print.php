@@ -55,6 +55,9 @@ class mh_print extends ecjia_merchant
     {
         parent::__construct();
 
+        RC_Loader::load_app_func('global');
+        assign_adminlog_content();
+        
         //全局JS和CSS
         RC_Script::enqueue_script('jquery-form');
         RC_Script::enqueue_script('smoke');
@@ -195,6 +198,8 @@ class mh_print extends ecjia_merchant
             return $this->showmessage('请输入打印机名称', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         RC_DB::table('printer_machine')->where('id', $id)->update(array('printer_name' => $printer_name));
+        
+        ecjia_merchant::admin_log($printer_name, 'edit', 'printer_name');
         $this->showmessage('打印机名称修改成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
     }
 
@@ -237,6 +242,7 @@ class mh_print extends ecjia_merchant
             $disk->delete(RC_Upload::upload_path() . $info['printer_logo']);
         }
 
+        ecjia_merchant::admin_log($info['printer_logo'], 'edit', 'printer_logo');
         RC_DB::table('printer_machine')->where('store_id', $_SESSION['store_id'])->where('id', $id)->update(array('printer_logo' => $file_name));
         $this->showmessage('上传成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/view', array('id' => $id))));
     }
@@ -254,6 +260,7 @@ class mh_print extends ecjia_merchant
         }
 
         RC_DB::table('printer_machine')->where('store_id', $_SESSION['store_id'])->where('id', $id)->update(array('printer_logo' => ''));
+        ecjia_merchant::admin_log($info['printer_logo'], 'remove', 'printer_logo');
         $this->showmessage('删除成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/view', array('id' => $id))));
     }
 
