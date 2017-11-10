@@ -289,6 +289,10 @@ class mh_print extends ecjia_merchant
     	$this->admin_priv('merchant_printer_update', ecjia::MSGTYPE_JSON);
     	
     }
+    
+    public function print_order() {
+    	
+    }
 
     private function get_record_list()
     {
