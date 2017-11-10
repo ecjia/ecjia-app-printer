@@ -12,7 +12,7 @@
         <!-- {if $action_link} -->
         <a class="data-pjax btn plus_or_reply" id="sticky_a" href="{$action_link.href}"><i class="fontello-icon-reply"></i>{$action_link.text}</a>
         <!-- {/if} -->
-        <a class="data-pjax btn plus_or_reply" id="sticky_a" href='{url path="printer/admin/view" args="id={$info.id}&store_id={$info.store_id}"}'>刷新打印机状态</a>
+        <a class="data-pjax btn plus_or_reply" id="sticky_a" href='{url path="printer/admin_store_printer/view" args="id={$info.id}&store_id={$info.store_id}"}'>刷新打印机状态</a>
     </h3>
 </div>
 
@@ -24,20 +24,20 @@
 				<div class="info_left">
 					<a data-toggle="modal" href="#uploadLogo"><img class="printer_logo" src="{if $info.printer_logo}{$info.printer_logo}{else}{$statics_url}images/click_upload.png{/if}" /></a>
 					<div class="left_bottom">
-						<a data-toggle="ajaxremove" data-msg="您确定要关闭该打印机吗？" href='{RC_Uri::url("printer/admin/close", "id={$info.id}&store_id={$info.store_id}")}'>
+						<a data-toggle="ajaxremove" data-msg="您确定要关闭该打印机吗？" href='{RC_Uri::url("printer/admin_store_printer/close", "id={$info.id}&store_id={$info.store_id}")}'>
 							<img class="close_img" src="{$statics_url}images/close.png" />
 						</a>
-						<a class="data-pjax" href='{url path="printer/admin/view" args="id={$info.id}&store_id={$info.store_id}"}'>
+						<a class="data-pjax" href='{url path="printer/admin_store_printer/view" args="id={$info.id}&store_id={$info.store_id}"}'>
 							<img class="refresh_img" src="{$statics_url}images/refresh.png" />
 						</a>
 					</div>
 				</div>
 				
 				<div class="info_right">
-					<span class="name cursor_pointer" data-trigger="editable" data-url="{RC_Uri::url('printer/admin/edit_printer_name')}" data-name="edit_printer_name" data-pk="{$info.id}" data-title="请输入打印机名称">{$info.printer_name}</span>
+					<span class="name cursor_pointer" data-trigger="editable" data-url="{RC_Uri::url('printer/admin_store_printer/edit_printer_name')}" data-name="edit_printer_name" data-pk="{$info.id}" data-title="请输入打印机名称">{$info.printer_name}</span>
 					<div class="right-item">终端编号：{$info.printer_code}</div>
 					<div class="right-item">终端密钥：{$info.printer_key}</div>
-					<div class="right-item">手机卡号：<span class="cursor_pointer" data-trigger="editable" data-url="{RC_Uri::url('printer/admin/edit_printer_mobile')}" data-name="edit_printer_mobile" data-pk="{$info.id}" data-title="请输入手机卡号">{$info.printer_mobile}</span></div>
+					<div class="right-item">手机卡号：<span class="cursor_pointer" data-trigger="editable" data-url="{RC_Uri::url('printer/admin_store_printer/edit_printer_mobile')}" data-name="edit_printer_mobile" data-pk="{$info.id}" data-title="请输入手机卡号">{$info.printer_mobile}</span></div>
 					<div class="right-item">打印机型：{$info.version}</div>
 					<div class="right-item">添加时间：{RC_Time::local_date('Y-m-d H:i:s', $info['add_time'])}</div>
 				</div>
@@ -71,7 +71,7 @@
 		<div class="printer_box printer_control">
 			<div class="title">打印控制</div>
 			<div class="info_content">
-				<a class="btn btn-info" data-toggle="ajaxremove" data-msg="您确定要取消所有未打印吗？" href='{RC_Uri::url("printer/admin/cancel", "id={$info.id}&store_id={$info.store_id}")}'>取消所有未打印</a>
+				<a class="btn btn-info" data-toggle="ajaxremove" data-msg="您确定要取消所有未打印吗？" href='{RC_Uri::url("printer/admin_store_printer/cancel", "id={$info.id}&store_id={$info.store_id}")}'>取消所有未打印</a>
 				<div class="help-block">取消后，此台打印机设备将不再打印剩下的所有订单</div>
 			</div>
 		</div>
@@ -107,7 +107,7 @@
 	<div class="modal-body">
 		<div class="row-fluid">
 			<div class="span12">
-				<form class="form-horizontal" method="post" name="theForm" action="{url path='printer/admin/upload_logo'}">
+				<form class="form-horizontal" method="post" name="theForm" action="{url path='printer/admin_store_printer/upload_logo'}">
 					<fieldset>
 						<div class="control-group formSep">
 							<label class="control-label">上传LOGO：</label>
@@ -123,7 +123,7 @@
 									<span class="fileupload-exists">修改</span>
 									<input type='file' name='printer_logo' />
 									</span>
-									<a class="btn fileupload-exists {if $info.printer_logo}remove_logo{/if}" {if !$info.printer_logo}data-dismiss="fileupload" href="javascript:;"{else}data-toggle="ajaxremove" data-msg="您确定要删除该打印机logo吗？" href='{url path="printer/admin/del_file" args="id={$info.id}&store_id={$info.store_id}"}' title="{lang key='system::system.drop'}"{/if}>删除</a>
+									<a class="btn fileupload-exists {if $info.printer_logo}remove_logo{/if}" {if !$info.printer_logo}data-dismiss="fileupload" href="javascript:;"{else}data-toggle="ajaxremove" data-msg="您确定要删除该打印机logo吗？" href='{url path="printer/admin_store_printer/del_file" args="id={$info.id}&store_id={$info.store_id}"}' title="{lang key='system::system.drop'}"{/if}>删除</a>
 								</div>
 							</div>
 						</div>

@@ -47,20 +47,12 @@
 defined('IN_ECJIA') or exit('No permission resources.');
 
 /**
- * 后台菜单API
- * @author royalwang
+ * 添加管理员记录日志操作对象
  */
-class printer_store_menu_api extends Component_Event_Api {
-	
-	public function call(&$options) {	
-	    $store_id = royalcms('request')->query('store_id');
-	    
-	    $menus = array(
-	    	ecjia_admin::make_admin_menu('store_printer', '打印机管理', RC_Uri::url('printer/admin_store_printer/init', array('store_id' => $store_id)), 10)->add_purview('store_printer_manage'),
-	    	ecjia_admin::make_admin_menu('store_printer_record', '打印记录', RC_Uri::url('printer/admin/record_list', array('store_id' => $store_id)), 11)->add_purview('store_printer_record_manage')
-	    );
-        return $menus;
-	}
+function assign_adminlog_content() {
+	ecjia_admin_log::instance()->add_object('printer', '打印机');
+	ecjia_admin_log::instance()->add_object('printer_name', '打印机名称');
+	ecjia_admin_log::instance()->add_object('printer_logo', '打印机logo');
 }
 
-// end
+//end

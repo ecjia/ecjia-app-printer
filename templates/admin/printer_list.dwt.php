@@ -45,8 +45,8 @@
         					<div class="bottom-item">添加日期&nbsp;&nbsp;{RC_Time::local_date('Y-m-d H:i:s', $val['add_time'])}</div>
         				</div>
         				<div class="view">
-        					<a class="btn btn-gebo data-pjax" href='{RC_Uri::url("printer/admin/view", "id={$val.id}&store_id={$val.store_id}")}'>查看</a>&nbsp;&nbsp;
-        					<a class="btn ajaxremove" data-toggle="ajaxremove" data-msg="您确定要删除该打印机吗？" href='{RC_Uri::url("printer/admin/delete", "id={$val.id}&store_id={$val.store_id}")}'>删除</a>
+        					<a class="btn btn-gebo data-pjax" href='{RC_Uri::url("printer/admin_store_printer/view", "id={$val.id}&store_id={$val.store_id}")}'>查看</a>&nbsp;&nbsp;
+        					<a class="btn ajaxremove" data-toggle="ajaxremove" data-msg="您确定要删除该打印机吗？" href='{RC_Uri::url("printer/admin_store_printer/delete", "id={$val.id}&store_id={$val.store_id}")}'>删除</a>
         				</div>
         			</li>
         			<!-- {/foreach} -->

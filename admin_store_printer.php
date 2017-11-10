@@ -49,12 +49,15 @@ defined('IN_ECJIA') or exit('No permission resources.');
 /**
  * 打印机管理
  */
-class admin extends ecjia_admin
+class admin_store_printer extends ecjia_admin
 {
     public function __construct()
     {
         parent::__construct();
 
+        RC_Loader::load_app_func('global');
+        assign_adminlog_content();
+        
         //全局JS和CSS
         RC_Script::enqueue_script('jquery-validate');
         RC_Script::enqueue_script('jquery-form');
@@ -112,9 +115,9 @@ class admin extends ecjia_admin
             $this->assign('action_link', array('href' => RC_Uri::url('store/admin/join'), 'text' => RC_Lang::get('store::store.store_list')));
         }
         $this->assign('ur_here', $store['merchants_name'] . ' - ' . '打印机管理');
-        $this->assign('add_url', RC_Uri::url('printer/admin/add', array('store_id' => $store_id)));
+        $this->assign('add_url', RC_Uri::url('printer/admin_store_printer/add', array('store_id' => $store_id)));
 
-        $printer_list = RC_DB::table('printer_machine')->where('store_id', $store_id)->orderBy('id', 'asc')->get();
+        $printer_list = RC_DB::table('printer_machine')->where('store_id', $store_id)->orderBy('id', 'desc')->get();
         $this->assign('list', $printer_list);
 
         $statics_url = RC_App::apps_url('statics/', __FILE__);
@@ -140,11 +143,11 @@ class admin extends ecjia_admin
         ecjia_screen::get_current_screen()->add_option('store_name', $store['merchants_name']);
         ecjia_screen::get_current_screen()->add_option('current_code', 'store_printer');
 
-        $this->assign('action_link', array('href' => RC_Uri::url('printer/admin/init', array('store_id' => $store_id)), 'text' => '打印机管理'));
+        $this->assign('action_link', array('href' => RC_Uri::url('printer/admin_store_printer/init', array('store_id' => $store_id)), 'text' => '打印机管理'));
         $this->assign('ur_here', $store['merchants_name'] . ' - ' . '添加打印机');
-        $this->assign('form_action', RC_Uri::url('printer/admin/insert', array('store_id' => $store_id)));
+        $this->assign('form_action', RC_Uri::url('printer/admin_store_printer/insert', array('store_id' => $store_id)));
 
-        $this->assign('add_url', RC_Uri::url('printer/admin/add', array('store_id' => $store_id)));
+        $this->assign('add_url', RC_Uri::url('printer/admin_store_printer/add', array('store_id' => $store_id)));
         $this->display('printer_edit.dwt');
     }
 
@@ -185,7 +188,9 @@ class admin extends ecjia_admin
             'add_time'       => RC_Time::gmtime(),
         );
         $id = RC_DB::table('printer_machine')->insertGetId($data);
-        $this->showmessage('添加成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin/init', array('store_id' => $store_id))));
+        
+        ecjia_admin::admin_log($printer_name, 'add', 'printer');
+        $this->showmessage('添加成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_store_printer/init', array('store_id' => $store_id))));
     }
 
     public function delete()
@@ -195,13 +200,16 @@ class admin extends ecjia_admin
         $store_id = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
         $id       = !empty($_GET['id']) ? intval($_GET['id']) : 0;
 
+        $data = RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->first();
         RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->delete();
-        $this->showmessage('删除成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin/init', array('store_id' => $store_id))));
+        
+        ecjia_admin::admin_log($data['printer_name'], 'remove', 'printer');
+        $this->showmessage('删除成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_store_printer/init', array('store_id' => $store_id))));
     }
 
     public function view()
     {
-        $this->admin_priv('store_printer_update');
+        $this->admin_priv('store_printer_manage');
 
         $store_id = intval($_GET['store_id']);
         $id       = intval($_GET['id']);
@@ -217,13 +225,13 @@ class admin extends ecjia_admin
         ecjia_screen::get_current_screen()->add_option('store_name', $store['merchants_name']);
         ecjia_screen::get_current_screen()->add_option('current_code', 'store_printer');
 
-        $this->assign('action_link', array('href' => RC_Uri::url('printer/admin/init', array('store_id' => $store_id)), 'text' => '打印机管理'));
+        $this->assign('action_link', array('href' => RC_Uri::url('printer/admin_store_printer/init', array('store_id' => $store_id)), 'text' => '打印机管理'));
         $this->assign('ur_here', $store['merchants_name'] . ' - ' . '查看打印机');
         $this->assign('info', $info);
 
         $statics_url = RC_App::apps_url('statics/', __FILE__);
         $this->assign('statics_url', $statics_url);
-        $this->assign('control_url', RC_Uri::url('printer/admin/voice_control', array('id' => $id, 'store_id' => $store_id)));
+        $this->assign('control_url', RC_Uri::url('printer/admin_store_printer/voice_control', array('id' => $id, 'store_id' => $store_id)));
 
         $count = $this->get_print_count($store_id, $info['printer_code']);
         $this->assign('count', $count);
@@ -238,7 +246,7 @@ class admin extends ecjia_admin
         $store_id = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
         $id       = !empty($_GET['id']) ? intval($_GET['id']) : 0;
 
-        $this->showmessage('取消成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin/view', array('id' => $id, 'store_id' => $store_id))));
+        $this->showmessage('取消成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_store_printer/view', array('id' => $id, 'store_id' => $store_id))));
     }
 
     public function close()
@@ -249,11 +257,13 @@ class admin extends ecjia_admin
         $id       = !empty($_GET['id']) ? intval($_GET['id']) : 0;
 
         RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->update(array('online_status' => 0));
-        $this->showmessage('关闭成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin/view', array('id' => $id, 'store_id' => $store_id))));
+        $this->showmessage('关闭成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_store_printer/view', array('id' => $id, 'store_id' => $store_id))));
     }
 
     public function voice_control()
     {
+    	$this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
+    	
         $store_id = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
         $id       = !empty($_GET['id']) ? intval($_GET['id']) : 0;
         $type     = isset($_POST['type']) ? trim($_POST['type']) : '';
@@ -262,10 +272,10 @@ class admin extends ecjia_admin
         if (!empty($type)) {
             $type = $type == 'buzzer' ? 'horn' : 'buzzer';
             RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->update(array('voice_type' => $type));
-            $this->showmessage('响铃类型修改成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin/view', array('id' => $id, 'store_id' => $store_id))));
+            $this->showmessage('响铃类型修改成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_store_printer/view', array('id' => $id, 'store_id' => $store_id))));
         } else if (!empty($voice)) {
             RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->update(array('voice' => $voice));
-            $this->showmessage('音量修改成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin/view', array('id' => $id, 'store_id' => $store_id))));
+            $this->showmessage('音量修改成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_store_printer/view', array('id' => $id, 'store_id' => $store_id))));
         }
     }
 
@@ -315,12 +325,15 @@ class admin extends ecjia_admin
             return $this->showmessage('请输入打印机名称', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         RC_DB::table('printer_machine')->where('id', $id)->update(array('printer_name' => $printer_name));
+        
+        ecjia_admin::admin_log($printer_name, 'edit', 'printer_name');
         $this->showmessage('打印机名称修改成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
     }
 
     public function edit_printer_mobile()
     {
         $this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
+        
         $id             = !empty($_POST['pk']) ? intval($_POST['pk']) : 0;
         $printer_mobile = !empty($_POST['value']) ? trim($_POST['value']) : '';
         if (empty($printer_mobile)) {
@@ -357,8 +370,9 @@ class admin extends ecjia_admin
             $disk->delete(RC_Upload::upload_path() . $info['printer_logo']);
         }
 
+        ecjia_admin::admin_log($info['printer_logo'], 'edit', 'printer_logo');
         RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->update(array('printer_logo' => $file_name));
-        $this->showmessage('上传成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin/view', array('id' => $id, 'store_id' => $store_id))));
+        $this->showmessage('上传成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_store_printer/view', array('id' => $id, 'store_id' => $store_id))));
     }
 
     public function del_file()
@@ -375,7 +389,9 @@ class admin extends ecjia_admin
         }
 
         RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->update(array('printer_logo' => ''));
-        $this->showmessage('删除成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin/view', array('id' => $id, 'store_id' => $store_id))));
+        
+        ecjia_admin::admin_log($info['printer_logo'], 'remove', 'printer_logo');
+        $this->showmessage('删除成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_store_printer/view', array('id' => $id, 'store_id' => $store_id))));
     }
 
     private function get_record_list()
