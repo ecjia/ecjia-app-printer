@@ -84,7 +84,7 @@ class mh_print extends ecjia_merchant
      */
     public function init()
     {
-        $this->admin_priv('store_printer_manage');
+        $this->admin_priv('merchant_printer_manage');
 
         ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('小票打印设置'));
 
@@ -103,7 +103,7 @@ class mh_print extends ecjia_merchant
 
     public function view()
     {
-        $this->admin_priv('store_staff_update');
+        $this->admin_priv('merchant_printer_manage');
 
         $id   = intval($_GET['id']);
         $info = RC_DB::table('printer_machine')->where('store_id', $_SESSION['store_id'])->where('id', $id)->first();
@@ -131,7 +131,7 @@ class mh_print extends ecjia_merchant
 
     public function cancel()
     {
-        $this->admin_priv('store_staff_update', ecjia::MSGTYPE_JSON);
+        $this->admin_priv('merchant_printer_update', ecjia::MSGTYPE_JSON);
         $id = !empty($_GET['id']) ? intval($_GET['id']) : 0;
 
         $this->showmessage('取消成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/view', array('id' => $id))));
@@ -139,7 +139,7 @@ class mh_print extends ecjia_merchant
 
     public function close()
     {
-        $this->admin_priv('store_staff_update', ecjia::MSGTYPE_JSON);
+        $this->admin_priv('merchant_printer_update', ecjia::MSGTYPE_JSON);
 
         $id = !empty($_GET['id']) ? intval($_GET['id']) : 0;
 
@@ -149,6 +149,8 @@ class mh_print extends ecjia_merchant
 
     public function voice_control()
     {
+    	$this->admin_priv('merchant_printer_update', ecjia::MSGTYPE_JSON);
+    	
         $id    = !empty($_GET['id']) ? intval($_GET['id']) : 0;
         $type  = isset($_POST['type']) ? trim($_POST['type']) : '';
         $voice = isset($_POST['voice']) ? intval($_POST['voice']) : 0;
@@ -165,6 +167,8 @@ class mh_print extends ecjia_merchant
 
     public function record_list()
     {
+    	$this->admin_priv('merchant_printer_manage');
+    	
         ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('小票打印设置'));
         $this->assign('ur_here', '小票打印设置');
 
@@ -177,13 +181,13 @@ class mh_print extends ecjia_merchant
 
     public function reprint()
     {
-        $this->admin_priv('store_staff_update', ecjia::MSGTYPE_JSON);
+        $this->admin_priv('merchant_printer_update', ecjia::MSGTYPE_JSON);
 
     }
 
     public function edit_printer_name()
     {
-        $this->admin_priv('store_staff_update', ecjia::MSGTYPE_JSON);
+        $this->admin_priv('merchant_printer_update', ecjia::MSGTYPE_JSON);
 
         $id           = !empty($_POST['pk']) ? intval($_POST['pk']) : 0;
         $printer_name = !empty($_POST['value']) ? trim($_POST['value']) : '';
@@ -196,7 +200,8 @@ class mh_print extends ecjia_merchant
 
     public function edit_printer_mobile()
     {
-        $this->admin_priv('store_staff_update', ecjia::MSGTYPE_JSON);
+        $this->admin_priv('merchant_printer_update', ecjia::MSGTYPE_JSON);
+        
         $id             = !empty($_POST['pk']) ? intval($_POST['pk']) : 0;
         $printer_mobile = !empty($_POST['value']) ? trim($_POST['value']) : '';
         if (empty($printer_mobile)) {
@@ -208,7 +213,7 @@ class mh_print extends ecjia_merchant
 
     public function upload_logo()
     {
-        $this->admin_priv('store_staff_update', ecjia::MSGTYPE_JSON);
+        $this->admin_priv('merchant_printer_update', ecjia::MSGTYPE_JSON);
 
         $id = !empty($_POST['id']) ? intval($_POST['id']) : 0;
 
@@ -238,7 +243,7 @@ class mh_print extends ecjia_merchant
 
     public function del_file()
     {
-        $this->admin_priv('store_staff_update', ecjia::MSGTYPE_JSON);
+        $this->admin_priv('merchant_printer_update', ecjia::MSGTYPE_JSON);
 
         $id = !empty($_GET['id']) ? intval($_GET['id']) : 0;
 
@@ -254,7 +259,7 @@ class mh_print extends ecjia_merchant
 
     public function order_ticket()
     {
-        $this->admin_priv('store_printer_manage');
+        $this->admin_priv('merchant_printer_manage');
 
         ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('小票打印设置'));
         $this->assign('ur_here', '小票打印设置');
@@ -274,7 +279,8 @@ class mh_print extends ecjia_merchant
 
     public function insert_template()
     {
-
+    	$this->admin_priv('merchant_printer_update', ecjia::MSGTYPE_JSON);
+    	
     }
 
     private function get_record_list()
