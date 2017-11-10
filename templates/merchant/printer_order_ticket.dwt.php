@@ -75,7 +75,7 @@
 			                        <div class="form-group">
 			                            <label class="control-label col-lg-5">{t}是否启用此模版{/t}</label>
 			                            <div class="col-lg-7">
-			                            	<div class="toggle-button">
+			                            	<div class="template-toggle-button">
 								                <input class="nouniform" name="status" type="checkbox" {if $info.status eq 1}checked{/if} value="1"/>
 								            </div>
 			                            </div>
@@ -83,7 +83,7 @@
 			                        <div class="form-group">
 			                            <label class="control-label col-lg-5">{t}是否开启自动打印{/t}</label>
 			                            <div class="col-lg-7">
-			                            	<div class="toggle-button">
+			                            	<div class="template-toggle-button">
 								                <input class="nouniform" name="auto_print" type="checkbox" {if $info.auto_print eq 1}checked{/if} value="1"/>
 								            </div>
 			                            </div>

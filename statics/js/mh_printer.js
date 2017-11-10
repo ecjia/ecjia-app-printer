@@ -66,7 +66,7 @@
                    	});
                 },  
             });
-			$('.toggle-button').toggleButtons({
+			$('.template-toggle-button').toggleButtons({
 				label: {  
 					disabled: "否", 
                 	enabled: "是" 
