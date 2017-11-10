@@ -50,3 +50,115 @@
 .no_printer {
 	margin-top: 100px;
 }
+.ticket_box {
+	height: auto;
+    border: 1px solid #ddd;
+    padding: 20px;
+	font-size: 16px;
+    line-height: 30px;
+	position: relative;
+}
+.ticket_box .store_logo {
+	margin-bottom: 10px;
+}
+.ticket_box_header {
+	text-align: center;
+}
+.ticket_box_header .pay_status {
+	font-size: 18px;
+    font-weight: bold;
+}
+.ticket_box .store_logo img {
+	width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+.ticket_content {
+	padding: 10px 0;
+    border-bottom: 2px dashed #ddd;
+	font-size: 15px;
+	overflow: hidden;
+}
+.ticket_content.top_dashed {
+	border-top: 2px dashed #ddd;
+	margin-top: 2px;
+}
+.ticket_content.no_dashed {
+	border-bottom: none;
+	padding-bottom: 0;
+}
+.ticket_content p.star {
+	display: inline-block;
+    vertical-align: middle;
+	height: 30px;
+    line-height: 40px;
+}
+.ticket_content ul {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    padding: 0 10px;
+    margin-bottom: 0;
+}
+.ticket_content p {
+	text-align: center;
+    font-size: 30px;
+    margin: 0;
+    line-height: 50px;
+	height: 30px;
+}
+.ticket_content li {
+    list-style: none;
+    float: left;
+    padding: 0 30px;
+    text-align: right;
+    width: 92px;
+}
+.ticket_content li:first-child {
+	padding-left: 0;
+	width: 62px;
+}
+.ticket_content li:last-child {
+	padding-right: 0;
+	width: 62px;
+}
+.ticket_content .total {
+	float: right;
+    font-weight: bold;
+    font-size: 18px;
+    padding-right: 10px;
+}
+.ticket_content .ticket-item .left-item {
+	width: 50%;
+    float: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.ticket_content .ticket-item .right-item {
+	float: left;
+    width: 50%;
+} 
+.ticket_box .page_number {
+	position: absolute;
+    right: 15px;
+    bottom: 0px;
+    font-size: 10px;
+}
+.ticket_content .title {
+	height: 35px;  
+   	line-height: 30px;  
+   	text-align: center;  
+}
+.ticket_content .title .line {  
+    display: inline-block;
+    width: 130px;
+    border-top: 2px dashed #ddd;
+    vertical-align: middle; 
+}  
+.ticket_content .title .txt {  
+    color: #686868;
+    vertical-align: middle;
+    display: inline-block;
+    width: 60px; 
+}

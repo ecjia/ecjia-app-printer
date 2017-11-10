@@ -40,8 +40,21 @@
                     	<div class="pull-left">打印机自定义设置</div>
 						<div class="clearfix"></div>
   					</h3>
-  					<div class="panel-body panel-body-small">
-						
+  					<div class="row m_t20">
+						<div class="col-lg-6">
+							<!-- {if $smarty.get.type eq 'normal'} -->
+								<!-- #BeginLibraryItem "/library/normal.lbi" --><!-- #EndLibraryItem -->
+							<!-- {else if $smarty.get.type eq 'take_out'} -->
+								<!-- #BeginLibraryItem "/library/take_out.lbi" --><!-- #EndLibraryItem -->
+							<!-- {else if $smarty.get.type eq 'store_buy'} -->
+								<!-- #BeginLibraryItem "/library/store_buy.lbi" --><!-- #EndLibraryItem -->
+							<!-- {else if $smarty.get.type eq 'pay_bill'} -->
+								<!-- #BeginLibraryItem "/library/pay_bill.lbi" --><!-- #EndLibraryItem -->
+							<!-- {/if} -->
+						</div>
+						<div class="col-lg-6">
+							<div class="ticket_form"></div>
+						</div>
 					</div>
             	</div>
         	</div>

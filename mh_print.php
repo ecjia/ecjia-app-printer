@@ -257,8 +257,16 @@ class mh_print extends ecjia_merchant
         $this->admin_priv('store_printer_manage');
 
         ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('小票打印设置'));
-
         $this->assign('ur_here', '小票打印设置');
+        
+        $store = RC_DB::table('store_franchisee')->where('store_id', $_SESSION['store_id'])->first();
+        $config = RC_DB::table('merchants_config')->where('store_id', $_SESSION['store_id'])->where('code', 'shop_logo')->first();
+        if (!empty($config['value'])) {
+        	$store['shop_logo'] = RC_Upload::upload_url($config['value']);
+        } else {
+        	$store['shop_logo'] = RC_App::apps_url('statics/images/merchant_logo.png', __FILE__);
+        }
+        $this->assign('store', $store);
 
         $this->display('printer_order_ticket.dwt');
     }
