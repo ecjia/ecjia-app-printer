@@ -2,7 +2,7 @@
 <!-- {extends file="ecjia-merchant.dwt.php"} -->
 <!-- {block name="footer"} -->
 <script type="text/javascript">
-//     ecjia.merchant.printer.init();
+    ecjia.merchant.printer.init();
 </script>
 <!-- {/block} -->
 <!-- {block name="home-content"} -->
@@ -12,7 +12,9 @@
   	</div>
   	<div class="clearfix"></div>
 </div>
+<style media="screen" type="text/css">
 
+</style>
 <div class="row">
     <div class="col-lg-12">
         <div class="panel">
@@ -53,7 +55,56 @@
 							<!-- {/if} -->
 						</div>
 						<div class="col-lg-6">
-							<div class="ticket_form"></div>
+							<div class="ticket_form">
+								<form class="form-horizontal ticket_form" name="theForm" method="post" action="{$form_action}">
+				                 	<div class="form-group">
+			                            <label class="control-label col-lg-5">{t}模版名称{/t}</label>
+			                            <div class="col-lg-7">普通订单小票</div>
+			                        </div>
+			                       	<div class="form-group">
+			                            <label class="control-label col-lg-5">{t}模版代号{/t}</label>
+			                            <div class="col-lg-7">模版001</div>
+			                        </div>
+			                        <div class="form-group">
+			                            <label class="control-label col-lg-5">{t}打印数量{/t}</label>
+			                            <div class="col-lg-7">
+			                            	模版001
+			                            	<span class="help-block">默认设置为1份，最多可设置9份</span>
+			                            </div>
+			                        </div>
+			                        <div class="form-group">
+			                            <label class="control-label col-lg-5">{t}是否启用此模版{/t}</label>
+			                            <div class="col-lg-7">
+			                            	<div class="toggle-button">
+								                <input class="nouniform" name="status" type="checkbox" {if $info.status eq 1}checked{/if} value="1"/>
+								            </div>
+			                            </div>
+			                        </div>
+			                        <div class="form-group">
+			                            <label class="control-label col-lg-5">{t}是否开启自动打印{/t}</label>
+			                            <div class="col-lg-7">
+			                            	<div class="toggle-button">
+								                <input class="nouniform" name="auto_print" type="checkbox" {if $info.auto_print eq 1}checked{/if} value="1"/>
+								            </div>
+			                            </div>
+			                        </div>
+			                        
+			                        <div class="form-group m_b0">
+			                            <label class="control-label col-lg-5">{t}自定义尾部信息{/t}</label>
+			                            <div class="col-lg-12 m_t10">
+			                            	<textarea class="form-control tail_textarea" name="tail_content"></textarea>
+			                            	<span class="help-block">如需换行，可在输入框中使用"<xmp><br/></xmp>"字符</span>
+			                            </div>
+			                        </div>
+			                        
+			                        <div class="form-group">
+			                        	<div class="col-lg-12">
+			                                <input class="btn btn-info" type="submit" value="保存打印模版">
+			                                <a class="btn btn-info m_l10" href="javascript:;">打印测试</a>
+			                            </div>
+			                        </div>
+			                  	</form>
+							</div>
 						</div>
 					</div>
             	</div>

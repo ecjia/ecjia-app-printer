@@ -162,3 +162,20 @@
     display: inline-block;
     width: 60px; 
 }
+.ticket_form label + div.col-lg-7, label + div.col-lg-2 {
+    padding-top: 7px;
+}
+.ticket_form.form-horizontal .control-label {
+	text-align: left;
+}
+.ticket_form .tail_textarea {
+	height: 90px;
+}
+.ticket_form xmp {
+	display: inline-block
+}
+.ticket_form .toggle-button label, .ticket_form .toggle-button span {
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+}

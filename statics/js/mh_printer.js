@@ -66,6 +66,16 @@
                    	});
                 },  
             });
+			$('.toggle-button').toggleButtons({
+				label: {  
+					disabled: "否", 
+                	enabled: "是" 
+                },  
+                style: {
+                    enabled: "info",
+                    disabled: "success"
+                },
+            });
         },
         
         slider: function() {
