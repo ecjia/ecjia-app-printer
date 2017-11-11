@@ -350,7 +350,6 @@ class admin_store_printer extends ecjia_admin
         $store_id = !empty($_POST['store_id']) ? intval($_POST['store_id']) : 0;
         $id       = !empty($_POST['id']) ? intval($_POST['id']) : 0;
 
-        $file_name = '';
         /* 处理上传的LOGO图片 */
         if ((isset($_FILES['printer_logo']['error']) && $_FILES['printer_logo']['error'] == 0) || (!isset($_FILES['printer_logo']['error']) && isset($_FILES['printer_logo']['tmp_name']) && $_FILES['printer_logo']['tmp_name'] != 'none')) {
             $upload     = RC_Upload::uploader('image', array('save_path' => 'data/printer', 'auto_sub_dirs' => false));
@@ -364,12 +363,15 @@ class admin_store_printer extends ecjia_admin
         }
 
         $info = RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->first();
-        //删除旧logo
-        if (!empty($info['printer_logo'])) {
-            $disk = RC_Filesystem::disk();
-            $disk->delete(RC_Upload::upload_path() . $info['printer_logo']);
+        if (!empty($file_name)) {
+	        //删除旧logo
+	        if (!empty($info['printer_logo'])) {
+	            $disk = RC_Filesystem::disk();
+	            $disk->delete(RC_Upload::upload_path() . $info['printer_logo']);
+	        }
+        } else {
+        	$file_name = $info['printer_logo'];
         }
-
         ecjia_admin::admin_log($info['printer_logo'], 'edit', 'printer_logo');
         RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->update(array('printer_logo' => $file_name));
         $this->showmessage('上传成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_store_printer/view', array('id' => $id, 'store_id' => $store_id))));

@@ -27,10 +27,10 @@
                      }
                  },
                  submitHandler: function () {
+                	 $('#uploadLogo').modal('hide');
                      $("form[name='theForm']").ajaxSubmit({
                          dataType: "json",
                          success: function (data) {
-                        	 $('#uploadLogo').modal('hide');
                              ecjia.merchant.showmessage(data);
                          }
                      });

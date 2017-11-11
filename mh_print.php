@@ -236,10 +236,14 @@ class mh_print extends ecjia_merchant
         }
 
         $info = RC_DB::table('printer_machine')->where('store_id', $_SESSION['store_id'])->where('id', $id)->first();
-        //删除旧logo
-        if (!empty($info['printer_logo'])) {
-            $disk = RC_Filesystem::disk();
-            $disk->delete(RC_Upload::upload_path() . $info['printer_logo']);
+        if (!empty($file_name)) {
+	        //删除旧logo
+	        if (!empty($info['printer_logo'])) {
+	            $disk = RC_Filesystem::disk();
+	            $disk->delete(RC_Upload::upload_path() . $info['printer_logo']);
+	        }
+        } else {
+        	$file_name = $info['printer_logo'];
         }
 
         ecjia_merchant::admin_log($info['printer_logo'], 'edit', 'printer_logo');

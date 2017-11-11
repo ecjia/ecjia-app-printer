@@ -57,7 +57,7 @@ class printer_store_menu_api extends Component_Event_Api {
 	    
 	    $menus = array(
 	    	ecjia_admin::make_admin_menu('store_printer', '打印机管理', RC_Uri::url('printer/admin_store_printer/init', array('store_id' => $store_id)), 10)->add_purview('store_printer_manage'),
-	    	ecjia_admin::make_admin_menu('store_printer_record', '打印记录', RC_Uri::url('printer/admin/record_list', array('store_id' => $store_id)), 11)->add_purview('store_printer_record_manage')
+	    	ecjia_admin::make_admin_menu('store_printer_record', '打印记录', RC_Uri::url('printer/admin_store_printer/record_list', array('store_id' => $store_id)), 11)->add_purview('store_printer_record_manage')
 	    );
         return $menus;
 	}
