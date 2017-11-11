@@ -57,7 +57,7 @@ class admin_store_printer extends ecjia_admin
 
         RC_Loader::load_app_func('global');
         assign_adminlog_content();
-        
+
         //全局JS和CSS
         RC_Script::enqueue_script('jquery-validate');
         RC_Script::enqueue_script('jquery-form');
@@ -188,7 +188,7 @@ class admin_store_printer extends ecjia_admin
             'add_time'       => RC_Time::gmtime(),
         );
         $id = RC_DB::table('printer_machine')->insertGetId($data);
-        
+
         ecjia_admin::admin_log($printer_name, 'add', 'printer');
         $this->showmessage('添加成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_store_printer/init', array('store_id' => $store_id))));
     }
@@ -202,7 +202,7 @@ class admin_store_printer extends ecjia_admin
 
         $data = RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->first();
         RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->delete();
-        
+
         ecjia_admin::admin_log($data['printer_name'], 'remove', 'printer');
         $this->showmessage('删除成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_store_printer/init', array('store_id' => $store_id))));
     }
@@ -262,8 +262,8 @@ class admin_store_printer extends ecjia_admin
 
     public function voice_control()
     {
-    	$this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
-    	
+        $this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
+
         $store_id = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
         $id       = !empty($_GET['id']) ? intval($_GET['id']) : 0;
         $type     = isset($_POST['type']) ? trim($_POST['type']) : '';
@@ -325,7 +325,7 @@ class admin_store_printer extends ecjia_admin
             return $this->showmessage('请输入打印机名称', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         RC_DB::table('printer_machine')->where('id', $id)->update(array('printer_name' => $printer_name));
-        
+
         ecjia_admin::admin_log($printer_name, 'edit', 'printer_name');
         $this->showmessage('打印机名称修改成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
     }
@@ -333,7 +333,7 @@ class admin_store_printer extends ecjia_admin
     public function edit_printer_mobile()
     {
         $this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
-        
+
         $id             = !empty($_POST['pk']) ? intval($_POST['pk']) : 0;
         $printer_mobile = !empty($_POST['value']) ? trim($_POST['value']) : '';
         if (empty($printer_mobile)) {
@@ -364,13 +364,13 @@ class admin_store_printer extends ecjia_admin
 
         $info = RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->first();
         if (!empty($file_name)) {
-	        //删除旧logo
-	        if (!empty($info['printer_logo'])) {
-	            $disk = RC_Filesystem::disk();
-	            $disk->delete(RC_Upload::upload_path() . $info['printer_logo']);
-	        }
+            //删除旧logo
+            if (!empty($info['printer_logo'])) {
+                $disk = RC_Filesystem::disk();
+                $disk->delete(RC_Upload::upload_path() . $info['printer_logo']);
+            }
         } else {
-        	$file_name = $info['printer_logo'];
+            $file_name = $info['printer_logo'];
         }
         ecjia_admin::admin_log($info['printer_logo'], 'edit', 'printer_logo');
         RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->update(array('printer_logo' => $file_name));
@@ -391,7 +391,7 @@ class admin_store_printer extends ecjia_admin
         }
 
         RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->update(array('printer_logo' => ''));
-        
+
         ecjia_admin::admin_log($info['printer_logo'], 'remove', 'printer_logo');
         $this->showmessage('删除成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_store_printer/view', array('id' => $id, 'store_id' => $store_id))));
     }

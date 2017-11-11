@@ -68,7 +68,7 @@
 			                        <div class="form-group">
 			                            <label class="control-label col-lg-5">{t}打印数量{/t}</label>
 			                            <div class="col-lg-7">
-			                            	<input class="form-control" type="number" value="1" min="1" max="9" name="print_count">
+			                            	<input class="form-control w100" type="number" value="1" min="1" max="9" name="print_count">
 			                            	<span class="help-block">默认设置为1份，最多可设置9份</span>
 			                            </div>
 			                        </div>
