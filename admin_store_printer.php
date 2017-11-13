@@ -311,7 +311,7 @@ class admin_store_printer extends ecjia_admin
 
     public function reprint()
     {
-        $this->admin_priv('store_staff_update', ecjia::MSGTYPE_JSON);
+        $this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
 
     }
 
