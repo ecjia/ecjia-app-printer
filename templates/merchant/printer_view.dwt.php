@@ -78,6 +78,8 @@
 			<div class="info_content">
 				<a class="btn btn-primary" data-toggle="ajaxremove" data-msg="您确定要取消所有未打印吗？" href='{RC_Uri::url("printer/mh_print/cancel", "id={$info.id}")}'>取消所有未打印</a>
 				<div class="help-block">取消后，此台打印机设备将不再打印剩下的所有订单</div>
+				<a class="btn btn-primary m_t10" data-toggle="modal" href="#testPrint">打印测试</a>
+				<div class="help-block">点击打印后可测试此台打印机是否可用</div>
 			</div>
 		</div>
 		
@@ -134,6 +136,29 @@
 						</div>
 					</div>
 					<div class="form-group t_c">
+						<button class="btn btn-primary" type="submit">{t}确定{/t}</button>
+						<input type="hidden" name="id" value="{$info.id}"/>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="testPrint">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button class="close" data-dismiss="modal">×</button>
+				<h3>上传打印LOGO</h3>
+			</div>
+			<div class="modal-body form-horizontal">
+				<form class="form-horizontal" method="post" name="testForm" action="{url path='printer/mh_print/printer_test'}">
+					<div class="row">
+						<textarea name="content" class="test_textarea form-control" placeholder="请输入要打印的内容"></textarea>
+						<span class="help-block m_l15">点击打印后可测试此台打印机是否可用</span>
+					</div>
+					<div class="t_l m_t10">
 						<button class="btn btn-primary" type="submit">{t}确定{/t}</button>
 						<input type="hidden" name="id" value="{$info.id}"/>
 					</div>

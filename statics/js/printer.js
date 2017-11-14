@@ -6,6 +6,7 @@
         	 app.printer.toggleButton();
         	 app.printer.slider();
         	 app.printer.remove_logo();
+        	 app.printer.testForm();
         },
         
         form: function () {
@@ -27,6 +28,7 @@
                      }
                  },
                  submitHandler: function () {
+                	 $('#uploadLogo').modal('hide');
                      $("form[name='theForm']").ajaxSubmit({
                          dataType: "json",
                          success: function (data) {
@@ -115,7 +117,23 @@
         	$('.remove_logo').off('click').on('click', function() {
         		$('#uploadLogo').modal('hide');
         	});
-        }
+        },
+        
+        testForm: function () {
+        	var option = {
+       			 submitHandler: function () {
+       				$('#testPrint').modal('hide');
+                    $("form[name='testForm']").ajaxSubmit({
+                        dataType: "json",
+                        success: function (data) {
+                            ecjia.admin.showmessage(data);
+                        }
+                    });
+                }
+            }
+            var options = $.extend(ecjia.admin.defaultOptions.validate, option);
+            $("form[name='testForm']").validate(options);
+       },
     };  
 })(ecjia.admin, jQuery);
  

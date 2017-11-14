@@ -73,6 +73,8 @@
 			<div class="info_content">
 				<a class="btn btn-info" data-toggle="ajaxremove" data-msg="您确定要取消所有未打印吗？" href='{RC_Uri::url("printer/admin_store_printer/cancel", "id={$info.id}&store_id={$info.store_id}")}'>取消所有未打印</a>
 				<div class="help-block">取消后，此台打印机设备将不再打印剩下的所有订单</div>
+				<a class="btn btn-info m_t10" data-toggle="modal" href="#testPrint">打印测试</a>
+				<div class="help-block">点击打印后可测试此台打印机是否可用</div>
 			</div>
 		</div>
 		
@@ -126,6 +128,31 @@
 									<a class="btn fileupload-exists {if $info.printer_logo}remove_logo{/if}" {if !$info.printer_logo}data-dismiss="fileupload" href="javascript:;"{else}data-toggle="ajaxremove" data-msg="您确定要删除该打印机logo吗？" href='{url path="printer/admin_store_printer/del_file" args="id={$info.id}&store_id={$info.store_id}"}' title="{lang key='system::system.drop'}"{/if}>删除</a>
 								</div>
 							</div>
+						</div>
+						<div class="control-group t_c">
+							<button class="btn btn-gebo" type="submit">{t}确定{/t}</button>
+							<input type="hidden" name="store_id" value="{$info.store_id}"/>
+							<input type="hidden" name="id" value="{$info.id}"/>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal hide fade" id="testPrint">
+	<div class="modal-header">
+		<button class="close" data-dismiss="modal">×</button>
+		<h3>{t}打印测试{/t}</h3>
+	</div>
+	<div class="modal-body">
+		<div class="row-fluid">
+			<div class="span12">
+				<form class="form-horizontal" method="post" name="testForm" action="{url path='printer/admin_store_printer/printer_test'}">
+					<fieldset>
+						<div class="control-group">
+							<textarea name="content" class="span12 h150" placeholder="请输入要打印的内容"></textarea>
 						</div>
 						<div class="control-group t_c">
 							<button class="btn btn-gebo" type="submit">{t}确定{/t}</button>

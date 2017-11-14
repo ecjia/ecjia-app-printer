@@ -279,6 +279,24 @@ class admin_store_printer extends ecjia_admin
         }
     }
 
+    public function printer_test() {
+    	$this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
+    	
+    	$store_id = !empty($_POST['store_id']) ? intval($_POST['store_id']) : 0;
+    	$id       = !empty($_POST['id']) ? intval($_POST['id']) : 0;
+    	
+    	$content = !empty($_POST['content']) ?  strip_tags($_POST['content']): '';
+    	if (empty($content)) {
+    		return $this->showmessage('请输入要打印的内容', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+    	}
+    	$res = Ecjia\App\Printer\YLY\YLYOpenApiClient::printIndex('4004525345', '7bc6a6fe2e314ad9b144de26b5231e69', $content, Royalcms\Component\Uuid\Uuid::generate(), SYS_TIME);
+    	$result = json_decode($res, true);
+    	if ($result['error'] != 0) {
+    		return $this->showmessage($result['error_description'], ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+    	}
+    	return $this->showmessage('测试打印成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_store_printer/view', array('id' => $id, 'store_id' => $store_id))));
+    }
+    
     public function record_list()
     {
         $this->admin_priv('store_printer_record_manage');

@@ -6,6 +6,7 @@
         	 app.printer.toggleButton();
         	 app.printer.slider();
         	 app.printer.remove_logo();
+        	 app.printer.testForm();
         },
         
         form: function () {
@@ -126,7 +127,23 @@
         	$('.remove_logo').off('click').on('click', function() {
         		$('#uploadLogo').modal('hide');
         	});
-        }
+        },
+        
+        testForm: function () {
+        	var option = {
+       			 submitHandler: function () {
+       				$('#testPrint').modal('hide');
+                    $("form[name='testForm']").ajaxSubmit({
+                        dataType: "json",
+                        success: function (data) {
+                            ecjia.merchant.showmessage(data);
+                        }
+                    });
+                }
+            }
+            var options = $.extend(ecjia.merchant.defaultOptions.validate, option);
+            $("form[name='testForm']").validate(options);
+       },
     };  
 })(ecjia.merchant, jQuery);
  

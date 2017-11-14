@@ -212,3 +212,9 @@
 	-moz-box-sizing: content-box;
 	box-sizing: content-box
 }
+
+textarea.form-control.test_textarea {
+	width: 95%;
+    margin: 0 auto;
+	height: 150px;
+}    

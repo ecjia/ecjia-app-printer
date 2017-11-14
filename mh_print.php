@@ -274,8 +274,29 @@ class mh_print extends ecjia_merchant
 支付宝：0.00\r
 实收金额：0.00";
     	};
-    	$a = Ecjia\App\Printer\YLY\YLYOpenApiClient::printIndex('4004525345', '7bc6a6fe2e314ad9b144de26b5231e69', $content, Royalcms\Component\Uuid\Uuid::generate(), SYS_TIME);
-    	
+    	$res = Ecjia\App\Printer\YLY\YLYOpenApiClient::printIndex('4004525345', '7bc6a6fe2e314ad9b144de26b5231e69', $content, Royalcms\Component\Uuid\Uuid::generate(), SYS_TIME);
+    	$result = json_decode($res, true);
+    	if ($result['error'] != 0) {
+    		return $this->showmessage($result['error_description'], ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+    	}
+    	return $this->showmessage('测试打印成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/order_ticket', array('type' => $type))));
+    }
+    
+    public function printer_test() {
+    	$this->admin_priv('merchant_printer_update', ecjia::MSGTYPE_JSON);
+    	 
+    	$id       = !empty($_POST['id']) ? intval($_POST['id']) : 0;
+    	 
+    	$content = !empty($_POST['content']) ?  strip_tags($_POST['content']): '';
+    	if (empty($content)) {
+    		return $this->showmessage('请输入要打印的内容', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+    	}
+    	$res = Ecjia\App\Printer\YLY\YLYOpenApiClient::printIndex('4004525345', '7bc6a6fe2e314ad9b144de26b5231e69', $content, Royalcms\Component\Uuid\Uuid::generate(), SYS_TIME);
+    	$result = json_decode($res, true);
+    	if ($result['error'] != 0) {
+    		return $this->showmessage($result['error_description'], ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+    	}
+    	return $this->showmessage('测试打印成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/view', array('id' => $id))));
     }
 
     public function reprint()
