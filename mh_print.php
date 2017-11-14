@@ -195,43 +195,44 @@ class mh_print extends ecjia_merchant
 订单编号：********\r
 流水编号：********\r
 会员账号：********\r
-下单时间：0000-00-00 00:00:00\r
+下单时间：0000-00-00 00:00:00
 <center>--------------------------------</center>
 <table><tr><td>商品</td><td>数量</td><td>单价</td></tr><tr><td>***</td><td>***</td><td>***</td></tr><tr><td></td><td>0</td><td>0</td></tr></table><FS><right>总价：0.00</right></FS>
 <center>--------------------------------</center>
-积分抵扣：-0.00<right>获得积分：0.00</right>
+积分抵扣：-0.00  获得积分：0.00\r
 积分余额：0.00\r
 应收金额：0.00\r
-支付宝：0.00\r
+支付宝：0.00
 <center>--------------------------------</center>
 满减满折：-0.00\r
 红包折扣：-0.00\r
 分头舍去：-0.00\r
-实收金额：0.00<right>找零金额：0.00</right>\r
+实收金额：0.00  找零金额：0.00
 <center>--------------------------------</center>
 备注内容：* * * * * * * * * *\r
-* * * * * * * * * *\r
+* * * * * * * * * *
 <center>请妥善保管好购物凭证</center>
-<center>谢谢惠顾欢迎下次光临</center><right>页1</right>"; 		
-    	} else if ($type == 'take_out') {
+<center>谢谢惠顾欢迎下次光临</center><right>页1</right>"; 	
+    		
+		} else if ($type == 'take_out') {
     		$content = "<FS><center>华联超市</center></FS>
 <FS><center>4000-000-000</center></FS>
 <FB><center>微信支付（已支付）</center></FB>
 订单编号：********\r
 流水编号：********\r
 下单时间：0000-00-00 00:00:00\r
-期望送达时间：0000-00-00 00：00：00\r
+期望送达时间：0000-00-00 00:00:00
 <center>----------- 商品名 -------------</center>
 <table><tr><td>商品</td><td>数量</td><td>单价</td></tr><tr><td>***</td><td>***</td><td>***</td></tr><tr><td></td><td>0</td><td>0</td></tr></table><FS><right>总价：0.00</right></FS>
 <center>-------------- 其他 ------------</center>
-积分抵扣：-0.00<right>获得积分：0.00</right>
+积分抵扣：-0.00  获得积分：0.00\r
 积分余额：0.00\r
 应收金额：0.00\r
-微信支付：0.00\r
+微信支付：0.00
 <center>--------------------------------</center>
 满减满折：-0.00\r
 红包折扣：-0.00\r
-分头舍去：-0.00\r
+分头舍去：-0.00
 <center>--------------------------------</center>
 备注内容：* * * * * * * * * *\r
 * * * * * * * * * *\r
@@ -239,6 +240,7 @@ class mh_print extends ecjia_merchant
 3553号301室\r
 姓名：张三\r
 手机号：15000000000";
+    		
     	} else if ($type == 'store_buy') {
 		$content = "<FS><center>华联超市</center></FS>
 <FS><center>4000-000-000</center></FS>
@@ -246,7 +248,7 @@ class mh_print extends ecjia_merchant
 订单编号：********\r
 流水编号：********\r
 下单时间：0000-00-00 00:00:00\r
-商家地址：上海市普陀区中山北路\r
+商家地址：上海市普陀区中山北路
 <center>--------------------------------</center>
 <table><tr><td>商品</td><td>数量</td><td>单价</td></tr><tr><td>***</td><td>***</td><td>***</td></tr><tr><td></td><td>0</td><td>0</td></tr></table><FS><right>总价：0.00</right></FS>
 <center>--------------------------------</center>
@@ -255,6 +257,7 @@ class mh_print extends ecjia_merchant
 支付宝：0.00\r
 分头舍去：-0.00\r
 实收金额：0.00";
+		
     	} else if ($type == 'pay_bill') {
 		$content = "<FS><center>华联超市</center></FS>
 <FS><center>4000-000-000</center></FS>
@@ -262,9 +265,9 @@ class mh_print extends ecjia_merchant
 流水编号：********\r
 会员账号：********\r				
 买单时间：0000-00-00 00:00:00\r
-商家地址：上海市普陀区中山北路\r
+商家地址：上海市普陀区中山北路
 <center>----------- 在线买单 -----------</center>
-优惠活动：满多少减多少\r
+优惠活动：满多少减多少
 <center>--------------------------------</center>
 应收金额：-0.00\r
 优惠金额：-0.00\r
