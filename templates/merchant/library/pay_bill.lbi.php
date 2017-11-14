@@ -7,7 +7,7 @@
 	<div class="ticket_content no_dashed">
 		<div class="ticket-item">订单编号：<p class="star">************</p></div>
 		<div class="ticket-item">流水编号：<p class="star">************</p></div>
-		<div class="ticket-item">流水编号：<p class="star">************</p></div>
+		<div class="ticket-item">会员账号：<p class="star">************</p></div>
 		<div class="ticket-item">买单时间：0000-00-00 00:00:00</div>
 		<div class="ticket-item">商家地址：上海市普陀区中山北路</div>
 	</div>
