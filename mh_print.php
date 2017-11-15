@@ -193,6 +193,7 @@ class mh_print extends ecjia_merchant
         $store_info = RC_DB::table('store_franchisee')->where('store_id', $_SESSION['store_id'])->first();
         $data = array(
         	'merchants_name'		=> $store_info['merchants_name'],//商家名称
+        	'merchants_mobile'		=> $store_info['contact_mobile'],//商家名称
             'order_sn'				=> '2017101294860',//订单编号
             'order_flow'			=> '2017101294861',//流水编号
         	'user_name'				=> 'ECJia测试会员',//会员账号
@@ -221,98 +222,98 @@ class mh_print extends ecjia_merchant
         	'favourable_activity'	=> '满500减10',//优惠活动
         	'discount_amount'		=> '10.00',//优惠金额
         	'cashier'				=> '小李',//收银员
+        	'payment'				=> '微信支付'//支付方式
         );
         if ($type == 'normal') {
-            $content = "<FS><center>华联超市</center></FS>
-<FS><center>4000-000-000</center></FS>
-订单编号：********
-流水编号：********
-会员账号：********
+            $content = "<FS><center>".$data['merchants_name']."</center></FS>
+<FS><center>".$data['merchants_mobile']."</center></FS>
+订单编号：".$data['order_sn']."
+流水编号：".$data['order_flow']."
+会员账号：".$data['user_name']."
 下单时间：0000-00-00 00:00
 --------------------------------
-<table><tr><td>商品</td><td>数量</td><td>单价</td></tr><tr></tr><tr><td>***</td><td>***</td><td>***</td></tr><tr><td></td><td>0</td><td>0</td></tr></table><FS><right>总价：0.00</right></FS>
+<table><tr><td>商品</td><td>数量</td><td>单价</td></tr><tr><td>".$data['goods_name']."</td></tr><tr><td> </td><td>".$data['goods_number']."</td><td>".$data['goods_unit_price']."</td></tr></table><FS><right>总价：".$data['goods_total']."</right></FS>
 --------------------------------
-积分抵扣：-0.00  获得积分：0.00
-积分余额：0.00
-应收金额：0.00
-支付宝：0.00
+积分抵扣：".$data['integral_deduction']."  获得积分：".$data['integral']."
+积分余额：".$data['integral_balance']."
+应收金额：".$data['receivable_balance']."
+支付宝：".$data['alipay']."
 --------------------------------
-满减满折：-0.00
-红包折扣：-0.00
-分头舍去：-0.00
-实收金额：0.00  找零金额：0.00
+满减满折：-".$data['full_reduction']."
+红包折扣：".$data['bonus_discount']."
+分头舍去：-".$data['truncation']."
+实收金额：".$data['amount_paid']."  找零金额：".$data['odd_change']."
 --------------------------------
-备注内容：* * * * * * * * * *
-* * * * * * * * * *
+备注内容：".$data['remarks_content']."
 <center>请妥善保管好购物凭证</center>
 <center>谢谢惠顾欢迎下次光临</center>";
 
         } else if ($type == 'take_out') {
-            $content = "<FS><center>华联超市</center></FS>
-<FS><center>4000-000-000</center></FS>
-<FB><center>微信支付（已支付）</center></FB>
-订单编号：********
-流水编号：********
-下单时间：0000-00-00 00:00
-期望送达时间：0000-00-00 00:00
-------------- 商品名 -------------
-<table><tr><td>商品</td><td>数量</td><td>单价</td></tr><tr><td>***</td><td>***</td><td>***</td></tr><tr><td></td><td>0</td><td>0</td></tr></table><FS><right>总价：0.00</right></FS>\r
--------------- 其他 --------------
-积分抵扣：-0.00  获得积分：0.00
-积分余额：0.00
-应收金额：0.00
-微信支付：0.00
+            $content = "<FS><center>".$data['merchants_name']."</center></FS>
+<FS><center>".$data['merchants_mobile']."</center></FS>
+<FB><center>".$data['payment']."（已支付）</center></FB>
+订单编号：".$data['order_sn']."
+流水编号：".$data['order_flow']."
+下单时间：".$data['pay_time']."
+期望送达时间：".$data['expected_time']."
+------------ 商品名 ------------
+<table><tr><td>商品</td><td>数量</td><td>单价</td></tr><tr><td>".$data['goods_name']."</td></tr><tr><td> </td><td>".$data['goods_number']."</td><td>".$data['goods_unit_price']."</td></tr></table><FS><right>总价：".$data['goods_total']."</right></FS>\r
+------------- 其他 -------------
+积分抵扣：-".$data['integral_deduction']."  获得积分：".$data['integral']."
+积分余额：".$data['integral_balance']."
+应收金额：".$data['receivable_balance']."
+微信支付：".$data['wechat_pay']."
 --------------------------------
-满减满折：-0.00
-红包折扣：-0.00
-分头舍去：-0.00
+满减满折：-".$data['full_reduction']."
+红包折扣：-".$data['bonus_discount']."
+分头舍去：-".$data['truncation']."
 --------------------------------
-备注内容：* * * * * * * * * *
-* * * * * * * * * *
-地址：上海市普陀区中山北路
-3553号301室
-姓名：张三
-手机号：15000000000";
+备注内容：".$data['remarks_content']."
+地址：".$data['address']."
+姓名：".$data['consignee']."
+手机号：".$data['mobile'];
 
         } else if ($type == 'store_buy') {
-            $content = "<FS><center>华联超市</center></FS>
-<FS><center>4000-000-000</center></FS>
-收银员：********
-订单编号：********
-流水编号：********
-下单时间：0000-00-00 00:00
-商家地址：上海市普陀区中山北路
+            $content = "<FS><center>".$data['merchants_name']."</center></FS>
+<FS><center>".$data['merchants_mobile']."</center></FS>
+收银员：".$data['cashier']."
+订单编号：".$data['order_sn']."
+流水编号：".$data['order_flow']."
+下单时间：".$data['pay_time']."
+商家地址：".$data['merchant_address']."
 --------------------------------
-<table><tr><td>商品</td><td>数量</td><td>单价</td></tr><tr><td>***</td><td>***</td><td>***</td></tr><tr><td></td><td>0</td><td>0</td></tr></table><FS><right>总价：0.00</right></FS>
+<table><tr><td>商品</td><td>数量</td><td>单价</td></tr><tr><td>".$data['goods_name']."</td></tr><tr><td> </td><td>".$data['goods_number']."</td><td>".$data['goods_unit_price']."</td></tr></table><FS><right>总价：".$data['goods_total']."</right></FS>
 --------------------------------
-优惠金额：0.00
-应收金额：0.00
-支付宝：0.00
-分头舍去：-0.00
-实收金额：0.00";
+优惠金额：".$data['discount_amount']."
+应收金额：".$data['receivable_balance']."
+支付宝：".$data['alipay']."
+分头舍去：-".$data['truncation']."
+实收金额：".$data['amount_paid'];
 
         } else if ($type == 'pay_bill') {
-            $content = "<FS><center>华联超市</center></FS>
-<FS><center>4000-000-000</center></FS>
-订单编号：********
-流水编号：********
-会员账号：********
-买单时间：0000-00-00 00:00
-商家地址：上海市普陀区中山北路\r
+            $content = "<FS><center>".$data['merchants_name']."</center></FS>
+<FS><center>".$data['merchants_mobile']."</center></FS>
+订单编号：".$data['order_sn']."
+流水编号：".$data['order_flow']."
+会员账号：".$data['user_name']."
+买单时间：".$data['pay_time']."
+商家地址：".$data['merchant_address']."\r
 ----------- 在线买单 -----------
-优惠活动：满多少减多少
+优惠活动：".$data['favourable_activity']."
 --------------------------------
-应收金额：-0.00
-优惠金额：-0.00
-支付宝：0.00
-实收金额：0.00";
+应收金额：-".$data['receivable_balance']."
+优惠金额：-".$data['discount_amount']."
+支付宝：".$data['alipay']."
+实收金额：".$data['amount_paid'];
         };
         $res    = Ecjia\App\Printer\YLY\YLYOpenApiClient::printIndex('4004525345', '7bc6a6fe2e314ad9b144de26b5231e69', $content, Royalcms\Component\Uuid\Uuid::generate(), SYS_TIME);
         $result = json_decode($res, true);
-        if ($result['error'] != 0) {
+		
+        if ($result['error'] == 0) {
             return $this->showmessage($result['error_description'], ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        } else {
+        	return $this->showmessage('测试打印成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/order_ticket', array('type' => $type))));
         }
-        return $this->showmessage('测试打印成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/order_ticket', array('type' => $type))));
     }
 
     public function printer_test()
