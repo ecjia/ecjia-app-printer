@@ -181,16 +181,17 @@ class mh_print extends ecjia_merchant
 
         $this->display('printer_record_list.dwt');
     }
-    
-    public function print_test() {
-    	$this->admin_priv('merchant_printer_update', ecjia::MSGTYPE_JSON);
-    	$type = trim($_POST['id']);
-    	$array = array('normal', 'take_out', 'store_buy', 'pay_bill');
-    	if (!in_array($type, $array)) {
-    		return $this->showmessage('该小票类型不存在', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR, array('pjaxurl' => RC_Uri::url('printer/mh_print/order_ticket', array('type' => 'normal'))));
-    	}
-    	if ($type == 'normal') {
-    		$content = "<FS><center>华联超市</center></FS>
+
+    public function print_test()
+    {
+        $this->admin_priv('merchant_printer_update', ecjia::MSGTYPE_JSON);
+        $type  = trim($_POST['id']);
+        $array = array('normal', 'take_out', 'store_buy', 'pay_bill');
+        if (!in_array($type, $array)) {
+            return $this->showmessage('该小票类型不存在', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR, array('pjaxurl' => RC_Uri::url('printer/mh_print/order_ticket', array('type' => 'normal'))));
+        }
+        if ($type == 'normal') {
+            $content = "<FS><center>华联超市</center></FS>
 <FS><center>4000-000-000</center></FS>
 订单编号：********\r
 流水编号：********\r
@@ -212,10 +213,10 @@ class mh_print extends ecjia_merchant
 备注内容：* * * * * * * * * *\r
 * * * * * * * * * *
 <center>请妥善保管好购物凭证</center>
-<center>谢谢惠顾欢迎下次光临</center><right>页1</right>"; 	
-    		
-		} else if ($type == 'take_out') {
-    		$content = "<FS><center>华联超市</center></FS>
+<center>谢谢惠顾欢迎下次光临</center><right>页1</right>";
+
+        } else if ($type == 'take_out') {
+            $content = "<FS><center>华联超市</center></FS>
 <FS><center>4000-000-000</center></FS>
 <FB><center>微信支付（已支付）</center></FB>
 订单编号：********\r
@@ -240,9 +241,9 @@ class mh_print extends ecjia_merchant
 3553号301室\r
 姓名：张三\r
 手机号：15000000000";
-    		
-    	} else if ($type == 'store_buy') {
-		$content = "<FS><center>华联超市</center></FS>
+
+        } else if ($type == 'store_buy') {
+            $content = "<FS><center>华联超市</center></FS>
 <FS><center>4000-000-000</center></FS>
 收银员：********\r
 订单编号：********\r
@@ -257,13 +258,13 @@ class mh_print extends ecjia_merchant
 支付宝：0.00\r
 分头舍去：-0.00\r
 实收金额：0.00";
-		
-    	} else if ($type == 'pay_bill') {
-		$content = "<FS><center>华联超市</center></FS>
+
+        } else if ($type == 'pay_bill') {
+            $content = "<FS><center>华联超市</center></FS>
 <FS><center>4000-000-000</center></FS>
 订单编号：********\r
 流水编号：********\r
-会员账号：********\r				
+会员账号：********\r
 买单时间：0000-00-00 00:00:00\r
 商家地址：上海市普陀区中山北路
 <center>----------- 在线买单 -----------</center>
@@ -273,30 +274,31 @@ class mh_print extends ecjia_merchant
 优惠金额：-0.00\r
 支付宝：0.00\r
 实收金额：0.00";
-    	};
-    	$res = Ecjia\App\Printer\YLY\YLYOpenApiClient::printIndex('4004525345', '7bc6a6fe2e314ad9b144de26b5231e69', $content, Royalcms\Component\Uuid\Uuid::generate(), SYS_TIME);
-    	$result = json_decode($res, true);
-    	if ($result['error'] != 0) {
-    		return $this->showmessage($result['error_description'], ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
-    	}
-    	return $this->showmessage('测试打印成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/order_ticket', array('type' => $type))));
+        };
+        $res    = Ecjia\App\Printer\YLY\YLYOpenApiClient::printIndex('4004525345', '7bc6a6fe2e314ad9b144de26b5231e69', $content, Royalcms\Component\Uuid\Uuid::generate(), SYS_TIME);
+        $result = json_decode($res, true);
+        if ($result['error'] != 0) {
+            return $this->showmessage($result['error_description'], ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        }
+        return $this->showmessage('测试打印成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/order_ticket', array('type' => $type))));
     }
-    
-    public function printer_test() {
-    	$this->admin_priv('merchant_printer_update', ecjia::MSGTYPE_JSON);
-    	 
-    	$id       = !empty($_POST['id']) ? intval($_POST['id']) : 0;
-    	 
-    	$content = !empty($_POST['content']) ?  strip_tags($_POST['content']): '';
-    	if (empty($content)) {
-    		return $this->showmessage('请输入要打印的内容', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
-    	}
-    	$res = Ecjia\App\Printer\YLY\YLYOpenApiClient::printIndex('4004525345', '7bc6a6fe2e314ad9b144de26b5231e69', $content, Royalcms\Component\Uuid\Uuid::generate(), SYS_TIME);
-    	$result = json_decode($res, true);
-    	if ($result['error'] != 0) {
-    		return $this->showmessage($result['error_description'], ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
-    	}
-    	return $this->showmessage('测试打印成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/view', array('id' => $id))));
+
+    public function printer_test()
+    {
+        $this->admin_priv('merchant_printer_update', ecjia::MSGTYPE_JSON);
+
+        $id = !empty($_POST['id']) ? intval($_POST['id']) : 0;
+
+        $content = !empty($_POST['content']) ? strip_tags($_POST['content']) : '';
+        if (empty($content)) {
+            return $this->showmessage('请输入要打印的内容', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        }
+        $res    = Ecjia\App\Printer\YLY\YLYOpenApiClient::printIndex('4004525345', '7bc6a6fe2e314ad9b144de26b5231e69', $content, Royalcms\Component\Uuid\Uuid::generate(), SYS_TIME);
+        $result = json_decode($res, true);
+        if ($result['error'] != 0) {
+            return $this->showmessage($result['error_description'], ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        }
+        return $this->showmessage('测试打印成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/view', array('id' => $id))));
     }
 
     public function reprint()
@@ -407,7 +409,7 @@ class mh_print extends ecjia_merchant
         $this->assign('store', $store);
         $this->assign('form_action', RC_Uri::url('printer/mh_print/insert_template'));
         $this->assign('print_test', RC_Uri::url('printer/mh_print/print_test'));
-        
+
         $this->display('printer_order_ticket.dwt');
     }
 
