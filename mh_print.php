@@ -185,7 +185,9 @@ class mh_print extends ecjia_merchant
     public function print_test()
     {
         $this->admin_priv('merchant_printer_update', ecjia::MSGTYPE_JSON);
-        $type  = trim($_POST['id']);
+        $type  = trim($_POST['type']);
+        $number = intval($_POST['number']);
+        $tail_content = strip_tags($_POST['tail_content']);
         $array = array('normal', 'take_out', 'store_buy', 'pay_bill');
         if (!in_array($type, $array)) {
             return $this->showmessage('该小票类型不存在', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR, array('pjaxurl' => RC_Uri::url('printer/mh_print/order_ticket', array('type' => 'normal'))));
@@ -224,8 +226,12 @@ class mh_print extends ecjia_merchant
         	'cashier'				=> '小李',//收银员
         	'payment'				=> '微信支付'//支付方式
         );
+        $content = '';
+        if ($number > 1) {
+        	$content = "<MN>".$number."</MN>";
+        }
         if ($type == 'normal') {
-            $content = "<FS><center>".$data['merchants_name']."</center></FS>
+            $content .= $content."<FS><center>".$data['merchants_name']."</center></FS>
 <FS><center>".$data['merchants_mobile']."</center></FS>
 订单编号：".$data['order_sn']."
 流水编号：".$data['order_flow']."
@@ -249,7 +255,7 @@ class mh_print extends ecjia_merchant
 <center>谢谢惠顾欢迎下次光临</center>";
 
         } else if ($type == 'take_out') {
-            $content = "<FS><center>".$data['merchants_name']."</center></FS>
+            $content .= $content."<FS><center>".$data['merchants_name']."</center></FS>
 <FS><center>".$data['merchants_mobile']."</center></FS>
 <FB><center>".$data['payment']."（已支付）</center></FB>
 订单编号：".$data['order_sn']."
@@ -274,7 +280,7 @@ class mh_print extends ecjia_merchant
 手机号：".$data['mobile'];
 
         } else if ($type == 'store_buy') {
-            $content = "<FS><center>".$data['merchants_name']."</center></FS>
+            $content .= $content."<FS><center>".$data['merchants_name']."</center></FS>
 <FS><center>".$data['merchants_mobile']."</center></FS>
 收银员：".$data['cashier']."
 订单编号：".$data['order_sn']."
@@ -291,7 +297,7 @@ class mh_print extends ecjia_merchant
 实收金额：".$data['amount_paid'];
 
         } else if ($type == 'pay_bill') {
-            $content = "<FS><center>".$data['merchants_name']."</center></FS>
+       		$content .= $content."<FS><center>".$data['merchants_name']."</center></FS>
 <FS><center>".$data['merchants_mobile']."</center></FS>
 订单编号：".$data['order_sn']."
 流水编号：".$data['order_flow']."
@@ -308,8 +314,8 @@ class mh_print extends ecjia_merchant
         };
         $res    = Ecjia\App\Printer\YLY\YLYOpenApiClient::printIndex('4004525345', '7bc6a6fe2e314ad9b144de26b5231e69', $content, Royalcms\Component\Uuid\Uuid::generate(), SYS_TIME);
         $result = json_decode($res, true);
-		
-        if ($result['error'] == 0) {
+
+        if ($result['error'] != 0) {
             return $this->showmessage($result['error_description'], ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         } else {
         	return $this->showmessage('测试打印成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/order_ticket', array('type' => $type))));
@@ -328,6 +334,7 @@ class mh_print extends ecjia_merchant
         }
         $res    = Ecjia\App\Printer\YLY\YLYOpenApiClient::printIndex('4004525345', '7bc6a6fe2e314ad9b144de26b5231e69', $content, Royalcms\Component\Uuid\Uuid::generate(), SYS_TIME);
         $result = json_decode($res, true);
+        
         if ($result['error'] != 0) {
             return $this->showmessage($result['error_description'], ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }

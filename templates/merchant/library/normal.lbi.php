@@ -15,12 +15,10 @@
 			<li>商品</li>
 			<li>数量</li>
 			<li>单价</li>
-			<li>金额</li>
 		</ul>
 		<p>* * * * * * * * * * * * * * *</p>
 		<ul>
 			<li>&nbsp;</li>
-			<li>0</li>
 			<li>0</li>
 			<li>0.00</li>
 		</ul>
@@ -50,5 +48,4 @@
 		<div class="t_c">请妥善保管好购物凭证</div>
 		<div class="t_c">谢谢惠顾，欢迎下次光临！</div>
 	</div>	
-	<span class="page_number">页1</span>					
 </div>

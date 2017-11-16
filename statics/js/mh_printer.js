@@ -143,6 +143,21 @@
             }
             var options = $.extend(ecjia.merchant.defaultOptions.validate, option);
             $("form[name='testForm']").validate(options);
+            
+            $('.print_test').off('click').on('click', function() {
+        		var type = $(this).attr('data-type'); 
+        		var number = $('input[name="print_count"]').val();
+        		var tail_content = $('input[name="tail_content"]').val();
+        		var url = $(this).attr('data-url');
+        		var info = {
+        			type: type,
+        			number: number,
+        			tail_content: tail_content
+        		}
+        		$.post(url, info, function(data){
+        			ecjia.merchant.showmessage(data);
+        		});
+        	});
        },
     };  
 })(ecjia.merchant, jQuery);
