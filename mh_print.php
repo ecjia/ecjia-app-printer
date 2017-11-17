@@ -231,7 +231,7 @@ class mh_print extends ecjia_merchant
         	$content = "<MN>".$number."</MN>";
         }
         if ($type == 'normal') {
-            $content .= $content."<FS><center>".$data['merchants_name']."</center></FS>
+            $content .= "<FS><center>".$data['merchants_name']."</center></FS>
 <FS><center>".$data['merchants_mobile']."</center></FS>
 订单编号：".$data['order_sn']."
 流水编号：".$data['order_flow']."
@@ -255,7 +255,7 @@ class mh_print extends ecjia_merchant
 <center>谢谢惠顾欢迎下次光临</center>";
 
         } else if ($type == 'take_out') {
-            $content .= $content."<FS><center>".$data['merchants_name']."</center></FS>
+            $content .= "<FS><center>".$data['merchants_name']."</center></FS>
 <FS><center>".$data['merchants_mobile']."</center></FS>
 <FB><center>".$data['payment']."（已支付）</center></FB>
 订单编号：".$data['order_sn']."
@@ -280,7 +280,7 @@ class mh_print extends ecjia_merchant
 手机号：".$data['mobile'];
 
         } else if ($type == 'store_buy') {
-            $content .= $content."<FS><center>".$data['merchants_name']."</center></FS>
+            $content .= "<FS><center>".$data['merchants_name']."</center></FS>
 <FS><center>".$data['merchants_mobile']."</center></FS>
 收银员：".$data['cashier']."
 订单编号：".$data['order_sn']."
@@ -297,7 +297,7 @@ class mh_print extends ecjia_merchant
 实收金额：".$data['amount_paid'];
 
         } else if ($type == 'pay_bill') {
-       		$content .= $content."<FS><center>".$data['merchants_name']."</center></FS>
+       		$content .= "<FS><center>".$data['merchants_name']."</center></FS>
 <FS><center>".$data['merchants_mobile']."</center></FS>
 订单编号：".$data['order_sn']."
 流水编号：".$data['order_flow']."
