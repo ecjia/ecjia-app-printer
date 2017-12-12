@@ -47,7 +47,7 @@
 defined('IN_ECJIA') or exit('No permission resources.');
 
 /**
- * 打印机管理
+ * 小票机
  */
 class admin_store_printer extends ecjia_admin
 {
@@ -90,7 +90,7 @@ class admin_store_printer extends ecjia_admin
     }
 
     /**
-     * 打印机管理
+     * 小票机
      */
     public function init()
     {
@@ -103,7 +103,7 @@ class admin_store_printer extends ecjia_admin
         $store = RC_DB::table('store_franchisee')->where('store_id', $store_id)->first();
 
         ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here($store['merchants_name'], RC_Uri::url('store/admin/preview', array('store_id' => $store_id))));
-        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('打印机管理'));
+        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('小票机'));
 
         ecjia_screen::get_current_screen()->set_sidebar_display(false);
         ecjia_screen::get_current_screen()->add_option('store_name', $store['merchants_name']);
@@ -114,7 +114,7 @@ class admin_store_printer extends ecjia_admin
         } else {
             $this->assign('action_link', array('href' => RC_Uri::url('store/admin/join'), 'text' => RC_Lang::get('store::store.store_list')));
         }
-        $this->assign('ur_here', $store['merchants_name'] . ' - ' . '打印机管理');
+        $this->assign('ur_here', $store['merchants_name'] . ' - ' . '小票机');
         $this->assign('add_url', RC_Uri::url('printer/admin_store_printer/add', array('store_id' => $store_id)));
 
         $printer_list = RC_DB::table('printer_machine')->where('store_id', $store_id)->orderBy('id', 'desc')->get();
@@ -143,7 +143,7 @@ class admin_store_printer extends ecjia_admin
         ecjia_screen::get_current_screen()->add_option('store_name', $store['merchants_name']);
         ecjia_screen::get_current_screen()->add_option('current_code', 'store_printer');
 
-        $this->assign('action_link', array('href' => RC_Uri::url('printer/admin_store_printer/init', array('store_id' => $store_id)), 'text' => '打印机管理'));
+        $this->assign('action_link', array('href' => RC_Uri::url('printer/admin_store_printer/init', array('store_id' => $store_id)), 'text' => '小票机'));
         $this->assign('ur_here', $store['merchants_name'] . ' - ' . '添加打印机');
         $this->assign('form_action', RC_Uri::url('printer/admin_store_printer/insert', array('store_id' => $store_id)));
 
@@ -225,7 +225,7 @@ class admin_store_printer extends ecjia_admin
         ecjia_screen::get_current_screen()->add_option('store_name', $store['merchants_name']);
         ecjia_screen::get_current_screen()->add_option('current_code', 'store_printer');
 
-        $this->assign('action_link', array('href' => RC_Uri::url('printer/admin_store_printer/init', array('store_id' => $store_id)), 'text' => '打印机管理'));
+        $this->assign('action_link', array('href' => RC_Uri::url('printer/admin_store_printer/init', array('store_id' => $store_id)), 'text' => '小票机'));
         $this->assign('ur_here', $store['merchants_name'] . ' - ' . '查看打印机');
         $this->assign('info', $info);
 
