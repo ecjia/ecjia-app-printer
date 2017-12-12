@@ -10,21 +10,43 @@
         },
         
         form: function () {
-        	 var option = {
-                 rules: {
-                	 printer_code: {
-                         required: true
-                     },
-                     printer_key: {
-                         required: true
-                     }
-                 },
+        	$('.toggle-printer-button').toggleButtons({
+				label: {  
+                     enabled: "开启",  
+                     disabled: "关闭"  
+                },  
+                style: {
+                    enabled: "info",
+                    disabled: "success"
+                }
+            });
+        	var option = {
+				 rules: {
+					 printer_code: {
+				         required: true
+				     },
+				     printer_key: {
+				         required: true
+				     },
+				     app_key: {
+				         required: true
+				     },
+				     app_secret: {
+				         required: true
+				     },
+				 },
                  messages: {
                 	 printer_code: {
                          required: "请输入终端编号"
                      },
                      printer_key: {
                          required: "请输入终端密钥"
+                     },
+                     app_key: {
+                         required: "请输入App Key"
+                     },
+                     app_secret: {
+                         required: "请输入App Secret"
                      }
                  },
                  submitHandler: function () {
