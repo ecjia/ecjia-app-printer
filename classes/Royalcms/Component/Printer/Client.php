@@ -66,6 +66,12 @@ class Client
      */
     protected function parseRep($response)
     {
+        if (is_ecjia_error($response)) {
+            return $response;
+        }
+        if (count($response) === 0) {
+            return true;
+        }
         return $response;
     }
 
