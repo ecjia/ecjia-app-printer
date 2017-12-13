@@ -205,7 +205,7 @@ class PrinterManager
      * 获取机型打印宽度接口
      * @param string $machine_code
      */
-    public function getPrintinfo($machine_code)
+    public function getPrintInfo($machine_code)
     {
         $resp = $this->printer->request('yly/printer/printinfo', function ($req) use ($machine_code) {
             $req->setMachineCode($machine_code);
