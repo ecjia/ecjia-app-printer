@@ -44,7 +44,7 @@
 //
 //  ---------------------------------------------------------------------------------
 //
-namespace Ecjia\App\Shipping\Facades;
+namespace Ecjia\App\Printer\Facades;
 
 use Royalcms\Component\Support\Facades\Facade;
 
