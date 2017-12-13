@@ -48,7 +48,7 @@ class Client
         );
 
         // 签名
-        $params['sign'] = $this->generateSign($params);
+        $params['sign'] = $this->generateSign($publicParams);
 
         // 请求数据
         $resp = $this->curl(
@@ -83,7 +83,7 @@ class Client
     {
         return [
             'app_key'     => $this->app->getAppKey(),
-            'app_secret'  => $this->app->getAppSecret(),
+//             'app_secret'  => $this->app->getAppSecret(),
             'timestamp'   => date('Y-m-d H:i:s'),
         ];
     }
@@ -113,7 +113,7 @@ class Client
         }
         
         $str = implode('', $arr);
-
+        
         return strtolower(hash_hmac('md5', $str, $this->app->getAppSecret()));
     }
 

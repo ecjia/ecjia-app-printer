@@ -54,9 +54,9 @@ class PrinterAddPrinter extends Request implements Command
      * 设置终端内部的手机号（方便充值）无手机号可传空值
      * @param string $value 终端内部的手机号
      */
-    public function setMobilePhone($value)
+    public function setPhone($value)
     {
-        $this->params['mobilephone'] = $value;
+        $this->params['phone'] = $value;
     
         return $this;
     }
@@ -67,7 +67,7 @@ class PrinterAddPrinter extends Request implements Command
      */
     public function setPrintName($value)
     {
-        $this->params['printname'] = $value;
+        $this->params['print_name'] = $value;
     
         return $this;
     }
