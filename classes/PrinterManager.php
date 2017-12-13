@@ -131,4 +131,19 @@ class PrinterManager
         return $resp;
     }
     
+    
+    /**
+     * 获取机型软硬件版本
+     */
+    public function getVersion($machine_code)
+    {
+        $resp = $this->printer->request('yly/printer/getversion', function ($req) use ($machine_code) {
+            $req->setMachineCode($machine_code);
+        });
+    
+        return $resp;
+    }
+    
+    
+    
 }
