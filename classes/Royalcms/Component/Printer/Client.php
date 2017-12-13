@@ -55,9 +55,18 @@ class Client
             $method,
             $params
         );
-        
+   
         // 解析返回
-        return $resp;
+        return $this->parseRep($resp);
+    }
+
+    /**
+     * 解析返回数据
+     * @return array|false
+     */
+    protected function parseRep($response)
+    {
+        return $response;
     }
 
     /**
