@@ -114,7 +114,7 @@ class Client
         
         $str = implode('', $arr);
 
-        return strtoupper(hash_hmac('md5', $str, $this->app->getAppSecret()));
+        return strtolower(hash_hmac('md5', $str, $this->app->getAppSecret()));
     }
 
     /**
