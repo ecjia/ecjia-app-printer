@@ -83,7 +83,6 @@ class Client
     {
         return [
             'app_key'     => $this->app->getAppKey(),
-//             'app_secret'  => $this->app->getAppSecret(),
             'timestamp'   => date('Y-m-d H:i:s'),
         ];
     }
