@@ -46,10 +46,23 @@ class PrinterManager
         return $resp;
     }
     
-    
-    public function addPrinter()
+    /**
+     * 添加打印机
+     * @param string $print_name    设置打印机终端名称
+     * @param string $machine_code  设置打印机终端号
+     * @param string $machine_secret设置打印机终端密钥
+     * @param string $phone         设置终端内部的手机号
+     */
+    public function addPrinter($print_name, $machine_code, $machine_secret, $phone = '')
     {
+        $resp = $this->printer->request('yly/printer/addprinter', function ($req) use ($print_name, $machine_code, $machine_secret, $phone) {
+            $req->setMachineCode($machine_code);
+            $req->setMsign($machine_secret);
+            $req->setMobilePhone($phone);
+            $req->setPrintName($print_name);
+        });
         
+        return $resp;
     }
     
     
