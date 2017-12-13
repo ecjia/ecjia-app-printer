@@ -2,6 +2,8 @@
 
 namespace Ecjia\App\Printer;
 
+use RC_Uri;
+
 class PrinterCallback
 {
     
