@@ -40,7 +40,7 @@ class PrinterCallback
      */
     public static function getStatusPush()
     {
-        return RC_Uri::url(self::PRINTER_PRINT_PUSH);
+        return RC_Uri::url(self::PRINTER_STATUS_PUSH);
     }
     
     /**
@@ -49,6 +49,6 @@ class PrinterCallback
      */
     public static function getOrderPush()
     {
-        return RC_Uri::url(self::PRINTER_PRINT_PUSH);
+        return RC_Uri::url(self::PRINTER_ORDER_PUSH);
     }
 }
