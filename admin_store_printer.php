@@ -198,7 +198,13 @@ class admin_store_printer extends ecjia_admin
         	return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         $id = RC_DB::table('printer_machine')->insertGetId($data);
-
+        
+        $res = ecjia_printer::getPrintInfo($printer_code);
+        if (is_ecjia_error($res)) {
+        	return $this->showmessage($res->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        }
+        RC_DB::table('printer_machine')->where('id', $id)->update(array('version' => $res['version'], 'print_width' => $res['print_width']));
+        
         ecjia_admin::admin_log($printer_name, 'add', 'printer');
         $this->showmessage('添加成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_store_printer/init', array('store_id' => $store_id))));
     }
