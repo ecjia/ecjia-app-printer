@@ -211,6 +211,11 @@
 	text-overflow: ellipsis
 }
 
+.info_right .right-item .view_key {
+	cursor: pointer;
+	padding-left: 5px;
+}
+
 .info_right .right-item .view_key img {
     width: 20px;
     height: 20px;

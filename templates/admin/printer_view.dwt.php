@@ -27,7 +27,7 @@
 						<a data-toggle="ajaxremove" data-msg="您确定要关闭该打印机吗？" href='{RC_Uri::url("printer/admin_store_printer/close", "id={$info.id}&store_id={$info.store_id}")}'>
 							<img class="close_img" src="{$statics_url}images/close.png" />
 						</a>
-						<a class="data-pjax" href='{url path="printer/admin_store_printer/view" args="id={$info.id}&store_id={$info.store_id}"}'>
+						<a data-toggle="ajaxremove" data-msg="您确定要重启该打印机吗？" href='{RC_Uri::url("printer/admin_store_printer/restart", "id={$info.id}&store_id={$info.store_id}")}'>
 							<img class="refresh_img" src="{$statics_url}images/refresh.png" />
 						</a>
 					</div>
@@ -36,7 +36,7 @@
 				<div class="info_right">
 					<span class="name cursor_pointer" data-trigger="editable" data-url="{RC_Uri::url('printer/admin_store_printer/edit_printer_name')}" data-name="edit_printer_name" data-pk="{$info.id}" data-title="请输入打印机名称">{$info.printer_name}</span>
 					<div class="right-item">终端编号：{$info.printer_code}</div>
-					<div class="right-item">终端密钥：<span class="printer_key">{$info.printer_key_star}</span><span class="view_key" data-key="{$info.printer_key_star}" data-value="{$info.printer_key}" data-view="{$statics_url}images/view_key.png" data-hide="{$statics_url}images/hide_key.png"><img src="{$statics_url}images/view_key.png"></span></div>
+					<div class="right-item">终端密钥：<span class="printer_key">{$info.printer_key_star}</span><span class="view_key" data-key="{$info.printer_key_star}" data-value="{$info.printer_key}"><i class="fontello-icon-eye"></i></span></div>
 					<div class="right-item">手机卡号：<span class="cursor_pointer" data-trigger="editable" data-url="{RC_Uri::url('printer/admin_store_printer/edit_printer_mobile')}" data-name="edit_printer_mobile" data-pk="{$info.id}" data-title="请输入手机卡号" data-emptytext="暂无">{if $info.printer_mobile}{$info.printer_mobile}{/if}</span></div>
 					<div class="right-item">打印机型：{$info.version}</div>
 					<div class="right-item">添加时间：{RC_Time::local_date('Y-m-d H:i:s', $info['add_time'])}</div>
