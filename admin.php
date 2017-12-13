@@ -115,9 +115,9 @@ class admin extends ecjia_admin
     	
     	$printer_display_platform = !empty($_POST['printer_display_platform']) ? intval($_POST['printer_display_platform']) : 0;
     	
-    	$printer_print_push = Ecjia\App\Printer\PrinterCallback::getPrintPush();
-    	$printer_status_push = Ecjia\App\Printer\PrinterCallback::getStatusPush();
-    	$printer_order_push = Ecjia\App\Printer\PrinterCallback::getOrderPush();
+    	$printer_print_push 	= !empty($_POST['printer_print_push']) 		? trim($_POST['printer_print_push']) 	: Ecjia\App\Printer\PrinterCallback::getPrintPush();
+    	$printer_status_push 	= !empty($_POST['printer_status_push']) 	? trim($_POST['printer_status_push']) 	: Ecjia\App\Printer\PrinterCallback::getStatusPush();
+    	$printer_order_push 	= !empty($_POST['printer_order_push']) 		? trim($_POST['printer_order_push']) 	: Ecjia\App\Printer\PrinterCallback::getOrderPush();
     	
     	$rs = ecjia_printer::setNotify($printer_print_push, $printer_order_push, $printer_status_push);
     	if (is_ecjia_error($rs)) {

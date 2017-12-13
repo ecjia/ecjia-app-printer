@@ -187,6 +187,10 @@ class admin_store_printer extends ecjia_admin
             'printer_mobile' => $printer_mobile,
             'add_time'       => RC_Time::gmtime(),
         );
+        $rs = ecjia_printer::addPrinter($printer_name, $printer_code, $printer_key, $printer_mobile);
+        if (is_ecjia_error($rs)) {
+        	return $this->showmessage($rs->get_error_messgae(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        }
         $id = RC_DB::table('printer_machine')->insertGetId($data);
 
         ecjia_admin::admin_log($printer_name, 'add', 'printer');

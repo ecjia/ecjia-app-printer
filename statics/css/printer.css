@@ -73,7 +73,6 @@
 	text-overflow: ellipsis;
 	text-align: left;
 	font-weight: 700;
-	max-width: 120px
 }
 
 .info_status .status,.thumbnail .top_right .status {
