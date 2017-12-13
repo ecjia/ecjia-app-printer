@@ -14,15 +14,14 @@
         		var $this = $(this),
         			key = $this.attr('data-key'),
         			value = $this.attr('data-value'),
-        			view = $this.attr('data-view'),
-        			hide = $this.attr('data-hide'),
-        			src = $this.children('img').attr('src');
-        		if (src == view) {
+        			i = $this.children('i').attr('class');
+
+        		if (i == 'fontello-icon-eye') {
         			$this.parent().find('.printer_key').html(value);
-        			$this.children('img').attr('src', hide);
+        			$this.children('i').attr('class', 'fontello-icon-eye-off')
         		} else {
         			$this.parent().find('.printer_key').html(key);
-        			$this.children('img').attr('src', view);
+        			$this.children('i').attr('class', 'fontello-icon-eye')
         		}
         	});
         	
