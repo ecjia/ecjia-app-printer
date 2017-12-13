@@ -37,7 +37,7 @@
 					<span class="name cursor_pointer" data-trigger="editable" data-url="{RC_Uri::url('printer/admin_store_printer/edit_printer_name')}" data-name="edit_printer_name" data-pk="{$info.id}" data-title="请输入打印机名称">{$info.printer_name}</span>
 					<div class="right-item">终端编号：{$info.printer_code}</div>
 					<div class="right-item">终端密钥：{$info.printer_key}</div>
-					<div class="right-item">手机卡号：<span class="cursor_pointer" data-trigger="editable" data-url="{RC_Uri::url('printer/admin_store_printer/edit_printer_mobile')}" data-name="edit_printer_mobile" data-pk="{$info.id}" data-title="请输入手机卡号">{$info.printer_mobile}</span></div>
+					<div class="right-item">手机卡号：<span class="cursor_pointer" data-trigger="editable" data-url="{RC_Uri::url('printer/admin_store_printer/edit_printer_mobile')}" data-name="edit_printer_mobile" data-pk="{$info.id}" data-title="请输入手机卡号" data-emptytext="暂无">{if $info.printer_mobile}{$info.printer_mobile}{/if}</span></div>
 					<div class="right-item">打印机型：{$info.version}</div>
 					<div class="right-item">添加时间：{RC_Time::local_date('Y-m-d H:i:s', $info['add_time'])}</div>
 				</div>
