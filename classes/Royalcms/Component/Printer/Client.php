@@ -3,6 +3,7 @@
 namespace Royalcms\Component\Printer;
 
 use Exception;
+use ecjia_cloud;
 use Royalcms\Component\Printer\Contracts\Command;
 
 /**
@@ -11,28 +12,10 @@ use Royalcms\Component\Printer\Contracts\Command;
 class Client
 {   
     /**
-     * API请求地址
-     * @var string
-     */
-    protected $api_uri = 'http://gw.api.taobao.com/router/rest';
-
-    /**
      * 应用
      * @var \Royalcms\Component\Printer\App
      */
     protected $app;
-
-    /**
-     * 签名规则
-     * @var string
-     */
-    protected $sign_method = 'md5';
-
-    /**
-     * 响应格式。可选值：xml，json。
-     * @var string
-     */
-    protected $format = 'json';
 
     /**
      * 初始化
@@ -44,7 +27,7 @@ class Client
 
         // 判断配置
         if (!$this->app->getAppKey() || !$this->app->getAppSecret()) {
-            throw new Exception("Aidayu configuration information: app_key or app_secret error");
+            throw new Exception("ecjia printer configuration information: app_key or app_secret error");
         }
     }
 
@@ -61,9 +44,6 @@ class Client
 
         $params = array_merge(
             $publicParams,
-            [
-                'method' => $method
-            ],
             $serviceParams
         );
 
@@ -72,58 +52,11 @@ class Client
 
         // 请求数据
         $resp = $this->curl(
-            $this->api_uri,
+            $method,
             $params
         );
-
+        
         // 解析返回
-        return $this->parseRep($resp);
-    }
-
-    /**
-     * 设置签名方式
-     * @param string $value 签名方式，支持md5, hmac
-     */
-    public function setSignMethod($value = 'md5')
-    {
-        $this->sign_method = $value;
-
-        return $this;
-    }
-
-    /**
-     * 设置回传格式
-     * @param string $value 响应格式，支持json/xml
-     */
-    public function setFormat($value = 'json')
-    {
-        $this->format = $value;
-
-        return $this;
-    }
-
-    /**
-     * 解析返回数据
-     * @return array|false
-     */
-    protected function parseRep($response)
-    {
-        if ($this->format == 'json') {
-            $resp = json_decode($response, true);
-
-            if (false !== $resp) {
-                $resp = current($resp);
-            }
-        }
-
-        elseif ($this->format == 'xml') {
-            $resp = @simplexml_load_string($response);
-        }
-
-        else {
-            throw new Exception("format error...");
-        }
-
         return $resp;
     }
 
@@ -135,10 +68,8 @@ class Client
     {
         return [
             'app_key'     => $this->app->getAppKey(),
+            'app_secret'  => $this->app->getAppSecret(),
             'timestamp'   => date('Y-m-d H:i:s'),
-            'format'      => $this->format,
-            'v'           => '2.0',
-            'sign_method' => $this->sign_method
         ];
     }
 
@@ -149,32 +80,7 @@ class Client
      */
     protected function generateSign($params = [])
     {
-        if ($this->sign_method == 'md5') {
-            return $this->generateMd5Sign($params);
-        } elseif ($this->sign_method == 'hmac') {
-            return $this->generateHmacSign($params);
-        } else {
-            throw new Exception("sign_method error...");
-        }
-    }
-
-    /**
-     * 按Md5方式生成签名
-     * @param  array  $params 待签的参数
-     * @return string         
-     */
-    protected function generateMd5Sign($params = [])
-    {
-        static::sortParams($params);  // 排序
-
-        $arr = [];
-        foreach ($params as $k => $v) {
-            $arr[] = $k . $v;
-        }
-        
-        $str = $this->app->getAppSecret() . implode('', $arr) . $this->app->getAppSecret();
-
-        return strtoupper(md5($str));
+        return $this->generateHmacSign($params);
     }
 
     /**
@@ -209,18 +115,20 @@ class Client
 
     /**
      * curl请求
-     * @param  string $url        string
+     * @param  string $method        string
      * @param  array|null $postFields 请求参数
      * @return [type]             [description]
      */
-    protected function curl($url, $postFields = null)
+    protected function curl($method, $postFields = null)
     { 
-        $data = [
-            'body' => $postFields
-        ];
+        $cloud = ecjia_cloud::instance()->api($method)->data($postFields)->run();
+        if (is_ecjia_error($cloud->getError())) {
+            return $cloud->getError();
+        }
         
-        $response = \RC_Http::remote_post($url, $data);
+        //获取每页可更新数
+        $data = $cloud->getReturnData();
 
-        return $response['body'];
+        return $data;
     }
 }
