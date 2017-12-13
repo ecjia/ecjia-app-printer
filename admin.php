@@ -121,7 +121,7 @@ class admin extends ecjia_admin
     	
     	$rs = ecjia_printer::setNotify($printer_print_push, $printer_order_push, $printer_status_push);
     	if (is_ecjia_error($rs)) {
-    		return $this->showmessage($rs->get_error_messgae(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+    		return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
     	}
     	
     	ecjia_config::instance()->write_config('printer_key', $app_key);

@@ -190,7 +190,7 @@ class admin_store_printer extends ecjia_admin
 
         $rs = ecjia_printer::addPrinter($printer_name, $printer_code, $printer_key, $printer_mobile);
         if (is_ecjia_error($rs)) {
-        	return $this->showmessage($rs->get_error_messgae(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        	return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         $id = RC_DB::table('printer_machine')->insertGetId($data);
 
@@ -209,7 +209,7 @@ class admin_store_printer extends ecjia_admin
         
         $rs = ecjia_printer::deletePrinter($data['printer_code']);
         if (is_ecjia_error($rs)) {
-        	return $this->showmessage($rs->get_error_messgae(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        	return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         
         RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->delete();
@@ -276,7 +276,7 @@ class admin_store_printer extends ecjia_admin
         
         $rs = ecjia_printer::shutdown($data['printer_code']);
         if (is_ecjia_error($rs)) {
-        	return $this->showmessage($rs->get_error_messgae(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        	return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         
         RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->update(array('online_status' => 0));
@@ -294,7 +294,7 @@ class admin_store_printer extends ecjia_admin
     	
     	$rs = ecjia_printer::restart($data['printer_code']);
     	if (is_ecjia_error($rs)) {
-    		return $this->showmessage($rs->get_error_messgae(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+    		return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
     	}
     	
     	RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->update(array('online_status' => 1));
@@ -427,7 +427,7 @@ class admin_store_printer extends ecjia_admin
         	
         	$rs = ecjia_printer::setIcon($info['printer_code'], $file_name);
         	if (is_ecjia_error($rs)) {
-        		return $this->showmessage($rs->get_error_messgae(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        		return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         	}
         	
             //删除旧logo
@@ -456,7 +456,7 @@ class admin_store_printer extends ecjia_admin
         if (!empty($info['printer_logo'])) {
         	$rs = ecjia_printer::deleteIcon($info['printer_code']);
         	if (is_ecjia_error($rs)) {
-        		return $this->showmessage($rs->get_error_messgae(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        		return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         	}
         	
             $disk = RC_Filesystem::disk();
