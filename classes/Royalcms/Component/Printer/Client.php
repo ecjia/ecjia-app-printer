@@ -7,7 +7,7 @@ use ecjia_cloud;
 use Royalcms\Component\Printer\Contracts\Command;
 
 /**
- * 阿里大于客户端
+ * ECJia云打印客户端
  */
 class Client
 {   
