@@ -222,6 +222,11 @@ class admin_store_printer extends ecjia_admin
         if (!empty($info['printer_logo'])) {
             $info['printer_logo'] = RC_Upload::upload_url($info['printer_logo']);
         }
+        if (!empty($info['printer_key'])) {
+        	$len = strlen($info['printer_key']);
+        	$info['printer_key_star'] = substr_replace($info['printer_key'], str_repeat('*', $len), 0, $len);
+        }
+        
         ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here($store['merchants_name'], RC_Uri::url('store/admin/preview', array('store_id' => $store_id))));
         ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('查看打印机'));
 

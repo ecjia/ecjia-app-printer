@@ -10,6 +10,22 @@
         },
         
         form: function () {
+        	$('.view_key').off('click').on('click', function() {
+        		var $this = $(this),
+        			key = $this.attr('data-key'),
+        			value = $this.attr('data-value'),
+        			view = $this.attr('data-view'),
+        			hide = $this.attr('data-hide'),
+        			src = $this.children('img').attr('src');
+        		if (src == view) {
+        			$this.parent().find('.printer_key').html(value);
+        			$this.children('img').attr('src', hide);
+        		} else {
+        			$this.parent().find('.printer_key').html(key);
+        			$this.children('img').attr('src', view);
+        		}
+        	});
+        	
         	$('.toggle-printer-button').toggleButtons({
 				label: {  
                      enabled: "开启",  

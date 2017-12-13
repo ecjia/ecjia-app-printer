@@ -184,7 +184,7 @@
 .printer_box .info_right {
 	position: absolute;
 	left: 150px;
-	max-width: 60%
+	max-width: 50%
 }
 
 .info_right .name {
@@ -209,6 +209,13 @@
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis
+}
+
+.info_right .right-item .view_key img {
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+	cursor: pointer;
 }
 
 .info_status {
