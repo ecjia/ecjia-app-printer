@@ -58,7 +58,7 @@ class PrinterManager
         $resp = $this->printer->request('yly/printer/addprinter', function ($req) use ($print_name, $machine_code, $machine_secret, $phone) {
             $req->setMachineCode($machine_code);
             $req->setMsign($machine_secret);
-            $req->setMobilePhone($phone);
+            $req->setPhone($phone);
             $req->setPrintName($print_name);
         });
         
@@ -196,6 +196,19 @@ class PrinterManager
         $resp = $this->printer->request('yly/printer/getorder', function ($req) use ($machine_code) {
             $req->setMachineCode($machine_code);
             $req->setResponseType('close');
+        });
+    
+        return $resp;
+    }
+    
+    /**
+     * 获取机型打印宽度接口
+     * @param string $machine_code
+     */
+    public function getPrintinfo($machine_code)
+    {
+        $resp = $this->printer->request('yly/printer/printinfo', function ($req) use ($machine_code) {
+            $req->setMachineCode($machine_code);
         });
     
         return $resp;
