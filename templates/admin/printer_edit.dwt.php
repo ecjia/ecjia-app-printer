@@ -25,7 +25,8 @@
 				<div class="control-group formSep">
 					<label class="control-label">打印机名称：</label>
 					<div class="controls">
-						<input type="text" name="printer_name" class="span6" placeholder="请输入打印机名称" />
+						<input type="text" name="printer_name" class="span6" placeholder="请输入打印机名称" value="{$printer_name}" />
+						<span class="input-must">{lang key='system::system.require_field'}</span>
 						<span class="help-block">该名称只在打印机列表显示，便于管理员查找打印机</span>
 					</div>
 				</div>
