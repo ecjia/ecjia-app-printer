@@ -65,5 +65,20 @@ class PrinterManager
         return $resp;
     }
     
+    /**
+     * 删除打印机
+     * @param string $machine_code  设置打印机终端号
+     */
+    public function deletePrinter($machine_code)
+    {
+        $resp = $this->printer->request('yly/printer/deleteprinter', function ($req) use ($machine_code) {
+            $req->setMachineCode($machine_code);
+        });
+        
+        return $resp;
+    }
+    
+    
+    
     
 }
