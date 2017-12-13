@@ -27,7 +27,7 @@
 						<a data-toggle="ajaxremove" data-msg="您确定要关闭该打印机吗？" href='{RC_Uri::url("printer/admin_store_printer/close", "id={$info.id}&store_id={$info.store_id}")}'>
 							<img class="close_img" src="{$statics_url}images/close.png" />
 						</a>
-						<a class="data-pjax" href='{url path="printer/admin_store_printer/view" args="id={$info.id}&store_id={$info.store_id}"}'>
+						<a data-toggle="ajaxremove" data-msg="您确定要重启该打印机吗？" href='{RC_Uri::url("printer/admin_store_printer/restart", "id={$info.id}&store_id={$info.store_id}")}'>
 							<img class="refresh_img" src="{$statics_url}images/refresh.png" />
 						</a>
 					</div>
