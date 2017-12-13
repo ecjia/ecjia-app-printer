@@ -145,5 +145,61 @@ class PrinterManager
     }
     
     
+    /**
+     * 取消所有未打印订单
+     */
+    public function cancelAll($machine_code)
+    {
+        $resp = $this->printer->request('yly/printer/cancelall', function ($req) use ($machine_code) {
+            $req->setMachineCode($machine_code);
+        });
+    
+        return $resp;
+    }
+    
+    
+    /**
+     * 取消单条未打印订单
+     */
+    public function cancelOne($machine_code, $order_id)
+    {
+        $resp = $this->printer->request('yly/printer/cancelone', function ($req) use ($machine_code, $order_id) {
+            $req->setMachineCode($machine_code);
+            $req->setOrderId($order_id);
+        });
+    
+        return $resp;
+    }
+    
+    
+    /**
+     * 开启接单拒单
+     * @param string $machine_code
+     */
+    public function openGetOrder($machine_code)
+    {
+        $resp = $this->printer->request('yly/printer/getorder', function ($req) use ($machine_code) {
+            $req->setMachineCode($machine_code);
+            $req->setResponseType('open');
+        });
+    
+        return $resp;
+    }
+    
+    
+    /**
+     * 关闭接单拒单
+     * @param string $machine_code
+     */
+    public function closeGetOrder($machine_code)
+    {
+        $resp = $this->printer->request('yly/printer/getorder', function ($req) use ($machine_code) {
+            $req->setMachineCode($machine_code);
+            $req->setResponseType('close');
+        });
+    
+        return $resp;
+    }
+    
     
 }
