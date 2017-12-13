@@ -37,6 +37,9 @@
             });
         	var option = {
 				 rules: {
+					 printer_name: {
+						 required: true
+					 },
 					 printer_code: {
 				         required: true
 				     },
@@ -51,6 +54,9 @@
 				     },
 				 },
                  messages: {
+                	 printer_name: {
+                         required: "请输入打印机名称"
+                     },
                 	 printer_code: {
                          required: "请输入终端编号"
                      },

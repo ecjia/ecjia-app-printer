@@ -24,6 +24,7 @@
         	<div class="printer_title">打印机列表</div>
         	<div class="printer_list wookmark">
         		<ul>
+        			{if $list}
         			<!-- {foreach from=$list item=val} -->
         			<li class="thumbnail">
         				<div class="top">
@@ -50,7 +51,9 @@
         				</div>
         			</li>
         			<!-- {/foreach} -->
+        			{else}
         			<li class="thumbnail add"><a class="more" href="{$add_url}"><i class="fontello-icon-plus"></i></a></li>
+        			{/if}
         		</ul>
         	</div>
         </div>

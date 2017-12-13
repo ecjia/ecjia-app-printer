@@ -147,6 +147,7 @@ class admin_store_printer extends ecjia_admin
         $this->assign('ur_here', $store['merchants_name'] . ' - ' . '添加打印机');
         $this->assign('form_action', RC_Uri::url('printer/admin_store_printer/insert', array('store_id' => $store_id)));
 
+       	$this->assign('printer_name', $store['merchants_name'].'打印机');
         $this->assign('add_url', RC_Uri::url('printer/admin_store_printer/add', array('store_id' => $store_id)));
         $this->display('printer_edit.dwt');
     }
@@ -168,6 +169,10 @@ class admin_store_printer extends ecjia_admin
             return $this->showmessage(__('请选择您要操作的店铺'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
 
+        if (empty($printer_name)) {
+        	$this->showmessage('请输入打印机名称', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        }
+        
         if (empty($printer_code)) {
             $this->showmessage('请输入终端编号', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
