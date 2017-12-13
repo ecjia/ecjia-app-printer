@@ -115,13 +115,18 @@ class admin extends ecjia_admin
     	
     	$printer_display_platform = !empty($_POST['printer_display_platform']) ? intval($_POST['printer_display_platform']) : 0;
     	
+    	$printer_print_push = Ecjia\App\Printer\PrinterCallback::getPrintPush();
+    	$printer_status_push = Ecjia\App\Printer\PrinterCallback::getStatusPush();
+    	$printer_order_push = Ecjia\App\Printer\PrinterCallback::getOrderPush();
+    	
+    	$rs = ecjia_printer::setNotify($printer_print_push, $printer_order_push, $printer_status_push);
+    	if (is_ecjia_error($rs)) {
+    		return $this->showmessage($rs->get_error_messgae(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+    	}
+    	
     	ecjia_config::instance()->write_config('printer_key', $app_key);
     	ecjia_config::instance()->write_config('printer_secret', $app_secret);
     	ecjia_config::instance()->write_config('printer_display_platform', $printer_display_platform);
-    	
-    	$printer_print_push  = trim($_POST['printer_print_push']);
-    	$printer_status_push = trim($_POST['printer_status_push']);
-    	$printer_order_push  = trim($_POST['printer_order_push']);
     	
     	ecjia_config::instance()->write_config('printer_print_push', $printer_print_push);
     	ecjia_config::instance()->write_config('printer_status_push', $printer_status_push);
