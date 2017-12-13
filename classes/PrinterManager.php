@@ -27,6 +27,9 @@ class PrinterManager
     
     /**
      * 设置打印回调地址
+     * @param string $finish 打印完成推送地址
+     * @param string $getOrder 接单拒单推送地址
+     * @param string $printStatus 打印机状态推送推送地址
      */
     public function setNotify($finish = null, $getOrder = null, $printStatus = null)
     {
@@ -43,6 +46,11 @@ class PrinterManager
         return $resp;
     }
     
+    
+    public function addPrinter()
+    {
+        
+    }
     
     
 }
