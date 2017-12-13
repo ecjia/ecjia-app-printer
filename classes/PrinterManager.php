@@ -40,7 +40,7 @@ class PrinterManager
         	$req->setOauthPrintStatus($oauth_printStatus);
         });
         
-        dd($resp);
+        return $resp;
     }
     
     
