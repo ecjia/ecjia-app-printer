@@ -78,7 +78,57 @@ class PrinterManager
         return $resp;
     }
     
+    /**
+     * 关机
+     * @param string $machine_code
+     */
+    public function shutdown($machine_code)
+    {
+        $resp = $this->printer->request('yly/printer/shutdownrestart', function ($req) use ($machine_code) {
+            $req->setMachineCode($machine_code);
+            $req->setResponseType('shutdown');
+        });
+        
+        return $resp;
+    }
     
+    /**
+     * 重启
+     * @param string $machine_code
+     */
+    public function restart($machine_code)
+    {
+        $resp = $this->printer->request('yly/printer/shutdownrestart', function ($req) use ($machine_code) {
+            $req->setMachineCode($machine_code);
+            $req->setResponseType('restart');
+        });
+        
+        return $resp;
+    }
     
+    /**
+     * 上传LOGO
+     */
+    public function setIcon($machine_code, $img_url)
+    {
+        $resp = $this->printer->request('yly/printer/seticon', function ($req) use ($machine_code, $img_url) {
+            $req->setMachineCode($machine_code);
+            $req->setImgUrl($img_url);
+        });
+        
+        return $resp;
+    }
+    
+    /**
+     * 删除LOGO
+     */
+    public function deleteIcon($machine_code)
+    {
+        $resp = $this->printer->request('yly/printer/deleteicon', function ($req) use ($machine_code) {
+            $req->setMachineCode($machine_code);
+        });
+        
+        return $resp;
+    }
     
 }
