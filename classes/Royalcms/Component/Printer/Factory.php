@@ -148,7 +148,8 @@ class Factory
         try {
             return call_user_func_array([$client, 'execute'], [$request]);
         } catch (Exception $e) {
-            return new RC_Error('royalcms_printer_exception', $e->message());
+            RC_Error::add('royalcms_printer_exception', $e->message());
+            return royalcms('error');
         }
     }
 }
