@@ -49,7 +49,7 @@ defined('IN_ECJIA') or exit('No permission resources.');
 /**
  * 打印机回调通知
  */
-class callback extends ecjia_admin
+class callback extends ecjia_front
 {
     public function __construct()
     {
@@ -68,7 +68,20 @@ class callback extends ecjia_admin
      * 打印完成推送地址
      */
     public function status_push() {
+        $notify_name = $this->request->input('notify_name');
+        $machine_code = $this->request->input('machine_code');
+        $online = $this->request->input('online');
+        $push_time = $this->request->input('push_time');
+        $sign = $this->request->input('sign');
         
+        if (ecjia_printer::verifySign(['notify_name' => $notify_name, 'push_time' => $push_time], $sign)) {
+            if ($notify_name == 'printer_print_status') {
+                ecjia_printer::statusPush($machine_code, $online, $push_time);
+                echo json_encode(['data' => 'OK']);
+            }
+        } else {
+            echo json_encode(['data' => '签名无效']);
+        }
     }
     
     /**

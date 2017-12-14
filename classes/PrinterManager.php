@@ -3,6 +3,8 @@
 namespace Ecjia\App\Printer;
 
 use ecjia_config;
+use RC_DB;
+use Royalcms\Component\Printer\HmacSign;
 
 class PrinterManager
 {
@@ -245,7 +247,34 @@ class PrinterManager
             $req->setOriginId($origin_id);
         });
     
-            return $resp;
+        return $resp;
+    }
+    
+    
+    /**
+     * 打印机状态推送更新
+     * @param string $machine_code
+     * @param string $online
+     * @param string $push_time
+     */
+    public function statusPush($machine_code, $online, $push_time)
+    {
+        return RC_DB::table('printer_machine')->where('machine_code', $machine_code)->update(['online_status' => $online, 'online_update_time' => $push_time]);
+    }
+    
+    /**
+     * 验证签名
+     * @param string $sign
+     */
+    public function verifySign(array $params, $sign)
+    {
+        $params['app_key'] = $this->appKey;
+        $mysign = HmacSign::generateSign($params, $this->appSecret);
+        if ($mysign === $sign) {
+            return true;
+        } else {
+            return false;
+        }
     }
     
 }
