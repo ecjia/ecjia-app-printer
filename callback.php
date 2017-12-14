@@ -73,7 +73,8 @@ class callback extends ecjia_front
         $online = $this->request->input('online');
         $push_time = $this->request->input('push_time');
         $sign = $this->request->input('sign');
-        RC_Logger::getLogger('error')->debug($this->request->all());
+        //RC_Logger::getLogger('error')->debug($this->request->all());
+        
         if (ecjia_printer::verifySign(['notify_name' => $notify_name, 'push_time' => $push_time], $sign)) {
             if ($notify_name == 'printer_print_status') {
                 ecjia_printer::statusPush($machine_code, $online, $push_time);
