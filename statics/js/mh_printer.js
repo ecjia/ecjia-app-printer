@@ -12,18 +12,18 @@
         form: function () {
         	 var option = {
                  rules: {
-                	 printer_code: {
+                	 machine_code: {
                          required: true
                      },
-                     printer_key: {
+                     machine_key: {
                          required: true
                      }
                  },
                  messages: {
-                	 printer_code: {
+                	 machine_code: {
                          required: "请输入终端编号"
                      },
-                     printer_key: {
+                     machine_key: {
                          required: "请输入终端密钥"
                      }
                  },
@@ -86,10 +86,10 @@
         			i = $this.children('i').attr('class');
 
         		if (i == 'fontello-icon-eye') {
-        			$this.parent().find('.printer_key').html(value);
+        			$this.parent().find('.machine_key').html(value);
         			$this.children('i').attr('class', 'fontello-icon-eye-off')
         		} else {
-        			$this.parent().find('.printer_key').html(key);
+        			$this.parent().find('.machine_key').html(key);
         			$this.children('i').attr('class', 'fontello-icon-eye')
         		}
         	});

@@ -41,7 +41,7 @@
                             		<a class="data-pjax" href="javascript:;">重新打印</a>
                             	</div>
                             </td>
-                            <td>{$list.printer_name}</td>
+                            <td>{$list.machine_name}</td>
                             <td>{$list.content}</td>
                             <td>{RC_Time::local_date('Y-m-d H:i:s', $list['print_time'])}</td>
                             <td>

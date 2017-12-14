@@ -147,7 +147,7 @@ class admin_store_printer extends ecjia_admin
         $this->assign('ur_here', $store['merchants_name'] . ' - ' . '添加小票机');
         $this->assign('form_action', RC_Uri::url('printer/admin_store_printer/insert', array('store_id' => $store_id)));
 
-       	$this->assign('printer_name', $store['merchants_name'].'小票机');
+       	$this->assign('machine_name', $store['merchants_name'].'小票机');
         $this->assign('add_url', RC_Uri::url('printer/admin_store_printer/add', array('store_id' => $store_id)));
         $this->display('printer_edit.dwt');
     }
@@ -159,62 +159,62 @@ class admin_store_printer extends ecjia_admin
     {
         $this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
 
-        $printer_name   = !empty($_POST['printer_name']) ? trim($_POST['printer_name']) : '';
-        $printer_code   = !empty($_POST['printer_code']) ? trim($_POST['printer_code']) : '';
-        $printer_key    = !empty($_POST['printer_key']) ? trim($_POST['printer_key']) : '';
-        $printer_mobile = !empty($_POST['printer_mobile']) ? trim($_POST['printer_mobile']) : '';
+        $machine_name   = !empty($_POST['machine_name']) ? trim($_POST['machine_name']) : '';
+        $machine_code   = !empty($_POST['machine_code']) ? trim($_POST['machine_code']) : '';
+        $machine_key    = !empty($_POST['machine_key']) ? trim($_POST['machine_key']) : '';
+        $machine_mobile = !empty($_POST['machine_mobile']) ? trim($_POST['machine_mobile']) : '';
 
         $store_id = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
         if (empty($store_id)) {
             return $this->showmessage(__('请选择您要操作的店铺'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
 
-        if (empty($printer_name)) {
+        if (empty($machine_name)) {
         	$this->showmessage('请输入小票机名称', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         
-        if (empty($printer_code)) {
+        if (empty($machine_code)) {
             $this->showmessage('请输入终端编号', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
-        if (empty($printer_key)) {
+        if (empty($machine_key)) {
             $this->showmessage('请输入终端密钥', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
 
-        $count = RC_DB::table('printer_machine')->where('printer_code', $printer_code)->count();
+        $count = RC_DB::table('printer_machine')->where('machine_code', $machine_code)->count();
         if ($count != 0) {
             $this->showmessage('该终端编号已存在', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         $data = array(
             'store_id'       => $store_id,
-            'printer_name'   => $printer_name,
-            'printer_code'   => $printer_code,
-            'printer_key'    => $printer_key,
-            'printer_mobile' => $printer_mobile,
+            'machine_name'   => $machine_name,
+            'machine_code'   => $machine_code,
+            'machine_key'    => $machine_key,
+            'machine_mobile' => $machine_mobile,
             'add_time'       => RC_Time::gmtime(),
         );
         
 		//添加小票机
-        $rs = ecjia_printer::addPrinter($printer_name, $printer_code, $printer_key, $printer_mobile);
+        $rs = ecjia_printer::addPrinter($machine_name, $machine_code, $machine_key, $machine_mobile);
         if (is_ecjia_error($rs)) {
         	return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         $id = RC_DB::table('printer_machine')->insertGetId($data);
         
         //小票机版本和打印宽度
-        $res = ecjia_printer::getPrintInfo($printer_code);
+        $res = ecjia_printer::getPrintInfo($machine_code);
         if (is_ecjia_error($res)) {
         	return $this->showmessage($res->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         RC_DB::table('printer_machine')->where('id', $id)->update(array('version' => $res['version'], 'print_width' => $res['print_width']));
         
         //小票机软硬件版本
-       	$response = ecjia_printer::getVersion($printer_code);
+       	$response = ecjia_printer::getVersion($machine_code);
         if (is_ecjia_error($response)) {
         	return $this->showmessage($response->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         RC_DB::table('printer_machine')->where('id', $id)->update(array('hardware' => $response['hardware'], 'software' => $response['software']));
         
-        ecjia_admin::admin_log($printer_name, 'add', 'printer');
+        ecjia_admin::admin_log($machine_name, 'add', 'printer');
         $this->showmessage('添加成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_store_printer/init', array('store_id' => $store_id))));
     }
 
@@ -228,14 +228,14 @@ class admin_store_printer extends ecjia_admin
 
         $data = RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->first();
         
-        $rs = ecjia_printer::deletePrinter($data['printer_code']);
+        $rs = ecjia_printer::deletePrinter($data['machine_code']);
         if (is_ecjia_error($rs)) {
         	return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         
         RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->delete();
 
-        ecjia_admin::admin_log($data['printer_name'], 'remove', 'printer');
+        ecjia_admin::admin_log($data['machine_name'], 'remove', 'printer');
         $this->showmessage('删除成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_store_printer/init', array('store_id' => $store_id))));
     }
 
@@ -248,12 +248,12 @@ class admin_store_printer extends ecjia_admin
         $id       = intval($_GET['id']);
         $store    = RC_DB::table('store_franchisee')->where('store_id', $store_id)->first();
         $info     = RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->first();
-        if (!empty($info['printer_logo'])) {
-            $info['printer_logo'] = RC_Upload::upload_url($info['printer_logo']);
+        if (!empty($info['machine_logo'])) {
+            $info['machine_logo'] = RC_Upload::upload_url($info['machine_logo']);
         }
-        if (!empty($info['printer_key'])) {
-        	$len = strlen($info['printer_key']);
-        	$info['printer_key_star'] = substr_replace($info['printer_key'], str_repeat('*', $len), 0, $len);
+        if (!empty($info['machine_key'])) {
+        	$len = strlen($info['machine_key']);
+        	$info['machine_key_star'] = substr_replace($info['machine_key'], str_repeat('*', $len), 0, $len);
         }
         
         ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here($store['merchants_name'], RC_Uri::url('store/admin/preview', array('store_id' => $store_id))));
@@ -271,7 +271,7 @@ class admin_store_printer extends ecjia_admin
         $this->assign('statics_url', $statics_url);
         $this->assign('control_url', RC_Uri::url('printer/admin_store_printer/voice_control', array('id' => $id, 'store_id' => $store_id)));
 
-        $count = $this->get_print_count($store_id, $info['printer_code']);
+        $count = $this->get_print_count($store_id, $info['machine_code']);
         $this->assign('count', $count);
 
         $this->display('printer_view.dwt');
@@ -286,7 +286,7 @@ class admin_store_printer extends ecjia_admin
         $id       = !empty($_GET['id']) ? intval($_GET['id']) : 0;
         
         $data = RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->first();
-        $rs = ecjia_printer::cancelAll($data['printer_code']);
+        $rs = ecjia_printer::cancelAll($data['machine_code']);
         if (is_ecjia_error($rs)) {
         	return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
@@ -303,7 +303,7 @@ class admin_store_printer extends ecjia_admin
 		
         $data = RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->first();
         
-        $rs = ecjia_printer::shutdown($data['printer_code']);
+        $rs = ecjia_printer::shutdown($data['machine_code']);
         if (is_ecjia_error($rs)) {
         	return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
@@ -322,7 +322,7 @@ class admin_store_printer extends ecjia_admin
     	
     	$data = RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->first();
     	
-    	$rs = ecjia_printer::restart($data['printer_code']);
+    	$rs = ecjia_printer::restart($data['machine_code']);
     	if (is_ecjia_error($rs)) {
     		return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
     	}
@@ -350,7 +350,7 @@ class admin_store_printer extends ecjia_admin
         } else {
         	$response_type = $data['voice_type'];
         }
-        $rs = ecjia_printer::setSound($data['printer_code'], $response_type, $voice);
+        $rs = ecjia_printer::setSound($data['machine_code'], $response_type, $voice);
         if (is_ecjia_error($rs)) {
         	return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
@@ -382,7 +382,7 @@ class admin_store_printer extends ecjia_admin
        	$order_sn = date('YmdHis') . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);
 
        	$content = "<MN>$print_number</MN>".$content;
-       	$rs = ecjia_printer::printSend($data['printer_code'], $content, $order_sn);
+       	$rs = ecjia_printer::printSend($data['machine_code'], $content, $order_sn);
         if (is_ecjia_error($rs)) {
         	return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
@@ -425,31 +425,31 @@ class admin_store_printer extends ecjia_admin
 
     }
 
-    public function edit_printer_name()
+    public function edit_machine_name()
     {
         $this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
 
         $id           = !empty($_POST['pk']) ? intval($_POST['pk']) : 0;
-        $printer_name = !empty($_POST['value']) ? trim($_POST['value']) : '';
-        if (empty($printer_name)) {
+        $machine_name = !empty($_POST['value']) ? trim($_POST['value']) : '';
+        if (empty($machine_name)) {
             return $this->showmessage('请输入小票机名称', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
-        RC_DB::table('printer_machine')->where('id', $id)->update(array('printer_name' => $printer_name));
+        RC_DB::table('printer_machine')->where('id', $id)->update(array('machine_name' => $machine_name));
 
-        ecjia_admin::admin_log($printer_name, 'edit', 'printer_name');
+        ecjia_admin::admin_log($machine_name, 'edit', 'machine_name');
         $this->showmessage('小票机名称修改成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
     }
 
-    public function edit_printer_mobile()
+    public function edit_machine_mobile()
     {
         $this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
 
         $id             = !empty($_POST['pk']) ? intval($_POST['pk']) : 0;
-        $printer_mobile = !empty($_POST['value']) ? trim($_POST['value']) : '';
-        if (empty($printer_mobile)) {
+        $machine_mobile = !empty($_POST['value']) ? trim($_POST['value']) : '';
+        if (empty($machine_mobile)) {
             return $this->showmessage('请输入手机卡号', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
-        RC_DB::table('printer_machine')->where('id', $id)->update(array('printer_mobile' => $printer_mobile));
+        RC_DB::table('printer_machine')->where('id', $id)->update(array('machine_mobile' => $machine_mobile));
         $this->showmessage('手机卡号修改成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
     }
 
@@ -461,9 +461,9 @@ class admin_store_printer extends ecjia_admin
         $id       = !empty($_POST['id']) ? intval($_POST['id']) : 0;
 
         /* 处理上传的LOGO图片 */
-        if ((isset($_FILES['printer_logo']['error']) && $_FILES['printer_logo']['error'] == 0) || (!isset($_FILES['printer_logo']['error']) && isset($_FILES['printer_logo']['tmp_name']) && $_FILES['printer_logo']['tmp_name'] != 'none')) {
+        if ((isset($_FILES['machine_logo']['error']) && $_FILES['machine_logo']['error'] == 0) || (!isset($_FILES['machine_logo']['error']) && isset($_FILES['machine_logo']['tmp_name']) && $_FILES['machine_logo']['tmp_name'] != 'none')) {
             $upload     = RC_Upload::uploader('image', array('save_path' => 'data/printer', 'auto_sub_dirs' => false));
-            $image_info = $upload->upload($_FILES['printer_logo']);
+            $image_info = $upload->upload($_FILES['machine_logo']);
 
             if (!empty($image_info)) {
                 $file_name = $upload->get_position($image_info);
@@ -474,21 +474,21 @@ class admin_store_printer extends ecjia_admin
 
         $info = RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->first();
         if (!empty($file_name)) {
-        	$rs = ecjia_printer::setIcon($info['printer_code'], RC_Upload::upload_url($file_name));
+        	$rs = ecjia_printer::setIcon($info['machine_code'], RC_Upload::upload_url($file_name));
         	if (is_ecjia_error($rs)) {
         		return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         	}
             //删除旧logo
-            if (!empty($info['printer_logo'])) {
+            if (!empty($info['machine_logo'])) {
                 $disk = RC_Filesystem::disk();
-                $disk->delete(RC_Upload::upload_path() . $info['printer_logo']);
+                $disk->delete(RC_Upload::upload_path() . $info['machine_logo']);
             }
         } else {
-            $file_name = $info['printer_logo'];
+            $file_name = $info['machine_logo'];
         }
         
-        ecjia_admin::admin_log($info['printer_logo'], 'edit', 'printer_logo');
-        RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->update(array('printer_logo' => $file_name));
+        ecjia_admin::admin_log($info['machine_logo'], 'edit', 'machine_logo');
+        RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->update(array('machine_logo' => $file_name));
         $this->showmessage('上传成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_store_printer/view', array('id' => $id, 'store_id' => $store_id))));
     }
 
@@ -500,39 +500,39 @@ class admin_store_printer extends ecjia_admin
         $id       = !empty($_GET['id']) ? intval($_GET['id']) : 0;
 
         $info = RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->first();
-        if (!empty($info['printer_logo'])) {
-        	$rs = ecjia_printer::deleteIcon($info['printer_code']);
+        if (!empty($info['machine_logo'])) {
+        	$rs = ecjia_printer::deleteIcon($info['machine_code']);
         	if (is_ecjia_error($rs)) {
         		return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         	}
             $disk = RC_Filesystem::disk();
-            $disk->delete(RC_Upload::upload_path() . $info['printer_logo']);
+            $disk->delete(RC_Upload::upload_path() . $info['machine_logo']);
         }
 
-        RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->update(array('printer_logo' => ''));
+        RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->update(array('machine_logo' => ''));
 
-        ecjia_admin::admin_log($info['printer_logo'], 'remove', 'printer_logo');
+        ecjia_admin::admin_log($info['machine_logo'], 'remove', 'machine_logo');
         $this->showmessage('删除成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_store_printer/view', array('id' => $id, 'store_id' => $store_id))));
     }
 
     private function get_record_list()
     {
         $db_printer_view = RC_DB::table('printer_printlist as p')
-            ->leftJoin('printer_machine as m', RC_DB::raw('p.printer_code'), '=', RC_DB::raw('m.printer_code'));
+            ->leftJoin('printer_machine as m', RC_DB::raw('p.machine_code'), '=', RC_DB::raw('m.machine_code'));
 
         $count = $db_printer_view->count();
         $page  = new ecjia_page($count, 10, 5);
-        $data  = $db_printer_view->selectRaw('p.*, m.printer_name')->take(10)->skip($page->start_id - 1)->orderBy('id', 'desc')->get();
+        $data  = $db_printer_view->selectRaw('p.*, m.machine_name')->take(10)->skip($page->start_id - 1)->orderBy('id', 'desc')->get();
 
         return array('item' => $data, 'page' => $page->show(2), 'desc' => $page->page_desc());
     }
 
-    private function get_print_count($store_id, $printer_code)
+    private function get_print_count($store_id, $machine_code)
     {
         $week_start_time     = RC_Time::local_mktime(0, 0, 0, RC_Time::local_date("m"), RC_Time::local_date("d") - RC_Time::local_date("w") + 1, RC_Time::local_date("Y"));
         $count['week_count'] = RC_DB::table('printer_printlist')
             ->where('store_id', $store_id)
-            ->where('printer_code', $printer_code)
+            ->where('machine_code', $machine_code)
             ->where('status', 1)
             ->where('print_time', '>', $week_start_time)
             ->where('print_time', '<', RC_Time::gmtime())
@@ -542,14 +542,14 @@ class admin_store_printer extends ecjia_admin
         $start                      = RC_Time::local_mktime(0, 0, 0, RC_Time::local_date("m", $now), RC_Time::local_date("d", $now), RC_Time::local_date("Y", $now));
         $count['today_print_count'] = RC_DB::table('printer_printlist')
             ->where('store_id', $store_id)
-            ->where('printer_code', $printer_code)
+            ->where('machine_code', $machine_code)
             ->where('status', 1)
             ->where('print_time', '>', $start)
             ->where('print_time', '<', RC_Time::gmtime())
             ->SUM('print_count');
         $count['today_unprint_count'] = RC_DB::table('printer_printlist')
             ->where('store_id', $store_id)
-            ->where('printer_code', $printer_code)
+            ->where('machine_code', $machine_code)
             ->where('status', '!=', 1)
             ->where('print_time', '>', $start)
             ->where('print_time', '<', RC_Time::gmtime())

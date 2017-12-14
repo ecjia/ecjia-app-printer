@@ -28,9 +28,9 @@
         			<!-- {foreach from=$list item=val} -->
         			<li class="thumbnail">
         				<div class="top">
-        					<img src="{$statics_url}images/printer_logo.png" />
+        					<img src="{$statics_url}images/machine_logo.png" />
         					<div class="top_right">
-        						<span class="name">{$val.printer_name}</span>
+        						<span class="name">{$val.machine_name}</span>
         						{if $val.online_status eq 1}
         						<span class="status">在线</span>
         						{else if $val.online_status eq 2}
@@ -41,7 +41,7 @@
         					</div>
         				</div>
         				<div class="bottom">
-        					<div class="bottom-item">终端编号&nbsp;&nbsp;{$val.printer_code}</div>
+        					<div class="bottom-item">终端编号&nbsp;&nbsp;{$val.machine_code}</div>
         					<div class="bottom-item">打印机型&nbsp;&nbsp;{$val.version}</div>
         					<div class="bottom-item">添加日期&nbsp;&nbsp;{RC_Time::local_date('Y-m-d H:i:s', $val['add_time'])}</div>
         				</div>
