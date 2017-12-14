@@ -80,7 +80,7 @@ class callback extends ecjia_front
                 echo json_encode(['data' => 'OK']);
             }
         } else {
-            echo json_encode(['data' => '签名无效']);
+            echo json_encode(['data' => 'Invalid signature']);
         }
     }
     
