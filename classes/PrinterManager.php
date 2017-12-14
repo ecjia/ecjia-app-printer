@@ -4,6 +4,7 @@ namespace Ecjia\App\Printer;
 
 use ecjia_config;
 use RC_DB;
+use Exception;
 use Royalcms\Component\Printer\HmacSign;
 
 class PrinterManager
@@ -35,17 +36,21 @@ class PrinterManager
      */
     public function setNotify($finish = null, $getOrder = null, $printStatus = null)
     {
-        $oauth_finish = $finish ?: ecjia_config::get('printer_print_push');
-        $oauth_getOrder = $getOrder ?: ecjia_config::get('printer_order_push');
-        $oauth_printStatus = $printStatus ?: ecjia_config::get('printer_status_push');
-        
-        $resp = $this->printer->request('yly/printer/setnotify', function ($req) use ($oauth_finish, $oauth_getOrder, $oauth_printStatus) {
-        	$req->setOauthFinish($oauth_finish);
-        	$req->setOauthGetOrder($oauth_getOrder);
-        	$req->setOauthPrintStatus($oauth_printStatus);
-        });
-        
-        return $resp;
+        try {
+            $oauth_finish = $finish ?: ecjia_config::get('printer_print_push');
+            $oauth_getOrder = $getOrder ?: ecjia_config::get('printer_order_push');
+            $oauth_printStatus = $printStatus ?: ecjia_config::get('printer_status_push');
+            
+            $resp = $this->printer->request('yly/printer/setnotify', function ($req) use ($oauth_finish, $oauth_getOrder, $oauth_printStatus) {
+            	$req->setOauthFinish($oauth_finish);
+            	$req->setOauthGetOrder($oauth_getOrder);
+            	$req->setOauthPrintStatus($oauth_printStatus);
+            });
+            
+            return $resp;
+        } catch (Exception $e) {
+            return RC_Error::make('ecjia_printer_set_notify', $e->getMessage());
+        }
     }
     
     /**
@@ -57,14 +62,18 @@ class PrinterManager
      */
     public function addPrinter($print_name, $machine_code, $machine_secret, $phone = '')
     {
-        $resp = $this->printer->request('yly/printer/addprinter', function ($req) use ($print_name, $machine_code, $machine_secret, $phone) {
-            $req->setMachineCode($machine_code);
-            $req->setMsign($machine_secret);
-            $req->setPhone($phone);
-            $req->setPrintName($print_name);
-        });
-        
-        return $resp;
+        try {
+            $resp = $this->printer->request('yly/printer/addprinter', function ($req) use ($print_name, $machine_code, $machine_secret, $phone) {
+                $req->setMachineCode($machine_code);
+                $req->setMsign($machine_secret);
+                $req->setPhone($phone);
+                $req->setPrintName($print_name);
+            });
+            
+            return $resp;
+        } catch (Exception $e) {
+            return RC_Error::make('ecjia_printer_add_printer', $e->getMessage());
+        }
     }
     
     /**
@@ -73,11 +82,15 @@ class PrinterManager
      */
     public function deletePrinter($machine_code)
     {
-        $resp = $this->printer->request('yly/printer/deleteprinter', function ($req) use ($machine_code) {
-            $req->setMachineCode($machine_code);
-        });
-        
-        return $resp;
+        try {
+            $resp = $this->printer->request('yly/printer/deleteprinter', function ($req) use ($machine_code) {
+                $req->setMachineCode($machine_code);
+            });
+            
+            return $resp;
+        } catch (Exception $e) {
+            return RC_Error::make('ecjia_printer_delete_printer', $e->getMessage());
+        }
     }
     
     /**
@@ -86,12 +99,16 @@ class PrinterManager
      */
     public function shutdown($machine_code)
     {
-        $resp = $this->printer->request('yly/printer/shutdownrestart', function ($req) use ($machine_code) {
-            $req->setMachineCode($machine_code);
-            $req->setResponseType('shutdown');
-        });
-        
-        return $resp;
+        try {
+            $resp = $this->printer->request('yly/printer/shutdownrestart', function ($req) use ($machine_code) {
+                $req->setMachineCode($machine_code);
+                $req->setResponseType('shutdown');
+            });
+            
+            return $resp;
+        } catch (Exception $e) {
+            return RC_Error::make('ecjia_printer_shutdown_restart', $e->getMessage());
+        }
     }
     
     /**
@@ -100,12 +117,16 @@ class PrinterManager
      */
     public function restart($machine_code)
     {
-        $resp = $this->printer->request('yly/printer/shutdownrestart', function ($req) use ($machine_code) {
-            $req->setMachineCode($machine_code);
-            $req->setResponseType('restart');
-        });
-        
-        return $resp;
+        try {
+            $resp = $this->printer->request('yly/printer/shutdownrestart', function ($req) use ($machine_code) {
+                $req->setMachineCode($machine_code);
+                $req->setResponseType('restart');
+            });
+            
+            return $resp;
+        } catch (Exception $e) {
+            return RC_Error::make('ecjia_printer_shutdown_restart', $e->getMessage());
+        }
     }
     
     /**
@@ -113,12 +134,16 @@ class PrinterManager
      */
     public function setIcon($machine_code, $img_url)
     {
-        $resp = $this->printer->request('yly/printer/seticon', function ($req) use ($machine_code, $img_url) {
-            $req->setMachineCode($machine_code);
-            $req->setImgUrl($img_url);
-        });
-        
-        return $resp;
+        try {
+            $resp = $this->printer->request('yly/printer/seticon', function ($req) use ($machine_code, $img_url) {
+                $req->setMachineCode($machine_code);
+                $req->setImgUrl($img_url);
+            });
+            
+            return $resp;
+        } catch (Exception $e) {
+            return RC_Error::make('ecjia_printer_set_icon', $e->getMessage());
+        }
     }
     
     /**
@@ -126,11 +151,15 @@ class PrinterManager
      */
     public function deleteIcon($machine_code)
     {
-        $resp = $this->printer->request('yly/printer/deleteicon', function ($req) use ($machine_code) {
-            $req->setMachineCode($machine_code);
-        });
-        
-        return $resp;
+        try {
+            $resp = $this->printer->request('yly/printer/deleteicon', function ($req) use ($machine_code) {
+                $req->setMachineCode($machine_code);
+            });
+            
+            return $resp;
+        } catch (Exception $e) {
+            return RC_Error::make('ecjia_printer_delete_icon', $e->getMessage());
+        }
     }
     
     
@@ -139,11 +168,15 @@ class PrinterManager
      */
     public function getVersion($machine_code)
     {
-        $resp = $this->printer->request('yly/printer/getversion', function ($req) use ($machine_code) {
-            $req->setMachineCode($machine_code);
-        });
-    
-        return $resp;
+        try {
+            $resp = $this->printer->request('yly/printer/getversion', function ($req) use ($machine_code) {
+                $req->setMachineCode($machine_code);
+            });
+        
+            return $resp;
+        } catch (Exception $e) {
+            return RC_Error::make('ecjia_printer_get_version', $e->getMessage());
+        }
     }
     
     
@@ -152,11 +185,15 @@ class PrinterManager
      */
     public function cancelAll($machine_code)
     {
-        $resp = $this->printer->request('yly/printer/cancelall', function ($req) use ($machine_code) {
-            $req->setMachineCode($machine_code);
-        });
-    
-        return $resp;
+        try {
+            $resp = $this->printer->request('yly/printer/cancelall', function ($req) use ($machine_code) {
+                $req->setMachineCode($machine_code);
+            });
+        
+            return $resp;
+        } catch (Exception $e) {
+            return RC_Error::make('ecjia_printer_cancel_all', $e->getMessage());
+        }
     }
     
     
@@ -165,12 +202,16 @@ class PrinterManager
      */
     public function cancelOne($machine_code, $order_id)
     {
-        $resp = $this->printer->request('yly/printer/cancelone', function ($req) use ($machine_code, $order_id) {
-            $req->setMachineCode($machine_code);
-            $req->setOrderId($order_id);
-        });
-    
-        return $resp;
+        try {
+            $resp = $this->printer->request('yly/printer/cancelone', function ($req) use ($machine_code, $order_id) {
+                $req->setMachineCode($machine_code);
+                $req->setOrderId($order_id);
+            });
+        
+            return $resp;
+        } catch (Exception $e) {
+            return RC_Error::make('ecjia_printer_cancel_one', $e->getMessage());
+        }
     }
     
     
@@ -180,12 +221,16 @@ class PrinterManager
      */
     public function openGetOrder($machine_code)
     {
-        $resp = $this->printer->request('yly/printer/getorder', function ($req) use ($machine_code) {
-            $req->setMachineCode($machine_code);
-            $req->setResponseType('open');
-        });
-    
-        return $resp;
+        try {
+            $resp = $this->printer->request('yly/printer/getorder', function ($req) use ($machine_code) {
+                $req->setMachineCode($machine_code);
+                $req->setResponseType('open');
+            });
+        
+            return $resp;
+        } catch (Exception $e) {
+            return RC_Error::make('ecjia_printer_get_order', $e->getMessage());
+        }
     }
     
     
@@ -195,12 +240,16 @@ class PrinterManager
      */
     public function closeGetOrder($machine_code)
     {
-        $resp = $this->printer->request('yly/printer/getorder', function ($req) use ($machine_code) {
-            $req->setMachineCode($machine_code);
-            $req->setResponseType('close');
-        });
-    
-        return $resp;
+        try {
+            $resp = $this->printer->request('yly/printer/getorder', function ($req) use ($machine_code) {
+                $req->setMachineCode($machine_code);
+                $req->setResponseType('close');
+            });
+        
+            return $resp;
+        } catch (Exception $e) {
+            return RC_Error::make('ecjia_printer_get_order', $e->getMessage());
+        }
     }
     
     /**
@@ -209,11 +258,15 @@ class PrinterManager
      */
     public function getPrintInfo($machine_code)
     {
-        $resp = $this->printer->request('yly/printer/printinfo', function ($req) use ($machine_code) {
-            $req->setMachineCode($machine_code);
-        });
-    
-        return $resp;
+        try {
+            $resp = $this->printer->request('yly/printer/printinfo', function ($req) use ($machine_code) {
+                $req->setMachineCode($machine_code);
+            });
+        
+            return $resp;
+        } catch (Exception $e) {
+            return RC_Error::make('ecjia_printer_print_info', $e->getMessage());
+        }
     }
     
     /**
@@ -224,13 +277,17 @@ class PrinterManager
      */
     public function setSound($machine_code, $response_type, $voice)
     {
-        $resp = $this->printer->request('yly/printer/setsound', function ($req) use ($machine_code, $response_type, $voice) {
-            $req->setMachineCode($machine_code);
-            $req->setResponseType($response_type);
-            $req->setVoice($voice);
-        });
-    
-        return $resp;
+        try {
+            $resp = $this->printer->request('yly/printer/setsound', function ($req) use ($machine_code, $response_type, $voice) {
+                $req->setMachineCode($machine_code);
+                $req->setResponseType($response_type);
+                $req->setVoice($voice);
+            });
+        
+            return $resp;
+        } catch (Exception $e) {
+            return RC_Error::make('ecjia_printer_set_sound', $e->getMessage());
+        }
     }
     
     /**
@@ -241,13 +298,17 @@ class PrinterManager
      */
     public function printSend($machine_code, $content, $origin_id)
     {
-        $resp = $this->printer->request('yly/print/index', function ($req) use ($machine_code, $content, $origin_id) {
-            $req->setMachineCode($machine_code);
-            $req->setContent($content);
-            $req->setOriginId($origin_id);
-        });
-    
-        return $resp;
+        try {
+            $resp = $this->printer->request('yly/print/index', function ($req) use ($machine_code, $content, $origin_id) {
+                $req->setMachineCode($machine_code);
+                $req->setContent($content);
+                $req->setOriginId($origin_id);
+            });
+        
+            return $resp;
+        } catch (Exception $e) {
+            return RC_Error::make('ecjia_printer_print_send', $e->getMessage());
+        }
     }
     
     
@@ -278,3 +339,5 @@ class PrinterManager
     }
     
 }
+
+// end

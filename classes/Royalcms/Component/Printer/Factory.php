@@ -142,13 +142,8 @@ class Factory
             call_user_func($callable, $request);
         }
         
-        try {
-            // E. 创建CLIENT对象
-            $client = new Client(new App($this->config));
-            return $client->execute($request);
-//             return call_user_func_array([$client, 'execute'], [$request]);
-        } catch (Exception $e) {
-            return RC_Error::make('royalcms_printer_exception', $e->getMessage());
-        }
+        // E. 创建CLIENT对象
+        $client = new Client(new App($this->config));
+        return $client->execute($request);
     }
 }
