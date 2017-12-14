@@ -517,11 +517,6 @@ class mh_print extends ecjia_merchant
 
     }
 
-    public function print_order()
-    {
-
-    }
-
     private function get_record_list()
     {
         $db_printer_view = RC_DB::table('printer_printlist as p')
