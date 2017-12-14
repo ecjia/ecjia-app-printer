@@ -232,7 +232,7 @@ class PrinterManager
     }
     
     /**
-     * 音量调节接口
+     * 打印接口
      * @param string $machine_code
      * @param string $content 打印内容，排版指令详见打印机指令
      * @param string $origin_id 订单号
