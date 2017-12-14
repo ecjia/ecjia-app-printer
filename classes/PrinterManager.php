@@ -321,7 +321,7 @@ class PrinterManager
      */
     public function statusPush($machine_code, $online, $push_time)
     {
-        return RC_DB::table('printer_machine')->where('machine_code', $machine_code)->update(['online_status' => $online, 'online_update_time' => $push_time]);
+        return RC_DB::table('printer_machine')->where('machine_code', $machine_code)->update(['online_status' => $online, 'online_update_time' => \RC_Time::gmtime()]);
     }
     
     /**
