@@ -5,7 +5,7 @@ namespace Royalcms\Component\Printer\Commands;
 use Royalcms\Component\Printer\Contracts\Command;
 use Royalcms\Component\Printer\Request;
 
-class PrinterAddPrinter extends Request implements Command
+class PrintIndex extends Request implements Command
 {
     
     /**
