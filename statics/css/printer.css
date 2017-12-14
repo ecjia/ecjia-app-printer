@@ -248,7 +248,9 @@
 .voice_type .toggle-button label,.voice_type .toggle-button span {
 	-webkit-box-sizing: content-box;
 	-moz-box-sizing: content-box;
-	box-sizing: content-box
+	box-sizing: content-box;
+	padding-left: 0;
+    padding-right: 2px;
 }
 
 .voice_type .label_type {

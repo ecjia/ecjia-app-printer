@@ -213,8 +213,10 @@
 	box-sizing: content-box
 }
 
+#testPrint .form-horizontal {
+	margin: 0 10px;
+}
+
 textarea.form-control.test_textarea {
-	width: 95%;
-    margin: 0 auto;
 	height: 150px;
 }    

@@ -11,7 +11,7 @@
 		<h2><!-- {if $ur_here}{$ur_here}{/if} --></h2>
   	</div>
   	<div class="pull-right">
-		<a class="btn btn-primary data-pjax plus_or_reply" id="sticky_a" href='{url path="printer/mh_print/view" args="id={$info.id}"}'>刷新打印机状态</a>
+		<a class="btn btn-primary data-pjax plus_or_reply" id="sticky_a" href='{url path="printer/mh_print/view" args="id={$info.id}"}'>刷新小票机状态</a>
   		{if $action_link}
 		<a href="{$action_link.href}" class="btn btn-primary data-pjax">
 			<i class="fa fa-reply"></i> {$action_link.text}
@@ -29,20 +29,20 @@
 				<div class="info_left">
 					<a data-toggle="modal" href="#uploadLogo"><img class="printer_logo" src="{if $info.printer_logo}{$info.printer_logo}{else}{$statics_url}images/click_upload.png{/if}" /></a>
 					<div class="left_bottom">
-						<a data-toggle="ajaxremove" data-msg="您确定要关闭该打印机吗？" href='{RC_Uri::url("printer/mh_print/close", "id={$info.id}")}'>
+						<a data-toggle="ajaxremove" data-msg="您确定要关闭该小票机吗？" href='{RC_Uri::url("printer/mh_print/close", "id={$info.id}")}'>
 							<img class="close_img" src="{$statics_url}images/close.png" />
 						</a>
-						<a class="data-pjax" href='{url path="printer/mh_print/view" args="id={$info.id}"}'>
+						<a data-toggle="ajaxremove" data-msg="您确定要重启该小票机吗？" href='{RC_Uri::url("printer/mh_print/restart", "id={$info.id}")}'>
 							<img class="refresh_img" src="{$statics_url}images/refresh.png" />
 						</a>
 					</div>
 				</div>
 				
 				<div class="info_right">
-					<span class="name cursor_pointer merchant_printer" data-trigger="editable" data-url="{RC_Uri::url('printer/mh_print/edit_printer_name')}" data-name="edit_printer_name" data-pk="{$info.id}" data-title="请输入打印机名称">{$info.printer_name}</span>
+					<span class="name cursor_pointer merchant_printer" data-trigger="editable" data-url="{RC_Uri::url('printer/mh_print/edit_printer_name')}" data-name="edit_printer_name" data-pk="{$info.id}" data-title="请输入小票机名称">{$info.printer_name}</span>
 					<div class="right-item">终端编号：{$info.printer_code}</div>
 					<div class="right-item">终端密钥：{$info.printer_key}</div>
-					<div class="right-item">手机卡号：<span class="cursor_pointer" data-trigger="editable" data-url="{RC_Uri::url('printer/mh_print/edit_printer_mobile')}" data-name="edit_printer_mobile" data-pk="{$info.id}" data-title="请输入手机卡号">{$info.printer_mobile}</span></div>
+					<div class="right-item">手机卡号：<span class="cursor_pointer" data-trigger="editable" data-url="{RC_Uri::url('printer/mh_print/edit_printer_mobile')}" data-name="edit_printer_mobile" data-pk="{$info.id}" data-title="请输入手机卡号" data-emptytext="暂无">{$info.printer_mobile}</span></div>
 					<div class="right-item">打印机型：{$info.version}</div>
 					<div class="right-item">添加时间：{RC_Time::local_date('Y-m-d H:i:s', $info['add_time'])}</div>
 				</div>
@@ -77,9 +77,9 @@
 			<div class="title">打印控制</div>
 			<div class="info_content">
 				<a class="btn btn-primary" data-toggle="ajaxremove" data-msg="您确定要取消所有未打印吗？" href='{RC_Uri::url("printer/mh_print/cancel", "id={$info.id}")}'>取消所有未打印</a>
-				<div class="help-block">取消后，此台打印机设备将不再打印剩下的所有订单</div>
+				<div class="help-block">取消后，此台小票机设备将不再打印剩下的所有订单</div>
 				<a class="btn btn-primary m_t10" data-toggle="modal" href="#testPrint">打印测试</a>
-				<div class="help-block">点击打印后可测试此台打印机是否可用</div>
+				<div class="help-block">点击打印后可测试此台小票机是否可用</div>
 			</div>
 		</div>
 		
@@ -111,7 +111,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button class="close" data-dismiss="modal">×</button>
-				<h3>上传打印LOGO</h3>
+				<h3>上传LOGO</h3>
 			</div>
 			<div class="modal-body form-horizontal">
 				<form class="form-horizontal" method="post" name="theForm" action="{url path='printer/mh_print/upload_logo'}">
@@ -130,7 +130,7 @@
 		                            <span class="fileupload-exists"> 修改</span>
 		                            <input type="file" class="default" name="printer_logo" />
 		                        </span>
-		                        <a class="btn btn-danger btn-sm fileupload-exists {if $info.printer_logo}remove_logo{/if}" {if $info.printer_logo}data-toggle="ajaxremove" data-msg="您确定要删除该打印机logo吗？"{else}data-dismiss="fileupload"{/if} data-href='{url path='printer/mh_print/del_file' args="id={$info.id}"}' >删除</a>
+		                        <a class="btn btn-danger btn-sm fileupload-exists {if $info.printer_logo}remove_logo{/if}" {if $info.printer_logo}data-toggle="ajaxremove" data-msg="您确定要删除该小票机logo吗？"{else}data-dismiss="fileupload"{/if} data-href='{url path='printer/mh_print/del_file' args="id={$info.id}"}' >删除</a>
 		                    </div>
 		                    <span class="help-block">推荐图片宽高：350px 文件大小：40kb</span>
 						</div>
@@ -150,15 +150,24 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button class="close" data-dismiss="modal">×</button>
-				<h3>上传打印LOGO</h3>
+				<h3>打印测试</h3>
 			</div>
 			<div class="modal-body form-horizontal">
 				<form class="form-horizontal" method="post" name="testForm" action="{url path='printer/mh_print/printer_test'}">
-					<div class="row">
-						<textarea name="content" class="test_textarea form-control" placeholder="请输入要打印的内容"></textarea>
-						<span class="help-block m_l15">点击打印后可测试此台打印机是否可用</span>
+					
+					<div class="form-group">
+						<label>打印份数：</label>
+						<div>
+							<input class="form-control" type="text" name="print_number" placeholder="请输入打印份数" value="1"/>
+							<span class="help-block">请输入1-9的整数，其他内容无效</span>
+						</div>
 					</div>
-					<div class="t_l m_t10">
+						
+					<div class="form-group">
+						<textarea name="content" class="test_textarea form-control" placeholder="请输入要打印的内容"></textarea>
+						<span class="help-block">点击打印后可测试此台小票机是否可用</span>
+					</div>
+					<div class="t_c m_t10">
 						<button class="btn btn-primary" type="submit">{t}确定{/t}</button>
 						<input type="hidden" name="id" value="{$info.id}"/>
 					</div>

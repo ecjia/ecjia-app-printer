@@ -100,7 +100,7 @@
 			                        <div class="form-group">
 			                        	<div class="col-lg-12">
 			                                <input class="btn btn-info" type="submit" value="保存打印模版">
-			                                <a class="btn btn-info m_l10 print_test" data-url="{$print_test}" data-type="{$smarty.get.type}">打印测试</a>
+			                                <a class="btn btn-info m_l10 print_test" data-url="{$print_order_ticker}" data-type="{$smarty.get.type}">打印测试</a>
 			                            </div>
 			                        </div>
 			                  	</form>

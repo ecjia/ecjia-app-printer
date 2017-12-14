@@ -21,8 +21,8 @@
                     <div class="setting-group">
                         <span class="setting-group-title"><i class="fa fa-gear"></i> 小票打印设置</span>
                         <ul class="nav nav-list m_t10 change">
-                        	<li class="nav-list-title">打印机管理</li>
-                        	<li><a class="setting-group-item data-pjax {if $type eq 'printer_manage'}llv-active{/if}" href='{url path="printer/mh_print/init"}'>打印机管理</a></li>
+                        	<li class="nav-list-title">小票机管理</li>
+                        	<li><a class="setting-group-item data-pjax {if $type eq 'printer_manage'}llv-active{/if}" href='{url path="printer/mh_print/init"}'>小票机管理</a></li>
                         	<li><a class="setting-group-item data-pjax m_t5 {if $type eq 'printer_record'}llv-active{/if}" href='{url path="printer/mh_print/record_list"}'>打印记录</a></li>
                         </ul>
                         <ul class="nav nav-list m_t10 change">
@@ -37,7 +37,7 @@
                 
                 <div class="col-lg-9">
                 	<h3 class="page-header">
-                    	<div class="pull-left">打印机列表</div>
+                    	<div class="pull-left">小票机列表</div>
 						<div class="clearfix"></div>
   					</h3>
 		  			<div class="printer_list wookmark">
