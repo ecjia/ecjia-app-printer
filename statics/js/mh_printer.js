@@ -60,7 +60,8 @@
                     }
                     var url = $('.info-toggle-button').attr('data-url');
                     var info = {
-                    	'type': type
+                    	'type': type,
+                    	'action': 'edit_type'
                     }
                    	$.post(url, info, function(data) {
                    		ecjia.merchant.showmessage(data);
@@ -92,33 +93,23 @@
 	                }
 	            });
 	            voiceSlider.noUiSlider.on('change', function ( values, handle ) {
+	            	$('.voice-slider-handle').attr("disabled", true);
 	            	var url = $('.info-toggle-button').attr('data-url');
-	            	if (values[handle] < 1 && v == 1) {
-	            		voiceSlider.noUiSlider.set(1);
-	            		return false;
-	            	} else if (values[handle] < 1) {
-	                    var info = {
-	                    	'voice': 1
-	                    }
-	                   	$.post(url, info, function(data) {
-	                   		ecjia.merchant.showmessage(data);
-	                   		if (data.state == 'success') {
-	                   			voiceSlider.noUiSlider.set(1);
-	                   			$('.voice_value').html(1);
-	                   		}
-	                   	});
-	                } else {
-	                	var voice = parseInt(values[handle]);
-	                    var info = {
-	                      'voice': voice
-	                    }
-	                   	$.post(url, info, function(data) {
-	                   		ecjia.merchant.showmessage(data);
-	                   		if (data.state == 'success') {
-	                   			$('.voice_value').html(voice);
-	                   		}
-	                   	});
-	                }
+                	var voice = parseInt(values[handle]);
+                	if (v == voice) {
+                		return false;
+                	}
+                    var info = {
+                      'voice': voice,
+                      'action': 'edit_voice'
+                    }
+                   	$.post(url, info, function(data) {
+                   		$('.voice-slider-handle').attr("disabled", false);
+                   		ecjia.merchant.showmessage(data);
+                   		if (data.state == 'success') {
+                   			$('.voice_value').html(voice);
+                   		}
+                   	});
 	            });
         	}
         },

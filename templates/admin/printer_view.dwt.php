@@ -104,7 +104,7 @@
 <div class="modal hide fade" id="uploadLogo">
 	<div class="modal-header">
 		<button class="close" data-dismiss="modal">×</button>
-		<h3>{t}上传打印LOGO{/t}</h3>
+		<h3>{t}上传LOGO{/t}</h3>
 	</div>
 	<div class="modal-body">
 		<div class="row-fluid">
