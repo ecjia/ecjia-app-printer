@@ -12,7 +12,7 @@ class HmacSign
      */
     public static function generateSign(array $params, $secret)
     {
-        return self::generateHmacSign($params);
+        return self::generateHmacSign($params, $secret);
     }
     
     
