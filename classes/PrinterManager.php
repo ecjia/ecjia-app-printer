@@ -3,6 +3,7 @@
 namespace Ecjia\App\Printer;
 
 use ecjia_config;
+use ecjia_error;
 use RC_DB;
 use Exception;
 use Royalcms\Component\Printer\HmacSign;
@@ -49,7 +50,7 @@ class PrinterManager
             
             return $resp;
         } catch (Exception $e) {
-            return RC_Error::make('ecjia_printer_set_notify', $e->getMessage());
+            return new ecjia_error('ecjia_printer_set_notify', $e->getMessage());
         }
     }
     
@@ -72,7 +73,7 @@ class PrinterManager
             
             return $resp;
         } catch (Exception $e) {
-            return RC_Error::make('ecjia_printer_add_printer', $e->getMessage());
+            return new ecjia_error('ecjia_printer_add_printer', $e->getMessage());
         }
     }
     
@@ -89,7 +90,7 @@ class PrinterManager
             
             return $resp;
         } catch (Exception $e) {
-            return RC_Error::make('ecjia_printer_delete_printer', $e->getMessage());
+            return new ecjia_error('ecjia_printer_delete_printer', $e->getMessage());
         }
     }
     
@@ -107,7 +108,7 @@ class PrinterManager
             
             return $resp;
         } catch (Exception $e) {
-            return RC_Error::make('ecjia_printer_shutdown_restart', $e->getMessage());
+            return new ecjia_error('ecjia_printer_shutdown_restart', $e->getMessage());
         }
     }
     
@@ -125,7 +126,7 @@ class PrinterManager
             
             return $resp;
         } catch (Exception $e) {
-            return RC_Error::make('ecjia_printer_shutdown_restart', $e->getMessage());
+            return new ecjia_error('ecjia_printer_shutdown_restart', $e->getMessage());
         }
     }
     
@@ -142,7 +143,7 @@ class PrinterManager
             
             return $resp;
         } catch (Exception $e) {
-            return RC_Error::make('ecjia_printer_set_icon', $e->getMessage());
+            return new ecjia_error('ecjia_printer_set_icon', $e->getMessage());
         }
     }
     
@@ -158,7 +159,7 @@ class PrinterManager
             
             return $resp;
         } catch (Exception $e) {
-            return RC_Error::make('ecjia_printer_delete_icon', $e->getMessage());
+            return new ecjia_error('ecjia_printer_delete_icon', $e->getMessage());
         }
     }
     
@@ -175,7 +176,7 @@ class PrinterManager
         
             return $resp;
         } catch (Exception $e) {
-            return RC_Error::make('ecjia_printer_get_version', $e->getMessage());
+            return new ecjia_error('ecjia_printer_get_version', $e->getMessage());
         }
     }
     
@@ -192,7 +193,7 @@ class PrinterManager
         
             return $resp;
         } catch (Exception $e) {
-            return RC_Error::make('ecjia_printer_cancel_all', $e->getMessage());
+            return new ecjia_error('ecjia_printer_cancel_all', $e->getMessage());
         }
     }
     
@@ -210,7 +211,7 @@ class PrinterManager
         
             return $resp;
         } catch (Exception $e) {
-            return RC_Error::make('ecjia_printer_cancel_one', $e->getMessage());
+            return new ecjia_error('ecjia_printer_cancel_one', $e->getMessage());
         }
     }
     
@@ -229,7 +230,7 @@ class PrinterManager
         
             return $resp;
         } catch (Exception $e) {
-            return RC_Error::make('ecjia_printer_get_order', $e->getMessage());
+            return new ecjia_error('ecjia_printer_get_order', $e->getMessage());
         }
     }
     
@@ -248,7 +249,7 @@ class PrinterManager
         
             return $resp;
         } catch (Exception $e) {
-            return RC_Error::make('ecjia_printer_get_order', $e->getMessage());
+            return new ecjia_error('ecjia_printer_get_order', $e->getMessage());
         }
     }
     
@@ -265,7 +266,7 @@ class PrinterManager
         
             return $resp;
         } catch (Exception $e) {
-            return RC_Error::make('ecjia_printer_print_info', $e->getMessage());
+            return new ecjia_error('ecjia_printer_print_info', $e->getMessage());
         }
     }
     
@@ -286,7 +287,7 @@ class PrinterManager
         
             return $resp;
         } catch (Exception $e) {
-            return RC_Error::make('ecjia_printer_set_sound', $e->getMessage());
+            return new ecjia_error('ecjia_printer_set_sound', $e->getMessage());
         }
     }
     
@@ -307,7 +308,7 @@ class PrinterManager
         
             return $resp;
         } catch (Exception $e) {
-            return RC_Error::make('ecjia_printer_print_send', $e->getMessage());
+            return new ecjia_error('ecjia_printer_print_send', $e->getMessage());
         }
     }
     
