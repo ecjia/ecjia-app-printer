@@ -6,6 +6,7 @@ use Exception;
 use InvalidArgumentException;
 use RC_Cache;
 use RC_Hook;
+use RC_Error;
 
 class Factory
 {
@@ -144,6 +145,10 @@ class Factory
         // E. 创建CLIENT对象
         $client = new Client(new App($this->config));
     
-        return call_user_func_array([$client, 'execute'], [$request]);
+        try {
+            return call_user_func_array([$client, 'execute'], [$request]);
+        } catch (Exception $e) {
+            return new RC_Error('royalcms_printer_exception', $e->message());
+        }
     }
 }
