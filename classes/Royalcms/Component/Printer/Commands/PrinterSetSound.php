@@ -50,7 +50,7 @@ class PrinterSetSound extends Request implements Command
     }
     
     /**
-     * [1,2,3] 3种音量设置
+     * [0,1,2,3] 3种音量设置,0关闭音量
      * @param string $value 音量值
      */
     public function setVoice($value)

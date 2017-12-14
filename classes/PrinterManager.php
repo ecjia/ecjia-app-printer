@@ -214,5 +214,21 @@ class PrinterManager
         return $resp;
     }
     
+    /**
+     * 音量调节接口
+     * @param string $machine_code
+     * @param string $response_type 蜂鸣器:buzzer,喇叭:horn
+     * @param string $voice [0,1,2,3] 3种音量设置,0关闭音量
+     */
+    public function setSound($machine_code, $response_type, $voice)
+    {
+        $resp = $this->printer->request('yly/printer/setsound', function ($req) use ($machine_code, $response_type, $voice) {
+            $req->setMachineCode($machine_code);
+            $req->setResponseType($response_type);
+            $req->setVoice($voice);
+        });
+    
+        return $resp;
+    }
     
 }
