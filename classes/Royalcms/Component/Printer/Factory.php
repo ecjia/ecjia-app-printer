@@ -141,15 +141,14 @@ class Factory
         if (is_callable($callable)) {
             call_user_func($callable, $request);
         }
-    
-        // E. 创建CLIENT对象
-        $client = new Client(new App($this->config));
-    
+        
         try {
+            // E. 创建CLIENT对象
+            $client = new Client(new App($this->config));
+            
             return call_user_func_array([$client, 'execute'], [$request]);
         } catch (Exception $e) {
-            RC_Error::add('royalcms_printer_exception', $e->message());
-            return royalcms('error');
+            return new RC_Error('royalcms_printer_exception', $e->message());
         }
     }
 }
