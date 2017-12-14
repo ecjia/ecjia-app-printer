@@ -152,8 +152,11 @@
 				<form class="form-horizontal" method="post" name="testForm" action="{url path='printer/admin_store_printer/printer_test'}">
 					<fieldset>
 						<div class="control-group">
-							<input class="span12" type="text" name="print_number" placeholder="请输入打印份数" value="1"/>
-							<span class="help-block">请输入1-9的整数，其他内容无效</span>
+							<label>打印份数：</label>
+							<div>
+								<input class="span12" type="text" name="print_number" placeholder="请输入打印份数" value="1"/>
+								<span class="help-block">请输入1-9的整数，其他内容无效</span>
+							</div>
 						</div>
 						<div class="control-group">
 							<textarea name="content" class="span12 h150" placeholder="请输入要打印的内容"></textarea>
