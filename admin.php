@@ -113,6 +113,9 @@ class admin extends ecjia_admin
     		return $this->showmessage('App Secret不能为空', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
     	}
     	
+    	ecjia_config::instance()->write_config('printer_key', $app_key);
+    	ecjia_config::instance()->write_config('printer_secret', $app_secret);
+    	
     	$printer_display_platform = !empty($_POST['printer_display_platform']) ? intval($_POST['printer_display_platform']) : 0;
     	
     	$printer_print_push 	= !empty($_POST['printer_print_push']) 		? trim($_POST['printer_print_push']) 	: Ecjia\App\Printer\PrinterCallback::getPrintPush();
@@ -123,11 +126,9 @@ class admin extends ecjia_admin
     	if (is_ecjia_error($rs)) {
     		return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
     	}
-    	
-    	ecjia_config::instance()->write_config('printer_key', $app_key);
-    	ecjia_config::instance()->write_config('printer_secret', $app_secret);
+
     	ecjia_config::instance()->write_config('printer_display_platform', $printer_display_platform);
-    	
+
     	ecjia_config::instance()->write_config('printer_print_push', $printer_print_push);
     	ecjia_config::instance()->write_config('printer_status_push', $printer_status_push);
     	ecjia_config::instance()->write_config('printer_order_push', $printer_order_push);
