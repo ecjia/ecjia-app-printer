@@ -78,6 +78,21 @@
                     disabled: "success"
                 },
             });
+			
+        	$('.view_key').off('click').on('click', function() {
+        		var $this = $(this),
+        			key = $this.attr('data-key'),
+        			value = $this.attr('data-value'),
+        			i = $this.children('i').attr('class');
+
+        		if (i == 'fontello-icon-eye') {
+        			$this.parent().find('.printer_key').html(value);
+        			$this.children('i').attr('class', 'fontello-icon-eye-off')
+        		} else {
+        			$this.parent().find('.printer_key').html(key);
+        			$this.children('i').attr('class', 'fontello-icon-eye')
+        		}
+        	});
         },
         
         slider: function() {

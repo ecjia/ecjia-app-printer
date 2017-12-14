@@ -52,7 +52,7 @@ class printer_admin_hooks {
        $setting = ecjia_admin_setting::singleton();
        
        $menus[] = ecjia_admin::make_admin_menu('nav-header', '小票打印', '', 22)->add_purview(array('store_printer_manage'));
-       $menus[] = ecjia_admin::make_admin_menu('printer_setting', '打印机设置', RC_Uri::url('printer/admin/init'), 23)->add_purview('store_printer_manage')->add_icon('fontello-icon-chat-empty');
+       $menus[] = ecjia_admin::make_admin_menu('printer_setting', '打印机设置', RC_Uri::url('printer/admin_config/init'), 23)->add_purview('store_printer_manage')->add_icon('fontello-icon-chat-empty');
        
        return $menus;
    }

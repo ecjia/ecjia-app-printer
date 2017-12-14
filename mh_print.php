@@ -116,6 +116,10 @@ class mh_print extends ecjia_merchant
         if (!empty($info['printer_logo'])) {
             $info['printer_logo'] = RC_Upload::upload_url($info['printer_logo']);
         }
+        if (!empty($info['printer_key'])) {
+        	$len = strlen($info['printer_key']);
+        	$info['printer_key_star'] = substr_replace($info['printer_key'], str_repeat('*', $len), 0, $len);
+        }
         ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('查看小票机'));
 
         $this->assign('action_link', array('href' => RC_Uri::url('printer/mh_print/init'), 'text' => '小票机管理'));
