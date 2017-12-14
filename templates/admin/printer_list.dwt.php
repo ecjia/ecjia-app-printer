@@ -21,7 +21,7 @@
     </div>
     <div class="span9">
         <div class="span12">
-        	<div class="printer_title">打印机列表</div>
+        	<div class="printer_title">小票机列表</div>
         	<div class="printer_list wookmark">
         		<ul>
         			{if $list}
@@ -47,7 +47,7 @@
         				</div>
         				<div class="view">
         					<a class="btn btn-gebo data-pjax" href='{RC_Uri::url("printer/admin_store_printer/view", "id={$val.id}&store_id={$val.store_id}")}'>查看</a>&nbsp;&nbsp;
-        					<a class="btn ajaxremove" data-toggle="ajaxremove" data-msg="您确定要删除该打印机吗？" href='{RC_Uri::url("printer/admin_store_printer/delete", "id={$val.id}&store_id={$val.store_id}")}'>删除</a>
+        					<a class="btn ajaxremove" data-toggle="ajaxremove" data-msg="您确定要删除该小票机吗？" href='{RC_Uri::url("printer/admin_store_printer/delete", "id={$val.id}&store_id={$val.store_id}")}'>删除</a>
         				</div>
         			</li>
         			<!-- {/foreach} -->

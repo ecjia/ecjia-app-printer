@@ -50,9 +50,9 @@ defined('IN_ECJIA') or exit('No permission resources.');
  * 添加管理员记录日志操作对象
  */
 function assign_adminlog_content() {
-	ecjia_admin_log::instance()->add_object('printer', '打印机');
-	ecjia_admin_log::instance()->add_object('printer_name', '打印机名称');
-	ecjia_admin_log::instance()->add_object('printer_logo', '打印机logo');
+	ecjia_admin_log::instance()->add_object('printer', '小票机');
+	ecjia_admin_log::instance()->add_object('printer_name', '小票机名称');
+	ecjia_admin_log::instance()->add_object('printer_logo', '小票机logo');
 }
 
 //end
