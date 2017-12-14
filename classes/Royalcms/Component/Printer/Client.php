@@ -48,7 +48,7 @@ class Client
         );
 
         // 签名
-        $params['sign'] = $this->generateSign($publicParams);
+        $params['sign'] = HmacSign::generateSign($publicParams, $this->app->getAppSecret());
 
         // 请求数据
         $resp = $this->curl(
@@ -86,46 +86,6 @@ class Client
             'timestamp'   => date('Y-m-d H:i:s'),
         ];
     }
-
-    /**
-     * 生成签名
-     * @param  array  $params 待签参数
-     * @return string         
-     */
-    protected function generateSign($params = [])
-    {
-        return $this->generateHmacSign($params);
-    }
-
-    /**
-     * 按hmac方式生成签名
-     * @param  array  $params 待签的参数
-     * @return string         
-     */
-    protected function generateHmacSign($params = [])
-    {
-        static::sortParams($params);  // 排序
-
-        $arr = [];
-        foreach ($params as $k => $v) {
-            $arr[] = $k . $v;
-        }
-        
-        $str = implode('', $arr);
-        
-        return strtolower(hash_hmac('md5', $str, $this->app->getAppSecret()));
-    }
-
-    /**
-     * 待签名参数排序
-     * @param  array  &$params 参数
-     * @return array         
-     */
-    protected static function sortParams(&$params = [])
-    {
-        ksort($params);
-    }
-
 
     /**
      * curl请求
