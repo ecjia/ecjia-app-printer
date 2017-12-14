@@ -376,10 +376,13 @@ class admin_store_printer extends ecjia_admin
         if (empty($content)) {
             return $this->showmessage('请输入要打印的内容', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
-        $res    = Ecjia\App\Printer\YLY\YLYOpenApiClient::printIndex('4004525345', '7bc6a6fe2e314ad9b144de26b5231e69', $content, Royalcms\Component\Uuid\Uuid::generate(), SYS_TIME);
-        $result = json_decode($res, true);
-        if ($result['error'] != 0) {
-            return $this->showmessage($result['error_description'], ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        
+        $data = RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->first();
+       	$order_sn = date('Ymd') . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);
+       	
+        $rs = ecjia_printer::printSend($data['printer_code'], $content, $order_sn);
+        if (is_ecjia_error($rs)) {
+        	return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         return $this->showmessage('测试打印成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_store_printer/view', array('id' => $id, 'store_id' => $store_id))));
     }
