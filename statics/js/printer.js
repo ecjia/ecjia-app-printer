@@ -17,10 +17,10 @@
         			i = $this.children('i').attr('class');
 
         		if (i == 'fontello-icon-eye') {
-        			$this.parent().find('.printer_key').html(value);
+        			$this.parent().find('.machine_key').html(value);
         			$this.children('i').attr('class', 'fontello-icon-eye-off')
         		} else {
-        			$this.parent().find('.printer_key').html(key);
+        			$this.parent().find('.machine_key').html(key);
         			$this.children('i').attr('class', 'fontello-icon-eye')
         		}
         	});
@@ -37,13 +37,13 @@
             });
         	var option = {
 				 rules: {
-					 printer_name: {
+					 machine_name: {
 						 required: true
 					 },
-					 printer_code: {
+					 machine_code: {
 				         required: true
 				     },
-				     printer_key: {
+				     machine_key: {
 				         required: true
 				     },
 				     app_key: {
@@ -54,13 +54,13 @@
 				     },
 				 },
                  messages: {
-                	 printer_name: {
+                	 machine_name: {
                          required: "请输入打印机名称"
                      },
-                	 printer_code: {
+                	 machine_code: {
                          required: "请输入终端编号"
                      },
-                     printer_key: {
+                     machine_key: {
                          required: "请输入终端密钥"
                      },
                      app_key: {
@@ -126,10 +126,12 @@
 	                }
 	            });
 	            voiceSlider.noUiSlider.on('change', function ( values, handle ) {
+	            	var v = parseInt($('.voice_value').html());
 	            	$('.voice-slider-handle').attr("disabled", true);
 	            	var url = $('.info-toggle-button').attr('data-url');
                 	var voice = parseInt(values[handle]);
                 	if (v == voice) {
+                		$('.voice-slider-handle').attr("disabled", false);
                 		return false;
                 	}
                     var info = {

@@ -25,7 +25,7 @@
 				<div class="control-group formSep">
 					<label class="control-label">打印机名称：</label>
 					<div class="controls">
-						<input type="text" name="printer_name" class="span6" placeholder="请输入打印机名称" value="{$printer_name}" />
+						<input type="text" name="machine_name" class="span6" placeholder="请输入打印机名称" value="{$machine_name}" />
 						<span class="input-must">{lang key='system::system.require_field'}</span>
 						<span class="help-block">该名称只在打印机列表显示，便于管理员查找打印机</span>
 					</div>
@@ -34,7 +34,7 @@
 				<div class="control-group formSep">
 					<label class="control-label">终端编号：</label>
 					<div class="controls">
-						<input type="text" name="printer_code" class="span6" placeholder="请输入终端编号" />
+						<input type="text" name="machine_code" class="span6" placeholder="请输入终端编号" />
 						<span class="input-must">{lang key='system::system.require_field'}</span>
 						<span class="help-block">请输入打印机设备上的终端编号</span>
 					</div>
@@ -43,7 +43,7 @@
 				<div class="control-group formSep">
 					<label class="control-label">终端密钥：</label>
 					<div class="controls">
-						<input type="text" name="printer_key" class="span6" placeholder="请输入终端密钥" />
+						<input type="text" name="machine_key" class="span6" placeholder="请输入终端密钥" />
 						<span class="input-must">{lang key='system::system.require_field'}</span>
 						<span class="help-block">请输入打印机设备上的终端密钥</span>
 					</div>
@@ -52,7 +52,7 @@
 				<div class="control-group formSep">
 					<label class="control-label">手机卡号：</label>
 					<div class="controls">
-						<input type="text" name="printer_mobile" class="span6" placeholder="请输入手机卡号" />
+						<input type="text" name="machine_mobile" class="span6" placeholder="请输入手机卡号" />
 						<span class="help-block">如果打印机设备上有放手机卡，请输入放在设备内的手机卡号</span>
 					</div>
 				</div>

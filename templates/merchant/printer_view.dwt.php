@@ -27,7 +27,7 @@
 			<div class="title">基本信息</div>
 			<div class="info_content">
 				<div class="info_left">
-					<a data-toggle="modal" href="#uploadLogo"><img class="printer_logo" src="{if $info.printer_logo}{$info.printer_logo}{else}{$statics_url}images/click_upload.png{/if}" /></a>
+					<a data-toggle="modal" href="#uploadLogo"><img class="machine_logo" src="{if $info.machine_logo}{$info.machine_logo}{else}{$statics_url}images/click_upload.png{/if}" /></a>
 					<div class="left_bottom">
 						<a data-toggle="ajaxremove" data-msg="您确定要关闭该小票机吗？" href='{RC_Uri::url("printer/mh_print/close", "id={$info.id}")}'>
 							<img class="close_img" src="{$statics_url}images/close.png" />
@@ -39,10 +39,10 @@
 				</div>
 				
 				<div class="info_right">
-					<span class="name cursor_pointer merchant_printer" data-trigger="editable" data-url="{RC_Uri::url('printer/mh_print/edit_printer_name')}" data-name="edit_printer_name" data-pk="{$info.id}" data-title="请输入小票机名称">{$info.printer_name}</span>
-					<div class="right-item">终端编号：{$info.printer_code}</div>
-					<div class="right-item">终端密钥：<span class="printer_key">{$info.printer_key_star}</span><span class="view_key" data-key="{$info.printer_key_star}" data-value="{$info.printer_key}"><i class="fontello-icon-eye"></i></span></div>
-					<div class="right-item">手机卡号：<span class="cursor_pointer" data-trigger="editable" data-url="{RC_Uri::url('printer/mh_print/edit_printer_mobile')}" data-name="edit_printer_mobile" data-pk="{$info.id}" data-title="请输入手机卡号" data-emptytext="暂无">{$info.printer_mobile}</span></div>
+					<span class="name cursor_pointer merchant_printer" data-trigger="editable" data-url="{RC_Uri::url('printer/mh_print/edit_machine_name')}" data-name="edit_machine_name" data-pk="{$info.id}" data-title="请输入小票机名称">{$info.machine_name}</span>
+					<div class="right-item">终端编号：{$info.machine_code}</div>
+					<div class="right-item">终端密钥：<span class="machine_key">{$info.machine_key_star}</span><span class="view_key" data-key="{$info.machine_key_star}" data-value="{$info.machine_key}"><i class="fontello-icon-eye"></i></span></div>
+					<div class="right-item">手机卡号：<span class="cursor_pointer" data-trigger="editable" data-url="{RC_Uri::url('printer/mh_print/edit_machine_mobile')}" data-name="edit_machine_mobile" data-pk="{$info.id}" data-title="请输入手机卡号" data-emptytext="暂无">{$info.machine_mobile}</span></div>
 					<div class="right-item">打印机型：{$info.version}</div>
 					<div class="right-item">添加时间：{RC_Time::local_date('Y-m-d H:i:s', $info['add_time'])}</div>
 				</div>
@@ -118,19 +118,19 @@
 					<div class="form-group">
 						<label class="control-label col-lg-3">{t}上传LOGO：{/t}</label>
 						<div class="col-lg-6">
-							<div class="fileupload fileupload-{if $info.printer_logo}exists{else}new{/if}" data-provides="fileupload">
-		                        {if $info.printer_logo}
-		                        <div class="fileupload-{if $info.printer_logo}exists{else}new{/if} thumbnail" style="max-width: 60px;">
-		                            <img src="{$info.printer_logo}" style="width:50px; height:50px;"/>
+							<div class="fileupload fileupload-{if $info.machine_logo}exists{else}new{/if}" data-provides="fileupload">
+		                        {if $info.machine_logo}
+		                        <div class="fileupload-{if $info.machine_logo}exists{else}new{/if} thumbnail" style="max-width: 60px;">
+		                            <img src="{$info.machine_logo}" style="width:50px; height:50px;"/>
 		                        </div>
 		                        {/if}
-		                        <div class="fileupload-preview fileupload-{if $info.printer_logo}new{else}exists{/if} thumbnail" style="max-width: 60px;max-height: 60px;line-height: 10px;"></div>
+		                        <div class="fileupload-preview fileupload-{if $info.machine_logo}new{else}exists{/if} thumbnail" style="max-width: 60px;max-height: 60px;line-height: 10px;"></div>
 		                        <span class="btn btn-primary btn-file btn-sm">
 		                            <span class="fileupload-new"><i class="fa fa-paper-clip"></i>浏览</span>
 		                            <span class="fileupload-exists"> 修改</span>
-		                            <input type="file" class="default" name="printer_logo" />
+		                            <input type="file" class="default" name="machine_logo" />
 		                        </span>
-		                        <a class="btn btn-danger btn-sm fileupload-exists {if $info.printer_logo}remove_logo{/if}" {if $info.printer_logo}data-toggle="ajaxremove" data-msg="您确定要删除该小票机logo吗？"{else}data-dismiss="fileupload"{/if} data-href='{url path='printer/mh_print/del_file' args="id={$info.id}"}' >删除</a>
+		                        <a class="btn btn-danger btn-sm fileupload-exists {if $info.machine_logo}remove_logo{/if}" {if $info.machine_logo}data-toggle="ajaxremove" data-msg="您确定要删除该小票机logo吗？"{else}data-dismiss="fileupload"{/if} data-href='{url path='printer/mh_print/del_file' args="id={$info.id}"}' >删除</a>
 		                    </div>
 		                    <span class="help-block">推荐图片宽高：350px 文件大小：40kb</span>
 						</div>
