@@ -193,12 +193,11 @@ class mh_print extends ecjia_merchant
         $voice = isset($_POST['voice']) ? intval($_POST['voice']) : 0;
 
         $info = RC_DB::table('printer_machine')->where('store_id', $_SESSION['store_id'])->where('id', $id)->first();
-        
         if ($action == 'edit_type') {
         	$response_type = $type == 'buzzer' ? 'horn' : 'buzzer';
-        	$voice = $data['voice'];
+        	$voice = $info['voice'];
         } else {
-        	$response_type = $data['voice_type'];
+        	$response_type = $info['voice_type'];
         }
         $rs = ecjia_printer::setSound($info['machine_code'], $response_type, $voice);
         if (is_ecjia_error($rs)) {

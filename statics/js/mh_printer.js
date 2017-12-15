@@ -108,10 +108,12 @@
 	                }
 	            });
 	            voiceSlider.noUiSlider.on('change', function ( values, handle ) {
+	            	var v = parseInt($('.voice_value').html());
 	            	$('.voice-slider-handle').attr("disabled", true);
 	            	var url = $('.info-toggle-button').attr('data-url');
                 	var voice = parseInt(values[handle]);
                 	if (v == voice) {
+                		$('.voice-slider-handle').attr("disabled", false);
                 		return false;
                 	}
                     var info = {
