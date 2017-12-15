@@ -69,7 +69,7 @@ class PrintQuickpayOrders extends EventAbstract
      * 打印测试数据
      * @var array
      */
-    protected $test_values = [
+    protected $demo_values = [
          
     ];
     

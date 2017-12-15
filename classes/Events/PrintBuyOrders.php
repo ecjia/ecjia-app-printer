@@ -61,6 +61,9 @@ class PrintBuyOrders extends EventAbstract
     protected $template = '买家已成功确认收货，配送单号为：${express_sn}。如有问题请拨打客服电话：${service_phone}。';
 
     protected $available_values = [
+        'merchants_name'   => '商家名称',
+        'merchants_mobile' => '商家电话',
+        
     	'order_sn' 	       => '订单编号',
     	'order_trade_no'   => '流水编号',
     	'user_name'        => '会员账号',
@@ -78,6 +81,7 @@ class PrintBuyOrders extends EventAbstract
         'give_change'           => '找零金额',
         
         'order_remarks'         => '订单备注内容',
+        'tail_content'          => '尾部内容',
         
         'goods_lists' => [
         	'goods_name'   => '商品',
@@ -85,7 +89,7 @@ class PrintBuyOrders extends EventAbstract
         	'goods_amount' => '单价',
         ],
         
-        'goods_subtotal' => '总计'
+        'goods_subtotal' => '总计',
     ];
     
     /**

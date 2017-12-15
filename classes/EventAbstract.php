@@ -83,7 +83,16 @@ abstract class EventAbstract
     {
         $str = '';
         foreach ($this->available_values as $key => $value) {
-            $str .= $key . '(' . $value . '), ';
+            if (is_array($value)) {
+                $str .= $key . '[';
+                foreach ($value as $key1 => $value1) {
+                    $str .= $key1 . '(' . $value1 . '), ';
+                }
+                $str = rtrim($str, ', ');
+                $str .= '], ';
+            } else {
+                $str .= $key . '(' . $value . '), ';
+            }
         }
         
         return rtrim($str, ', ');
