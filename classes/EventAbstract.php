@@ -74,6 +74,11 @@ abstract class EventAbstract
         return $this->available_values;
     }
     
+    public function getDemoValues()
+    {
+        return $this->demo_values;
+    }
+    
     public function getValueHit()
     {
         $str = '';

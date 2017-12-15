@@ -61,8 +61,63 @@ class PrintBuyOrders extends EventAbstract
     protected $template = '买家已成功确认收货，配送单号为：${express_sn}。如有问题请拨打客服电话：${service_phone}。';
 
     protected $available_values = [
-    	'express_sn' 	=> '配送单号',
-    	'service_phone' => '客服电话',
+    	'order_sn' 	       => '订单编号',
+    	'order_trade_no'   => '流水编号',
+    	'user_name'        => '会员账号',
+        
+        'integral_money'    => '积分抵扣',
+        'integral'          => '应收金额',
+        'integral_balance'  => '积分余额',
+        'integral_give'     => '获得积分',
+        'payment'           => '支付宝',
+        
+        'favourable_discount'   => '满减满折',
+        'bonus_discount'        => '红包折扣',
+        'rounding'              => '分头舍去',
+        'order_amount'          => '实收金额',
+        'give_change'           => '找零金额',
+        
+        'order_remarks'         => '订单备注内容',
+        
+        'goods_lists' => [
+        	'goods_name'   => '商品',
+        	'goods_number' => '数量',
+        	'goods_amount' => '单价',
+        ],
+        
+        'goods_subtotal' => '小计'
     ];
     
+    /**
+     * 打印测试数据
+     * @var array
+     */
+    protected $demo_values = [
+        'order_sn' 	       => '2017101294860', //订单编号
+    	'order_trade_no'   => '2017121470950', //流水编号
+    	'user_name'        => 'ecjia', //会员账号
+        
+        'integral_money'    => '5.00', //积分抵扣
+        'integral'          => '49.50', //应收金额
+        'integral_balance'  => '20.00', //积分余额
+        'integral_give'     => '49', //获得积分
+        'payment'           => '支付宝',
+        
+        'favourable_discount'   => '0.00', //满减满折
+        'bonus_discount'        => '0.00', //红包折扣
+        'rounding'              => '分头舍去',
+        'order_amount'          => '44.00', //实收金额
+        'give_change'           => '0.00', //找零金额
+        
+        'order_remarks'         => '订单备注内容',
+        
+        'goods_lists' => [
+            ['goods_name'   => '商品1', 'goods_number' => '3', 'goods_amount' => '5.00'],
+            ['goods_name'   => '商品2', 'goods_number' => '1', 'goods_amount' => '2.00'],
+            ['goods_name'   => '商品3', 'goods_number' => '1', 'goods_amount' => '2.00'],
+            ['goods_name'   => '商品4', 'goods_number' => '1', 'goods_amount' => '30.00'],
+        ],
+        
+        'goods_subtotal' => '49.00' //商品总计
+    ];
 }

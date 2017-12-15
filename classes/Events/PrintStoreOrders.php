@@ -65,4 +65,11 @@ class PrintStoreOrders extends EventAbstract
     	'service_phone' => '客服电话',
     ];
     
+    /**
+     * 打印测试数据
+     * @var array
+     */
+    protected $test_values = [
+         
+    ];
 }
