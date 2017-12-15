@@ -60,7 +60,7 @@ class PrintQuickpayOrders extends EventAbstract
 
     protected $template = '买家已成功确认收货，配送单号为：${express_sn}。如有问题请拨打客服电话：${service_phone}。';
 
-    protected $available_values = [
+    protected $availableValues = [
     	'express_sn' 	=> '配送单号',
     	'service_phone' => '客服电话',
     ];
@@ -69,7 +69,7 @@ class PrintQuickpayOrders extends EventAbstract
      * 打印测试数据
      * @var array
      */
-    protected $demo_values = [
+    protected $demoValues = [
          
     ];
     

@@ -49,6 +49,19 @@ namespace Ecjia\App\Printer;
 
 abstract class EventAbstract
 {
+    /**
+     * 厂商模板变量，数组格式
+     * @var array
+     */
+    protected $templateVar = [];
+    
+    /**
+     * 模板内容
+     * @var string
+     */
+    protected $content;
+    
+    
     public function getCode()
     {
         return $this->code;
@@ -71,18 +84,18 @@ abstract class EventAbstract
     
     public function getAvailableValues()
     {
-        return $this->available_values;
+        return $this->availableValues;
     }
     
     public function getDemoValues()
     {
-        return $this->demo_values;
+        return $this->demoValues;
     }
     
     public function getValueHit()
     {
         $str = '';
-        foreach ($this->available_values as $key => $value) {
+        foreach ($this->availableValues as $key => $value) {
             if (is_array($value)) {
                 $str .= $key . '[';
                 foreach ($value as $key1 => $value1) {
@@ -111,6 +124,58 @@ abstract class EventAbstract
         {
             return false;
         }
+    }
+    
+    /**
+     * @param array $templateVar
+     */
+    public function setContentByCustomVar(array $templateVar)
+    {
+        foreach ($templateVar as $key => $value) {
+            $this->content = str_replace('${' . $key . '}', $value, $this->content);
+        }
+    
+        return $this;
+    }
+    
+    /**
+     * @param string $content
+     */
+    public function setContent($content)
+    {
+        $this->content = is_string(trim($content)) ? $content : '';
+    
+        return $this;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+    
+    /**
+     * @param array $templateVar
+     * @param bool $hasKey
+     */
+    public function setTemplateVar(array $templateVar)
+    {
+        foreach ($templateVar as $key => $value)
+        {
+            $this->templateVar[$key] = $value;
+        }
+    
+        return $this;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getTemplateVar()
+    {
+        return $this->templateVar;
     }
     
 }
