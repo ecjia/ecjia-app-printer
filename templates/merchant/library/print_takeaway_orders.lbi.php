@@ -2,7 +2,9 @@
 	<div class="ticket_box_header">
 		<div class="store_logo"><img src="{$store.shop_logo}" /></div>
 		<div class="store_name">{$store.merchants_name}</div>
-		<div class="store_mobile">{$store.contact_mobile}</div>
+		{if $contact_mobile}
+		<div class="store_mobile">{$contact_mobile}</div>
+		{/if}
 		<div class="pay_status">{$data.payment}（{$data.pay_status}）</div>
 	</div>
 	<div class="ticket_content no_dashed">

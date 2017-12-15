@@ -90,7 +90,7 @@ class PrintQuickpayOrders extends EventAbstract
 	    'purchase_time'    => '2017-10-12 10:00:00', //买单时间
 	    'merchant_address' => '上海市普陀区中山北路3553号301室',
 	    
-	    'favourable_activity' => '全场满300减10',
+	    'favourable_activity' => '全场满30减5',
 	    
 	    'receivables'       => '49.00', //应收金额
 	    'discount_amount'   => '5.00',  //优惠金额

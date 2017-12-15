@@ -2,7 +2,9 @@
 	<div class="ticket_box_header">
 		<div class="store_logo"><img src="{$store.shop_logo}" /></div>
 		<div class="store_name">{$store.merchants_name}</div>
-		<div class="store_mobile">{$store.contact_mobile}</div>
+		{if $contact_mobile}
+		<div class="store_mobile">{$contact_mobile}</div>
+		{/if}
 	</div>
 	<div class="ticket_content">
 		<div class="ticket-item">订单编号：{$data.order_sn}</div>

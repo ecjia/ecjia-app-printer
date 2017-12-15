@@ -272,6 +272,8 @@ class mh_print extends ecjia_merchant
             return $this->showmessage('该小票类型不存在', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR, array('pjaxurl' => RC_Uri::url('printer/mh_print/order_ticket', array('type' => 'normal'))));
         }
         $store_info = RC_DB::table('store_franchisee')->where('store_id', $_SESSION['store_id'])->first();
+        $contact_mobile = RC_DB::table('merchants_config')->where('store_id', $_SESSION['store_id'])->where('code', 'shop_kf_mobile')->pluck('value');
+
         $data = with(new Ecjia\App\Printer\EventFactory)->event($type)->getDemoValues();
         
         $content = '';
@@ -280,9 +282,11 @@ class mh_print extends ecjia_merchant
         }
         if ($type == 'print_buy_orders') {
         	
-$content .= "<FS><center>".$store_info['merchants_name']."</center></FS>
-<FS><center>".$store_info['contact_mobile']."</center></FS>
-订单编号：".$data['order_sn']."
+$content .= "<FS><center>".$store_info['merchants_name']."</center></FS>\r";
+if (!empty($contact_mobile)) {
+$content .= "<FS><center>".$contact_mobile."</center></FS>\r";	
+}
+$content .= "订单编号：".$data['order_sn']."
 流水编号：".$data['order_trade_no']."
 会员账号：".$data['user_name']."
 下单时间：".$data['purchase_time']."\r";
@@ -305,11 +309,14 @@ $content .= "--------------------------------
 分头舍去：".$data['rounding']."
 实收金额：".$data['order_amount']."  找零金额：".$data['give_change']."
 备注内容：".$data['order_remarks']."\r";
+
         } else if ($type == 'print_takeaway_orders') {
         	
-$content .= "<FS><center>".$store_info['merchants_name']."</center></FS>
-<FS><center>".$store_info['contact_mobile']."</center></FS>
-<FB><center>".$data['payment']."（".$data['pay_status']."）</center></FB>
+$content .= "<FS><center>".$store_info['merchants_name']."</center></FS>\r";
+if (!empty($contact_mobile)) {
+$content .= "<FS><center>".$contact_mobile."</center></FS>\r";	
+}
+$content .= "<FB><center>".$data['payment']."（".$data['pay_status']."）</center></FB>
 订单编号：".$data['order_sn']."
 流水编号：".$data['order_trade_no']."
 下单时间：".$data['purchase_time']."
@@ -339,9 +346,11 @@ $content .= "------------- 其他 -------------
 
         } else if ($type == 'print_store_orders') {
         	
-$content .= "<FS><center>".$store_info['merchants_name']."</center></FS>
-<FS><center>".$store_info['contact_mobile']."</center></FS>
-收银员：".$data['cashier']."
+$content .= "<FS><center>".$store_info['merchants_name']."</center></FS>\r";
+if (!empty($contact_mobile)) {
+	$content .= "<FS><center>".$contact_mobile."</center></FS>\r";
+}
+$content .= "收银员：".$data['cashier']."
 订单编号：".$data['order_sn']."
 流水编号：".$data['order_trade_no']."
 下单时间：".$data['purchase_time']."
@@ -362,9 +371,11 @@ $content .= "--------------------------------
 
         } else if ($type == 'print_quickpay_orders') {
         	
-$content .= "<FS><center>".$store_info['merchants_name']."</center></FS>
-<FS><center>".$store_info['contact_mobile']."</center></FS>
-订单编号：".$data['order_sn']."
+$content .= "<FS><center>".$store_info['merchants_name']."</center></FS>\r";
+if (!empty($contact_mobile)) {
+	$content .= "<FS><center>".$contact_mobile."</center></FS>\r";
+}
+$content .= "订单编号：".$data['order_sn']."
 流水编号：".$data['order_trade_no']."
 会员账号：".$data['user_name']."
 买单时间：".$data['purchase_time']."
@@ -380,6 +391,7 @@ $content .= "<FS><center>".$store_info['merchants_name']."</center></FS>
         };
         
         if (!empty($tail_content)) {
+        	$tail_content = str_replace('<br/>', "\r", $tail_content);
         	$content .= "--------------------------------".$tail_content;
         }
         
@@ -531,6 +543,9 @@ $content .= "<FS><center>".$store_info['merchants_name']."</center></FS>
         $demo_values = with(new Ecjia\App\Printer\EventFactory)->event($type)->getDemoValues();
         $this->assign('data', $demo_values);
         
+        $contact_mobile = RC_DB::table('merchants_config')->where('store_id', $_SESSION['store_id'])->where('code', 'shop_kf_mobile')->pluck('value');
+        $this->assign('contact_mobile', $contact_mobile);
+        
         $this->display('printer_order_ticket.dwt');
     }
 
@@ -543,7 +558,7 @@ $content .= "<FS><center>".$store_info['merchants_name']."</center></FS>
         $print_number 	  = !empty($_POST['print_number']) 		? (intval($_POST['print_number']) > 9 ? 9 : intval($_POST['print_number'])) : 1;
         $status           = !empty($_POST['status'])			? intval($_POST['status']) 			: 0;
         $auto_print       = !empty($_POST['auto_print'])		? intval($_POST['auto_print']) 		: 0;
-		$tail_content     = !empty($_POST['tail_content'])		? strip_tags($_POST['tail_content']): '';
+		$tail_content     = !empty($_POST['tail_content'])		? $_POST['tail_content']			: '';
 		
 		$data = array(
 			'template_subject' 	=> $template_subject,

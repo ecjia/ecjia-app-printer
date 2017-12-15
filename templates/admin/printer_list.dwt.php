@@ -28,7 +28,7 @@
         			<!-- {foreach from=$list item=val} -->
         			<li class="thumbnail">
         				<div class="top">
-        					<img src="{$statics_url}images/machine_logo.png" />
+        					<img src="{if $val.machine_logo}{RC_Upload::upload_url($val.machine_logo)}{else}{$statics_url}images/printer_logo.png{/if}" />
         					<div class="top_right">
         						<span class="name">{$val.machine_name}</span>
         						{if $val.online_status eq 1}
