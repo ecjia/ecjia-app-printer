@@ -64,8 +64,8 @@
 			                        </div>
 			                       	<div class="form-group">
 			                            <label class="control-label col-lg-5">{t}模版代号{/t}</label>
-			                            <div class="col-lg-7">{$template_mark}</div>
-			                            <input type="hidden" name="template_code" value="{$smarty.get.type}" />
+			                            <div class="col-lg-7">{$type}</div>
+			                            <input type="hidden" name="template_code" value="{$type}" />
 			                        </div>
 			                        <div class="form-group">
 			                            <label class="control-label col-lg-5">{t}打印数量{/t}</label>

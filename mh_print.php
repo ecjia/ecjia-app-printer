@@ -512,19 +512,15 @@ $content .= "订单编号：".$data['order_sn']."
             return $this->showmessage('该小票类型不存在', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR, array('pjaxurl' => RC_Uri::url('printer/mh_print/order_ticket', array('type' => 'normal'))));
         }
         $template_subject = '普通订单小票';
-        $template_mark = '模板001';
         if ($type == 'print_takeaway_orders') {
         	$template_subject = '外卖订单小票';
-        	$template_mark = '模板002';
         } elseif ($type == 'print_store_orders') {
         	$template_subject = '到店购物小票';
-        	$template_mark = '模板003';
         } elseif ($type == 'print_quickpay_orders') {
         	$template_subject = '优惠买单小票';
-        	$template_mark = '模板004';
         }
         $this->assign('template_subject', $template_subject);
-        $this->assign('template_mark', $template_mark);
+        $this->assign('type', $type);
         
         $store  = RC_DB::table('store_franchisee')->where('store_id', $_SESSION['store_id'])->first();
         $config = RC_DB::table('merchants_config')->where('store_id', $_SESSION['store_id'])->where('code', 'shop_logo')->first();
@@ -576,6 +572,7 @@ $content .= "订单编号：".$data['order_sn']."
 			RC_DB::table('printer_template')->where('store_id', $_SESSION['store_id'])->where('id', $info['id'])->update($data);
 		} else {
 			$data['store_id'] = $_SESSION['store_id'];
+			$data['add_time'] = RC_Time::gmtime();
 			RC_DB::table('printer_template')->insert($data);
 			ecjia_merchant::admin_log($template_subject, 'add', 'printer_template');
 		}
