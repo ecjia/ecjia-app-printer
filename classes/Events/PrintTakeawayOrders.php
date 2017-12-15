@@ -61,16 +61,82 @@ class PrintTakeawayOrders extends EventAbstract
     protected $template = '买家已成功确认收货，配送单号为：${express_sn}。如有问题请拨打客服电话：${service_phone}。';
 
     protected $available_values = [
-    	'express_sn' 	=> '配送单号',
-    	'service_phone' => '客服电话',
+	    'express_sn' 	=> '配送单号',
+	    'service_phone' => '客服电话',
+	    
+	    'merchants_name'   		=> '商家名称',
+	    'merchants_mobile' 		=> '商家电话',
+	    
+	    'payment'           	=> '微信支付',
+	    'pay_status'			=> '支付状态',
+	    'order_sn' 	        	=> '订单编号',
+	    'order_trade_no'    	=> '流水编号',
+	    'purchase_time'	        => '下单时间',
+	    'expect_shipping_time'  => '期望送达时间',
+	    
+	    'goods_lists' => [
+		    'goods_name'   => '商品',
+		    'goods_number' => '数量',
+		    'goods_amount' => '单价',
+	    ],
+	    'goods_subtotal' => '总计',
+	    
+	    'integral_money'    => '积分抵扣',
+	    'integral_balance'  => '积分余额',
+	    'integral'          => '应收金额',
+	    'integral_give'     => '获得积分',
+	    'wechat_pay'		=> '微信支付',
+	    
+	    'favourable_discount'   => '满减满折',
+	    'bonus_discount'        => '红包折扣',
+	    'rounding'              => '分头舍去',
+	    'order_amount'          => '实收金额',
+	    
+	    'order_remarks'         => '订单备注内容',
+	    'consignee_address'		=> '收货地址',
+	    'consignee_name'		=> '收货人姓名',
+	    'consignee_mobile'		=> '收货人手机号',
+	    'tail_content'          => '尾部内容',
     ];
     
     /**
      * 打印测试数据
      * @var array
      */
-    protected $test_values = [
-    	
-    ];
+    protected $demo_values = [
+	    'order_sn' 	       => '2017101294860', //订单编号
+	    'order_trade_no'   => '2017121470950', //流水编号
+	    'payment'          => '微信支付', //支付方式
+	    'pay_status'	   => '已支付',	//支付状态
+	    
+	    'purchase_time'    => '2017-10-12 10:00:00', //下单时间
+	    'expect_shipping_time' => '2017-10-12 13:00:00', //期望送达时间
+	    
+	    'integral_money'    => '5.00', //积分抵扣
+	    'integral_balance'  => '20.00', //积分余额
+	    'integral'          => '49.00', //应收金额
+	    'integral_give'     => '49', //获得积分
+	    'wechat_pay'        => '44.00', //微信支付
+	    
+	    'favourable_discount'   => '0.00', //满减满折
+	    'bonus_discount'        => '0.00', //红包折扣
+	    'rounding'              => '0.00', //分头舍去
+	    'order_amount'          => '44.00', //实收金额
+	    'order_remarks'         => '订单备注内容',
+	    
+	    'consignee_address'		=> '上海市普陀区中山北路3553号301室',
+	    'consignee_name'		=> '张三',
+	    'consignee_mobile'		=> '15000000000',
+	    'tail_content'          => '尾部内容',
+	    
+	    'goods_lists' => [
+			    ['goods_name'   => '乐口事 卢森堡玛奇朵咖啡味牛奶 330ml', 'goods_number' => '3', 'goods_amount' => '5.00'],
+			    ['goods_name'   => '爱之鱼 东海小黄鱼（12条装）450g', 'goods_number' => '1', 'goods_amount' => '2.00'],
+			    ['goods_name'   => '华英精切鸭翅中280g', 'goods_number' => '1', 'goods_amount' => '2.00'],
+			    ['goods_name'   => '申扬 农家草鸡蛋 18枚装（6枚*3）', 'goods_number' => '1', 'goods_amount' => '30.00'],
+		    ],
+		    
+		'goods_subtotal' => '49.00' //商品总计
+	];
     
 }
