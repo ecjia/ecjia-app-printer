@@ -392,7 +392,7 @@ $content .= "订单编号：".$data['order_sn']."
        		
         };
         
-        $content .= "<QR>". $data['order_sn'] ."</QR>";
+        $content .= "\r<QR>". $data['order_sn'] ."</QR>\r";
         if (!empty($tail_content)) {
         	$tail_content = str_replace('<br/>', "\r", $tail_content);
         	$content .= "--------------------------------".$tail_content;
