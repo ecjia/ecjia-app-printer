@@ -61,16 +61,13 @@ class PrintBuyOrders extends EventAbstract
     protected $template = '买家已成功确认收货，配送单号为：${express_sn}。如有问题请拨打客服电话：${service_phone}。';
 
     protected $availableValues = [
-        'merchants_name'   => '商家名称',
-        'merchants_mobile' => '商家电话',
-        
     	'order_sn' 	       => '订单编号',
     	'order_trade_no'   => '流水编号',
     	'user_name'        => '会员账号',
     	'purchase_time'	   => '下单时间',
         
         'integral_money'    => '积分抵扣',
-        'integral'          => '应收金额',
+        'receivables'       => '应收金额',
         'integral_balance'  => '积分余额',
         'integral_give'     => '获得积分',
         'payment'           => '支付宝',
@@ -104,7 +101,7 @@ class PrintBuyOrders extends EventAbstract
     	'purchase_time'    => '2017-10-12 10:00:00', //下单时间
         
         'integral_money'    => '5.00', //积分抵扣
-        'integral'          => '49.00', //应收金额
+        'receivables'       => '49.00', //应收金额
         'integral_balance'  => '20.00', //积分余额
         'integral_give'     => '49', //获得积分
         'payment'           => '44.00',

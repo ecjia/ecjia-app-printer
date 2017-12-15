@@ -63,6 +63,20 @@ class PrintQuickpayOrders extends EventAbstract
     protected $availableValues = [
     	'express_sn' 	=> '配送单号',
     	'service_phone' => '客服电话',
+    	
+    	'order_sn' 	        	=> '订单编号',
+    	'order_trade_no'    	=> '流水编号',
+    	'user_name'				=> '会员账号',
+    	
+    	'purchase_time'	        => '买单时间',
+    	'merchant_address'		=> '商家地址',
+    	 
+    	'favourable_activity'	=> '优惠活动',
+    	
+    	'receivables'       => '应收金额',
+    	'discount_amount'   => '优惠金额',
+    	'payment'			=> '支付宝',
+    	'order_amount'      => '实收金额',
     ];
     
     /**
@@ -70,7 +84,18 @@ class PrintQuickpayOrders extends EventAbstract
      * @var array
      */
     protected $demoValues = [
-         
+	    'order_sn' 	       => '2017101294860', //订单编号
+	    'order_trade_no'   => '2017121470950', //流水编号
+	    'user_account'	   => 'zhangsan',
+	    'purchase_time'    => '2017-10-12 10:00:00', //买单时间
+	    'merchant_address' => '上海市普陀区中山北路3553号301室',
+	    
+	    'favourable_activity' => '全场满300减10',
+	    
+	    'receivables'       => '49.00', //应收金额
+	    'discount_amount'   => '5.00',  //优惠金额
+	    'payment'        	=> '44.00', //支付宝
+	    'order_amount'     	=> '44.00', //实收金额
     ];
     
 }

@@ -43,7 +43,7 @@
 			<div class="right-item">获得积分：{$data.integral_give}</div>
 		</div>
 		<div class="ticket-item">积分余额：{$data.integral_balance}</div>
-		<div class="ticket-item">应收金额：{$data.integral}</div>
+		<div class="ticket-item">应收金额：{$data.receivables}</div>
 		<div class="ticket-item">微信支付：{$data.wechat_pay}</div>
 	</div>	
 	<div class="ticket_content">
@@ -58,4 +58,9 @@
 		<div class="ticket-item">姓名：{$data.consignee_name}</div>
 		<div class="ticket-item">手机号：{$data.consignee_mobile}</div>
 	</div>	
+	{if $info.tail_content}
+	<div class="ticket_content dashed">
+		{$info.tail_content}
+	</div>	
+	{/if}	
 </div>

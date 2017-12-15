@@ -63,6 +63,27 @@ class PrintStoreOrders extends EventAbstract
     protected $availableValues = [
     	'express_sn' 	=> '配送单号',
     	'service_phone' => '客服电话',
+    	
+    	'cashier'           	=> '收银员',
+    	'order_sn' 	        	=> '订单编号',
+    	'order_trade_no'    	=> '流水编号',
+    	'purchase_time'	        => '下单时间',
+    	'merchant_address'		=> '商家地址',
+    	 
+    	'goods_lists' => [
+	    	'goods_name'   => '商品',
+	    	'goods_number' => '数量',
+	    	'goods_amount' => '单价',
+    	],
+    	'goods_subtotal' => '总计',
+    	 
+    	'discount_amount'   => '优惠金额',
+    	'receivables'       => '应收金额',
+    	'payment'		    => '支付宝',
+    	'rounding'          => '分头舍去',
+    	'order_amount'      => '实收金额',
+    	 
+    	'tail_content'          => '尾部内容',
     ];
     
     /**
@@ -70,6 +91,27 @@ class PrintStoreOrders extends EventAbstract
      * @var array
      */
     protected $demoValues = [
-         
+	    'cashier'           	=> '张三',
+	    'order_sn' 	        	=> '2017101294860',
+	    'order_trade_no'    	=> '2017121470950',
+	    'purchase_time'	        => '2017-10-12 10:00:00',
+	    'merchant_address'		=> '上海市普陀区中山北路3553号301室',
+	    
+	    'goods_lists' => [
+			    ['goods_name'   => '乐口事 卢森堡玛奇朵咖啡味牛奶 330ml', 'goods_number' => '3', 'goods_amount' => '5.00'],
+			    ['goods_name'   => '爱之鱼 东海小黄鱼（12条装）450g', 'goods_number' => '1', 'goods_amount' => '2.00'],
+			    ['goods_name'   => '华英精切鸭翅中280g', 'goods_number' => '1', 'goods_amount' => '2.00'],
+			    ['goods_name'   => '申扬 农家草鸡蛋 18枚装（6枚*3）', 'goods_number' => '1', 'goods_amount' => '30.00'],
+		],
+		    
+		'goods_subtotal' => '49.00', //商品总计
+	    
+	    'discount_amount'   => '5.00',
+	    'receivables'       => '44.00',
+	    'payment'		    => '44.00',
+	    'rounding'          => '0.00',
+	    'order_amount'      => '44.00',
+	    
+	    'tail_content'          => '尾部内容',
     ];
 }

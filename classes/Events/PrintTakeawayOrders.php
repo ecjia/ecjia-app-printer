@@ -60,12 +60,9 @@ class PrintTakeawayOrders extends EventAbstract
 
     protected $template = '买家已成功确认收货，配送单号为：${express_sn}。如有问题请拨打客服电话：${service_phone}。';
 
-    protected $available_values = [
+    protected $availableValues = [
 	    'express_sn' 	=> '配送单号',
 	    'service_phone' => '客服电话',
-	    
-	    'merchants_name'   		=> '商家名称',
-	    'merchants_mobile' 		=> '商家电话',
 	    
 	    'payment'           	=> '微信支付',
 	    'pay_status'			=> '支付状态',
@@ -83,7 +80,7 @@ class PrintTakeawayOrders extends EventAbstract
 	    
 	    'integral_money'    => '积分抵扣',
 	    'integral_balance'  => '积分余额',
-	    'integral'          => '应收金额',
+	    'receivables'       => '应收金额',
 	    'integral_give'     => '获得积分',
 	    'wechat_pay'		=> '微信支付',
 	    
@@ -103,7 +100,7 @@ class PrintTakeawayOrders extends EventAbstract
      * 打印测试数据
      * @var array
      */
-    protected $demo_values = [
+    protected $demoValues = [
 	    'order_sn' 	       => '2017101294860', //订单编号
 	    'order_trade_no'   => '2017121470950', //流水编号
 	    'payment'          => '微信支付', //支付方式
@@ -114,7 +111,7 @@ class PrintTakeawayOrders extends EventAbstract
 	    
 	    'integral_money'    => '5.00', //积分抵扣
 	    'integral_balance'  => '20.00', //积分余额
-	    'integral'          => '49.00', //应收金额
+	    'receivables'       => '49.00', //应收金额
 	    'integral_give'     => '49', //获得积分
 	    'wechat_pay'        => '44.00', //微信支付
 	    
@@ -134,7 +131,7 @@ class PrintTakeawayOrders extends EventAbstract
 			    ['goods_name'   => '爱之鱼 东海小黄鱼（12条装）450g', 'goods_number' => '1', 'goods_amount' => '2.00'],
 			    ['goods_name'   => '华英精切鸭翅中280g', 'goods_number' => '1', 'goods_amount' => '2.00'],
 			    ['goods_name'   => '申扬 农家草鸡蛋 18枚装（6枚*3）', 'goods_number' => '1', 'goods_amount' => '30.00'],
-		    ],
+		],
 		    
 		'goods_subtotal' => '49.00' //商品总计
 	];
