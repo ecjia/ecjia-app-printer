@@ -267,7 +267,7 @@ class mh_print extends ecjia_merchant
         $store_info = RC_DB::table('store_franchisee')->where('store_id', $_SESSION['store_id'])->first();
         $data = array(
         	'merchants_name'		=> $store_info['merchants_name'],//商家名称
-        	'merchants_mobile'		=> $store_info['contact_mobile'],//商家名称
+        	'merchants_mobile'		=> $store_info['contact_mobile'],//联系电话
             'order_sn'				=> '2017101294860',//订单编号
             'order_flow'			=> '2017101294861',//流水编号
         	'user_name'				=> 'ECJia测试会员',//会员账号
@@ -529,6 +529,9 @@ class mh_print extends ecjia_merchant
         
         $info = RC_DB::table('printer_template')->where('store_id', $_SESSION['store_id'])->where('template_code', $type)->first();
         $this->assign('info', $info);
+        
+        $demo_values = with(new Ecjia\App\Printer\EventFactory)->event($type)->getDemoValues();
+        $this->assign('data', $demo_values);
         
         $this->display('printer_order_ticket.dwt');
     }
