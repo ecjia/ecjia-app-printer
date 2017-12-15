@@ -270,6 +270,24 @@ class PrinterManager
         }
     }
     
+    
+    /**
+     * 获取机型状态信息
+     * @param string $machine_code
+     */
+    public function getPrintStatus($machine_code)
+    {
+        try {
+            $resp = $this->printer->request('yly/printer/printstatus', function ($req) use ($machine_code) {
+                $req->setMachineCode($machine_code);
+            });
+    
+                return $resp;
+        } catch (Exception $e) {
+            return new ecjia_error('ecjia_printer_print_status', $e->getMessage());
+        }
+    }
+    
     /**
      * 音量调节接口
      * @param string $machine_code
