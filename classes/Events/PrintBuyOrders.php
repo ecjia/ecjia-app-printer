@@ -85,7 +85,7 @@ class PrintBuyOrders extends EventAbstract
         	'goods_amount' => '单价',
         ],
         
-        'goods_subtotal' => '小计'
+        'goods_subtotal' => '总计'
     ];
     
     /**
