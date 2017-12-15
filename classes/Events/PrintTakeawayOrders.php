@@ -64,9 +64,6 @@ class PrintTakeawayOrders extends EventAbstract
 	    'express_sn' 	=> '配送单号',
 	    'service_phone' => '客服电话',
 	    
-	    'merchants_name'   		=> '商家名称',
-	    'merchants_mobile' 		=> '商家电话',
-	    
 	    'payment'           	=> '微信支付',
 	    'pay_status'			=> '支付状态',
 	    'order_sn' 	        	=> '订单编号',

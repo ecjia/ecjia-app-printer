@@ -69,7 +69,7 @@ class PrintQuickpayOrders extends EventAbstract
     	'user_name'				=> '会员账号',
     	
     	'purchase_time'	        => '买单时间',
-    	'merchant_name'			=> '商家地址',
+    	'merchant_address'		=> '商家地址',
     	 
     	'favourable_activity'	=> '优惠活动',
     	
@@ -88,7 +88,7 @@ class PrintQuickpayOrders extends EventAbstract
 	    'order_trade_no'   => '2017121470950', //流水编号
 	    'user_account'	   => 'zhangsan',
 	    'purchase_time'    => '2017-10-12 10:00:00', //买单时间
-	    'merchant_name'	   => '上海市普陀区中山北路3553号301室',
+	    'merchant_address' => '上海市普陀区中山北路3553号301室',
 	    
 	    'favourable_activity' => '全场满300减10',
 	    

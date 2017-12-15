@@ -35,6 +35,8 @@
 		<div class="ticket-item">实收金额：{$data.order_amount}</div>
 	</div>
 	{if $info.tail_content}
+	<div class="ticket_content dashed">
 		{$info.tail_content}
+	</div>	
 	{/if}							
 </div>

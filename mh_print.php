@@ -258,132 +258,135 @@ class mh_print extends ecjia_merchant
     {
         $this->admin_priv('merchant_printer_update', ecjia::MSGTYPE_JSON);
         $type  = trim($_POST['type']);
-        $number = intval($_POST['number']);
-        $tail_content = strip_tags($_POST['tail_content']);
-        $array = array('normal', 'take_out', 'store_buy', 'pay_bill');
+        
+        $info = RC_DB::table('printer_template')->where('store_id', $_SESSION['store_id'])->where('template_code', $type)->first();
+        if (!empty($info)) {
+        	$number = $info['print_number'];
+        	$tail_content = $info['tail_content'];
+        } else {
+        	$number = 1;
+        	$tail_content = '';
+        }
+        
+        $array = array('print_buy_orders', 'print_takeaway_orders', 'print_store_orders', 'print_quickpay_orders');
         if (!in_array($type, $array)) {
             return $this->showmessage('该小票类型不存在', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR, array('pjaxurl' => RC_Uri::url('printer/mh_print/order_ticket', array('type' => 'normal'))));
         }
         $store_info = RC_DB::table('store_franchisee')->where('store_id', $_SESSION['store_id'])->first();
-        $data = array(
-        	'merchants_name'		=> $store_info['merchants_name'],//商家名称
-        	'merchants_mobile'		=> $store_info['contact_mobile'],//联系电话
-            'order_sn'				=> '2017101294860',//订单编号
-            'order_flow'			=> '2017101294861',//流水编号
-        	'user_name'				=> 'ECJia测试会员',//会员账号
-        	'pay_time'				=> '2017-11-15 15:55',//下单时间
-        	'expected_time'			=> '2017-11-15 16:55',//期望送达时间
-        	'goods_name'			=> 'Panasonic/松下美发器 EH-HW13 卷发器直发器 陶瓷两用夹板',//商品名称
-        	'goods_number'			=> 10,//商品数量
-        	'goods_unit_price'		=> 50,//单价
-        	'goods_total'			=> 500,//总价
-        	'integral_deduction'	=> 5.00,//积分抵扣
-        	'integral'				=> 5,//获得积分
-        	'integral_balance'		=> 20.00,//积分余额
-        	'receivable_balance' 	=> 495,//应收金额
-        	'alipay'				=> 495,//支付宝
-        	'wechat_pay'			=> 495,//微信支付
-        	'full_reduction'		=> 10.00,//满减满折
-        	'bonus_discount'		=> 5.00,//红包折扣
-        	'truncation'			=> 0.5,//分头舍去
-        	'amount_paid'			=> 500,//实收金额
-        	'odd_change'			=> 25.5,//找零金额
-        	'consignee'				=> '张三',//姓名
-        	'mobile'				=> '15000000000',//手机号
-        	'address'				=> '上海市普陀区中山北路1500号',//地址
-        	'remarks_content'   	=> '测试备注内容',//备注内容
-        	'merchant_address'		=> '上海市普陀区中山北路3553号伸大厦301',//商家地址
-        	'favourable_activity'	=> '满500减10',//优惠活动
-        	'discount_amount'		=> '10.00',//优惠金额
-        	'cashier'				=> '小李',//收银员
-        	'payment'				=> '微信支付'//支付方式
-        );
+
+        $data = with(new Ecjia\App\Printer\EventFactory)->event($type)->getDemoValues();
+
         $content = '';
         if ($number > 1) {
         	$content = "<MN>".$number."</MN>";
         }
-        if ($type == 'normal') {
-            $content .= "<FS><center>".$data['merchants_name']."</center></FS>
-<FS><center>".$data['merchants_mobile']."</center></FS>
+        if ($type == 'print_buy_orders') {
+        	
+            $content .= "<FS><center>".$store_info['merchants_name']."</center></FS>
+<FS><center>".$store_info['contact_mobile']."</center></FS>
 订单编号：".$data['order_sn']."
-流水编号：".$data['order_flow']."
+流水编号：".$data['order_trade_no']."
 会员账号：".$data['user_name']."
-下单时间：0000-00-00 00:00
---------------------------------
-<table><tr><td>商品</td><td>数量</td><td>单价</td></tr><tr><td>".$data['goods_name']."</td></tr><tr><td> </td><td>".$data['goods_number']."</td><td>".$data['goods_unit_price']."</td></tr></table><FS><right>总价：".$data['goods_total']."</right></FS>
---------------------------------
-积分抵扣：".$data['integral_deduction']."  获得积分：".$data['integral']."
+下单时间：".$data['purchase_time'];
+if (!empty($data['goods_lists'])) {
+$content .= "--------------------------------<table><tr><td>商品</td><td>数量</td><td>单价</td></tr>";
+foreach ($data['goods_lists'] as $k => $v) {
+$content .= "<tr><td>".$v['goods_name']."</td></tr><tr><td> </td><td>".$v['goods_number']."</td><td>".$v['goods_amount']."</td></tr> ";
+}
+$content .= "</table><FS><right>总价：".$data['goods_total']."</right></FS>";
+}
+$content .= "--------------------------------
+积分抵扣：".$data['integral_money']."  获得积分：".$data['integral_give']."
 积分余额：".$data['integral_balance']."
-应收金额：".$data['receivable_balance']."
-支付宝：".$data['alipay']."
+应收金额：".$data['receivables']."
+支付宝：".$data['payment']."
 --------------------------------
-满减满折：-".$data['full_reduction']."
+满减满折：-".$data['favourable_discount']."
 红包折扣：".$data['bonus_discount']."
-分头舍去：-".$data['truncation']."
-实收金额：".$data['amount_paid']."  找零金额：".$data['odd_change']."
+分头舍去：-".$data['rounding']."
+实收金额：".$data['order_amount']."  找零金额：".$data['give_change']."
 --------------------------------
-备注内容：".$data['remarks_content']."
+备注内容：".$data['order_remarks']."
 <center>请妥善保管好购物凭证</center>
 <center>谢谢惠顾欢迎下次光临</center>";
 
-        } else if ($type == 'take_out') {
-            $content .= "<FS><center>".$data['merchants_name']."</center></FS>
-<FS><center>".$data['merchants_mobile']."</center></FS>
-<FB><center>".$data['payment']."（已支付）</center></FB>
+        } else if ($type == 'print_takeaway_orders') {
+        	
+            $content .= "<FS><center>".$store_info['merchants_name']."</center></FS>
+<FS><center>".$store_info['contact_mobile']."</center></FS>
+<FB><center>".$data['payment']."（".$data['pay_status']."）</center></FB>
 订单编号：".$data['order_sn']."
-流水编号：".$data['order_flow']."
-下单时间：".$data['pay_time']."
-期望送达时间：".$data['expected_time']."
------------- 商品名 ------------
-<table><tr><td>商品</td><td>数量</td><td>单价</td></tr><tr><td>".$data['goods_name']."</td></tr><tr><td> </td><td>".$data['goods_number']."</td><td>".$data['goods_unit_price']."</td></tr></table><FS><right>总价：".$data['goods_total']."</right></FS>\r
-------------- 其他 -------------
-积分抵扣：-".$data['integral_deduction']."  获得积分：".$data['integral']."
+流水编号：".$data['order_trade_no']."
+下单时间：".$data['purchase_time']."
+期望送达时间：".$data['expect_shipping_time'];
+if (!empty($data['goods_lists'])) {
+$content .= "------------ 商品名 ------------<table><tr><td>商品</td><td>数量</td><td>单价</td></tr>";
+foreach ($data['goods_lists'] as $k => $v) {
+$content .= "<tr><td>".$v['goods_name']."</td></tr><tr><td> </td><td>".$v['goods_number']."</td><td>".$v['goods_amount']."</td></tr> ";
+}
+$content .= "</table><FS><right>总价：".$data['goods_total']."</right></FS>";
+}
+$content .= "------------- 其他 -------------
+积分抵扣：-".$data['integral_money']."  获得积分：".$data['integral_give']."
 积分余额：".$data['integral_balance']."
-应收金额：".$data['receivable_balance']."
+应收金额：".$data['receivables']."
 微信支付：".$data['wechat_pay']."
 --------------------------------
-满减满折：-".$data['full_reduction']."
+满减满折：-".$data['favourable_discount']."
 红包折扣：-".$data['bonus_discount']."
-分头舍去：-".$data['truncation']."
+分头舍去：-".$data['rounding']."
+实收金额：-".$data['order_amount']."
 --------------------------------
-备注内容：".$data['remarks_content']."
-地址：".$data['address']."
-姓名：".$data['consignee']."
-手机号：".$data['mobile'];
+备注内容：".$data['order_remarks']."
+地址：".$data['consignee_address']."
+姓名：".$data['consignee_name']."
+手机号：".$data['consignee_mobile'];
 
-        } else if ($type == 'store_buy') {
-            $content .= "<FS><center>".$data['merchants_name']."</center></FS>
-<FS><center>".$data['merchants_mobile']."</center></FS>
+        } else if ($type == 'print_store_orders') {
+        	
+            $content .= "<FS><center>".$store_info['merchants_name']."</center></FS>
+<FS><center>".$store_info['contact_mobile']."</center></FS>
 收银员：".$data['cashier']."
 订单编号：".$data['order_sn']."
-流水编号：".$data['order_flow']."
-下单时间：".$data['pay_time']."
-商家地址：".$data['merchant_address']."
---------------------------------
-<table><tr><td>商品</td><td>数量</td><td>单价</td></tr><tr><td>".$data['goods_name']."</td></tr><tr><td> </td><td>".$data['goods_number']."</td><td>".$data['goods_unit_price']."</td></tr></table><FS><right>总价：".$data['goods_total']."</right></FS>
---------------------------------
+流水编号：".$data['order_trade_no']."
+下单时间：".$data['purchase_time']."
+商家地址：".$data['merchant_address'];
+if (!empty($data['goods_lists'])) {
+$content .= "--------------------------------<table><tr><td>商品</td><td>数量</td><td>单价</td></tr>";
+foreach ($data['goods_lists'] as $k => $v) {
+$content .= "<tr><td>".$v['goods_name']."</td></tr><tr><td> </td><td>".$v['goods_number']."</td><td>".$v['goods_amount']."</td></tr> ";
+}
+$content .= "</table><FS><right>总价：".$data['goods_total']."</right></FS>";
+}
+$content .= "--------------------------------
 优惠金额：".$data['discount_amount']."
-应收金额：".$data['receivable_balance']."
-支付宝：".$data['alipay']."
-分头舍去：-".$data['truncation']."
-实收金额：".$data['amount_paid'];
+应收金额：".$data['receivables']."
+支付宝：".$data['payment']."
+分头舍去：-".$data['rounding']."
+实收金额：".$data['order_amount'];
 
-        } else if ($type == 'pay_bill') {
-       		$content .= "<FS><center>".$data['merchants_name']."</center></FS>
-<FS><center>".$data['merchants_mobile']."</center></FS>
+        } else if ($type == 'print_quickpay_orders') {
+        	
+       		$content .= "<FS><center>".$store_info['merchants_name']."</center></FS>
+<FS><center>".$store_info['contact_mobile']."</center></FS>
 订单编号：".$data['order_sn']."
-流水编号：".$data['order_flow']."
+流水编号：".$data['order_trade_no']."
 会员账号：".$data['user_name']."
-买单时间：".$data['pay_time']."
+买单时间：".$data['purchase_time']."
 商家地址：".$data['merchant_address']."\r
 ----------- 在线买单 -----------
 优惠活动：".$data['favourable_activity']."
 --------------------------------
-应收金额：-".$data['receivable_balance']."
+应收金额：-".$data['receivables']."
 优惠金额：-".$data['discount_amount']."
-支付宝：".$data['alipay']."
-实收金额：".$data['amount_paid'];
+支付宝：".$data['payment']."
+实收金额：".$data['order_amount'];
+       		
         };
+        
+        if (!empty($tail_content)) {
+        	$content .= "--------------------------------".$tail_content;
+        }
         
         $info = RC_DB::table('printer_machine')->where('store_id', $_SESSION['store_id'])->first();
         $order_sn = date('YmdHis') . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);

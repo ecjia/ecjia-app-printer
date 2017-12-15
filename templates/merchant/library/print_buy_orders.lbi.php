@@ -48,8 +48,10 @@
 		备注内容：{$data.order_remarks}
 		<div class="t_c">请妥善保管好购物凭证</div>
 		<div class="t_c">谢谢惠顾，欢迎下次光临！</div>
-		{if $info.tail_content}
-			{$info.tail_content}
-		{/if}
+	</div>
+	{if $info.tail_content}
+	<div class="ticket_content dashed">
+		{$info.tail_content}
 	</div>	
+	{/if}		
 </div>

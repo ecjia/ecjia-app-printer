@@ -64,9 +64,6 @@ class PrintStoreOrders extends EventAbstract
     	'express_sn' 	=> '配送单号',
     	'service_phone' => '客服电话',
     	
-    	'merchants_name'   		=> '商家名称',
-    	'merchants_mobile' 		=> '商家电话',
-    	 
     	'cashier'           	=> '收银员',
     	'order_sn' 	        	=> '订单编号',
     	'order_trade_no'    	=> '流水编号',

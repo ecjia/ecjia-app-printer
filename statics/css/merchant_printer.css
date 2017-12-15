@@ -103,6 +103,12 @@
 	padding-bottom: 0
 }
 
+.ticket_content.dashed {
+	border-top: 2px dashed #ddd;
+	border-bottom: none;
+	margin-top: 10px;
+}
+
 .ticket_content p.star {
 	display: inline-block;
 	vertical-align: middle;
