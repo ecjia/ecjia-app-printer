@@ -10,7 +10,7 @@
 		<div class="ticket-item">会员账号：{$data.user_name}</div>
 		<div class="ticket-item">下单时间：{$data.purchase_time}</div>
 	</div>
-	<div class="ticket_content top_dashed">
+	<div class="ticket_content">
 		<ul>
 			<li>商品</li>
 			<li>数量</li>
