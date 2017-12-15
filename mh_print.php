@@ -267,7 +267,7 @@ class mh_print extends ecjia_merchant
         $store_info = RC_DB::table('store_franchisee')->where('store_id', $_SESSION['store_id'])->first();
         $data = array(
         	'merchants_name'		=> $store_info['merchants_name'],//商家名称
-        	'merchants_mobile'		=> $store_info['contact_mobile'],//商家名称
+        	'merchants_mobile'		=> $store_info['contact_mobile'],//联系电话
             'order_sn'				=> '2017101294860',//订单编号
             'order_flow'			=> '2017101294861',//流水编号
         	'user_name'				=> 'ECJia测试会员',//会员账号
@@ -497,10 +497,25 @@ class mh_print extends ecjia_merchant
         $this->assign('ur_here', '小票打印设置');
 
         $type  = trim($_GET['type']);
-        $array = array('normal', 'take_out', 'store_buy', 'pay_bill');
+        $array = array('print_buy_orders', 'print_takeaway_orders', 'print_store_orders', 'print_quickpay_orders');
         if (!in_array($type, $array)) {
             return $this->showmessage('该小票类型不存在', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR, array('pjaxurl' => RC_Uri::url('printer/mh_print/order_ticket', array('type' => 'normal'))));
         }
+        $template_subject = '普通订单小票';
+        $template_mark = '模板001';
+        if ($type == 'print_takeaway_orders') {
+        	$template_subject = '外卖订单小票';
+        	$template_mark = '模板002';
+        } elseif ($type == 'print_store_orders') {
+        	$template_subject = '到店购物小票';
+        	$template_mark = '模板003';
+        } elseif ($type == 'print_quickpay_orders') {
+        	$template_subject = '优惠买单小票';
+        	$template_mark = '模板004';
+        }
+        $this->assign('template_subject', $template_subject);
+        $this->assign('template_mark', $template_mark);
+        
         $store  = RC_DB::table('store_franchisee')->where('store_id', $_SESSION['store_id'])->first();
         $config = RC_DB::table('merchants_config')->where('store_id', $_SESSION['store_id'])->where('code', 'shop_logo')->first();
         if (!empty($config['value'])) {
@@ -511,14 +526,47 @@ class mh_print extends ecjia_merchant
         $this->assign('store', $store);
         $this->assign('form_action', RC_Uri::url('printer/mh_print/insert_template'));
         $this->assign('print_order_ticker', RC_Uri::url('printer/mh_print/print_order_ticker'));
-
+        
+        $info = RC_DB::table('printer_template')->where('store_id', $_SESSION['store_id'])->where('template_code', $type)->first();
+        $this->assign('info', $info);
+        
+        $demo_values = with(new Ecjia\App\Printer\EventFactory)->event($type)->getDemoValues();
+        $this->assign('data', $demo_values);
+        
         $this->display('printer_order_ticket.dwt');
     }
 
     public function insert_template()
     {
         $this->admin_priv('merchant_printer_update', ecjia::MSGTYPE_JSON);
-
+        
+        $template_subject = !empty($_POST['template_subject']) 	? trim($_POST['template_subject']) 	: '';
+        $template_code 	  = !empty($_POST['template_code']) 	? trim($_POST['template_code']) 	: '';
+        $print_number 	  = !empty($_POST['print_number']) 		? (intval($_POST['print_number']) > 9 ? 9 : intval($_POST['print_number'])) : 1;
+        $status           = !empty($_POST['status'])			? intval($_POST['status']) 			: 0;
+        $auto_print       = !empty($_POST['auto_print'])		? intval($_POST['auto_print']) 		: 0;
+		$tail_content     = !empty($_POST['tail_content'])		? strip_tags($_POST['tail_content']): '';
+		
+		$data = array(
+			'template_subject' 	=> $template_subject,
+			'template_code' 	=> $template_code,
+			'print_number' 		=> $print_number,
+			'status' 			=> $status,
+			'auto_print' 		=> $auto_print,
+			'tail_content' 		=> $tail_content,
+			'last_modify'		=> RC_Time::gmtime()
+		);
+		
+		$info = RC_DB::table('printer_template')->where('store_id', $_SESSION['store_id'])->where('template_code', $template_code)->first();
+		if (!empty($info)) {
+			ecjia_merchant::admin_log($template_subject, 'edit', 'printer_template');
+			RC_DB::table('printer_template')->where('store_id', $_SESSION['store_id'])->where('id', $info['id'])->update($data);
+		} else {
+			$data['store_id'] = $_SESSION['store_id'];
+			RC_DB::table('printer_template')->insert($data);
+			ecjia_merchant::admin_log($template_subject, 'add', 'printer_template');
+		}
+		$this->showmessage('保存成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/order_ticket', array('type' => $template_code))));
     }
 
     private function get_record_list()

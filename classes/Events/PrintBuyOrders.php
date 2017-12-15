@@ -67,6 +67,7 @@ class PrintBuyOrders extends EventAbstract
     	'order_sn' 	       => '订单编号',
     	'order_trade_no'   => '流水编号',
     	'user_name'        => '会员账号',
+    	'purchase_time'	   => '下单时间',
         
         'integral_money'    => '积分抵扣',
         'integral'          => '应收金额',
@@ -100,26 +101,27 @@ class PrintBuyOrders extends EventAbstract
         'order_sn' 	       => '2017101294860', //订单编号
     	'order_trade_no'   => '2017121470950', //流水编号
     	'user_name'        => 'ecjia', //会员账号
+    	'purchase_time'    => '2017-10-12 10:00:00', //下单时间
         
         'integral_money'    => '5.00', //积分抵扣
-        'integral'          => '49.50', //应收金额
+        'integral'          => '49.00', //应收金额
         'integral_balance'  => '20.00', //积分余额
         'integral_give'     => '49', //获得积分
-        'payment'           => '支付宝',
+        'payment'           => '44.00',
         
         'favourable_discount'   => '0.00', //满减满折
         'bonus_discount'        => '0.00', //红包折扣
-        'rounding'              => '分头舍去',
+        'rounding'              => '0.00', //分头舍去
         'order_amount'          => '44.00', //实收金额
         'give_change'           => '0.00', //找零金额
         
         'order_remarks'         => '订单备注内容',
         
         'goods_lists' => [
-            ['goods_name'   => '商品1', 'goods_number' => '3', 'goods_amount' => '5.00'],
-            ['goods_name'   => '商品2', 'goods_number' => '1', 'goods_amount' => '2.00'],
-            ['goods_name'   => '商品3', 'goods_number' => '1', 'goods_amount' => '2.00'],
-            ['goods_name'   => '商品4', 'goods_number' => '1', 'goods_amount' => '30.00'],
+            ['goods_name'   => '乐口事 卢森堡玛奇朵咖啡味牛奶 330ml', 'goods_number' => '3', 'goods_amount' => '5.00'],
+            ['goods_name'   => '爱之鱼 东海小黄鱼（12条装）450g', 'goods_number' => '1', 'goods_amount' => '2.00'],
+            ['goods_name'   => '华英精切鸭翅中280g', 'goods_number' => '1', 'goods_amount' => '2.00'],
+            ['goods_name'   => '申扬 农家草鸡蛋 18枚装（6枚*3）', 'goods_number' => '1', 'goods_amount' => '30.00'],
         ],
         
         'goods_subtotal' => '49.00' //商品总计

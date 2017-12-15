@@ -29,10 +29,10 @@
                         </ul>
                         <ul class="nav nav-list m_t10 change">
                         	<li class="nav-list-title">小票分类模版</li>
-                        	<li><a class="setting-group-item data-pjax {if $smarty.get.type eq 'normal'}llv-active{/if}" href='{url path="printer/mh_print/order_ticket" args="type=normal"}'>普通订单小票</a></li>
-                        	<li><a class="setting-group-item data-pjax m_t5 {if $smarty.get.type eq 'take_out'}llv-active{/if}" href='{url path="printer/mh_print/order_ticket" args="type=take_out"}'>外卖订单小票</a></li>
-                        	<li><a class="setting-group-item data-pjax m_t5 {if $smarty.get.type eq 'store_buy'}llv-active{/if}" href='{url path="printer/mh_print/order_ticket" args="type=store_buy"}'>到店购物小票</a></li>
-                        	<li><a class="setting-group-item data-pjax m_t5 {if $smarty.get.type eq 'pay_bill'}llv-active{/if}" href='{url path="printer/mh_print/order_ticket" args="type=pay_bill"}'>优惠买单小票</a></li>
+                        	<li><a class="setting-group-item data-pjax {if $smarty.get.type eq 'print_buy_orders'}llv-active{/if}" href='{url path="printer/mh_print/order_ticket" args="type=print_buy_orders"}'>普通订单小票</a></li>
+                        	<li><a class="setting-group-item data-pjax m_t5 {if $smarty.get.type eq 'print_takeaway_orders'}llv-active{/if}" href='{url path="printer/mh_print/order_ticket" args="type=print_takeaway_orders"}'>外卖订单小票</a></li>
+                        	<li><a class="setting-group-item data-pjax m_t5 {if $smarty.get.type eq 'print_store_orders'}llv-active{/if}" href='{url path="printer/mh_print/order_ticket" args="type=print_store_orders"}'>到店购物小票</a></li>
+                        	<li><a class="setting-group-item data-pjax m_t5 {if $smarty.get.type eq 'print_quickpay_orders'}llv-active{/if}" href='{url path="printer/mh_print/order_ticket" args="type=print_quickpay_orders"}'>优惠买单小票</a></li>
                         </ul>
                     </div>
                 </div>
@@ -44,14 +44,14 @@
   					</h3>
   					<div class="row m_t20">
 						<div class="col-lg-6">
-							<!-- {if $smarty.get.type eq 'normal'} -->
-								<!-- #BeginLibraryItem "/library/normal.lbi" --><!-- #EndLibraryItem -->
-							<!-- {else if $smarty.get.type eq 'take_out'} -->
-								<!-- #BeginLibraryItem "/library/take_out.lbi" --><!-- #EndLibraryItem -->
-							<!-- {else if $smarty.get.type eq 'store_buy'} -->
-								<!-- #BeginLibraryItem "/library/store_buy.lbi" --><!-- #EndLibraryItem -->
-							<!-- {else if $smarty.get.type eq 'pay_bill'} -->
-								<!-- #BeginLibraryItem "/library/pay_bill.lbi" --><!-- #EndLibraryItem -->
+							<!-- {if $smarty.get.type eq 'print_buy_orders'} -->
+								<!-- #BeginLibraryItem "/library/print_buy_orders.lbi" --><!-- #EndLibraryItem -->
+							<!-- {else if $smarty.get.type eq 'print_takeaway_orders'} -->
+								<!-- #BeginLibraryItem "/library/print_takeaway_orders.lbi" --><!-- #EndLibraryItem -->
+							<!-- {else if $smarty.get.type eq 'print_store_orders'} -->
+								<!-- #BeginLibraryItem "/library/print_store_orders.lbi" --><!-- #EndLibraryItem -->
+							<!-- {else if $smarty.get.type eq 'print_quickpay_orders'} -->
+								<!-- #BeginLibraryItem "/library/print_quickpay_orders.lbi" --><!-- #EndLibraryItem -->
 							<!-- {/if} -->
 						</div>
 						<div class="col-lg-6">
@@ -59,16 +59,18 @@
 								<form class="form-horizontal ticket_form" name="theForm" method="post" action="{$form_action}">
 				                 	<div class="form-group">
 			                            <label class="control-label col-lg-5">{t}模版名称{/t}</label>
-			                            <div class="col-lg-7">普通订单小票</div>
+			                            <div class="col-lg-7">{$template_subject}</div>
+			                            <input type="hidden" name="template_subject" value="{$template_subject}" />
 			                        </div>
 			                       	<div class="form-group">
 			                            <label class="control-label col-lg-5">{t}模版代号{/t}</label>
-			                            <div class="col-lg-7">模版001</div>
+			                            <div class="col-lg-7">{$template_mark}</div>
+			                            <input type="hidden" name="template_code" value="{$smarty.get.type}" />
 			                        </div>
 			                        <div class="form-group">
 			                            <label class="control-label col-lg-5">{t}打印数量{/t}</label>
 			                            <div class="col-lg-7">
-			                            	<input class="form-control w100" type="number" value="1" min="1" max="9" name="print_count">
+			                            	<input class="form-control w100" type="number" value="{if $info.print_number}{$info.print_number}{else}1{/if}" min="1" max="9" name="print_number">
 			                            	<span class="help-block">默认设置为1份，最多可设置9份</span>
 			                            </div>
 			                        </div>
@@ -92,7 +94,7 @@
 			                        <div class="form-group m_b0">
 			                            <label class="control-label col-lg-5">{t}自定义尾部信息{/t}</label>
 			                            <div class="col-lg-12 m_t10">
-			                            	<textarea class="form-control tail_textarea" name="tail_content"></textarea>
+			                            	<textarea class="form-control tail_textarea" name="tail_content">{$info.tail_content}</textarea>
 			                            	<span class="help-block">如需换行，可在输入框中使用"<xmp><br/></xmp>"字符</span>
 			                            </div>
 			                        </div>

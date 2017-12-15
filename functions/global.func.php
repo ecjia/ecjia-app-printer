@@ -53,6 +53,7 @@ function assign_adminlog_content() {
 	ecjia_admin_log::instance()->add_object('printer', '小票机');
 	ecjia_admin_log::instance()->add_object('machine_name', '小票机名称');
 	ecjia_admin_log::instance()->add_object('machine_logo', '小票机logo');
+	ecjia_admin_log::instance()->add_object('printer_template', '小票模板');
 }
 
 //end
