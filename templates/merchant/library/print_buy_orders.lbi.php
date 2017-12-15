@@ -32,7 +32,7 @@
 			<div class="right-item">获得积分：{$data.integral_give}</div>
 		</div>
 		<div class="ticket-item">积分余额：{$data.integral_balance}</div>
-		<div class="ticket-item">应收金额：{$data.integral}</div>
+		<div class="ticket-item">应收金额：{$data.receivables}</div>
 		<div class="ticket-item">支付宝：{$data.payment}</div>
 	</div>	
 	<div class="ticket_content">
@@ -48,5 +48,8 @@
 		备注内容：{$data.order_remarks}
 		<div class="t_c">请妥善保管好购物凭证</div>
 		<div class="t_c">谢谢惠顾，欢迎下次光临！</div>
+		{if $info.tail_content}
+			{$info.tail_content}
+		{/if}
 	</div>	
 </div>

@@ -70,7 +70,7 @@ class PrintBuyOrders extends EventAbstract
     	'purchase_time'	   => '下单时间',
         
         'integral_money'    => '积分抵扣',
-        'integral'          => '应收金额',
+        'receivables'       => '应收金额',
         'integral_balance'  => '积分余额',
         'integral_give'     => '获得积分',
         'payment'           => '支付宝',
@@ -104,7 +104,7 @@ class PrintBuyOrders extends EventAbstract
     	'purchase_time'    => '2017-10-12 10:00:00', //下单时间
         
         'integral_money'    => '5.00', //积分抵扣
-        'integral'          => '49.00', //应收金额
+        'receivables'       => '49.00', //应收金额
         'integral_balance'  => '20.00', //积分余额
         'integral_give'     => '49', //获得积分
         'payment'           => '44.00',
