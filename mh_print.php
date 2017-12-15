@@ -300,15 +300,11 @@ $content .= "--------------------------------
 应收金额：".$data['receivables']."
 支付宝：".$data['payment']."
 --------------------------------
-满减满折：-".$data['favourable_discount']."
+满减满折：".$data['favourable_discount']."
 红包折扣：".$data['bonus_discount']."
-分头舍去：-".$data['rounding']."
+分头舍去：".$data['rounding']."
 实收金额：".$data['order_amount']."  找零金额：".$data['give_change']."
---------------------------------
-备注内容：".$data['order_remarks']."\r
-<center>请妥善保管好购物凭证</center>
-<center>谢谢惠顾欢迎下次光临</center>";
-
+备注内容：".$data['order_remarks']."\r";
         } else if ($type == 'print_takeaway_orders') {
         	
 $content .= "<FS><center>".$store_info['merchants_name']."</center></FS>
@@ -326,15 +322,15 @@ $content .= "<tr><td>".$v['goods_name']."</td></tr><tr><td> </td><td>".$v['goods
 $content .= "<tr><td> </td><td> </td><td>总价：".$data['goods_subtotal']."</td></tr></table>";
 }
 $content .= "------------- 其他 -------------
-积分抵扣：-".$data['integral_money']."  获得积分：".$data['integral_give']."
+积分抵扣：".$data['integral_money']."  获得积分：".$data['integral_give']."
 积分余额：".$data['integral_balance']."
 应收金额：".$data['receivables']."
 微信支付：".$data['wechat_pay']."
 --------------------------------
-满减满折：-".$data['favourable_discount']."
-红包折扣：-".$data['bonus_discount']."
-分头舍去：-".$data['rounding']."
-实收金额：-".$data['order_amount']."
+满减满折：".$data['favourable_discount']."
+红包折扣：".$data['bonus_discount']."
+分头舍去：".$data['rounding']."
+实收金额：".$data['order_amount']."
 --------------------------------
 备注内容：".$data['order_remarks']."
 地址：".$data['consignee_address']."
@@ -361,7 +357,7 @@ $content .= "--------------------------------
 优惠金额：".$data['discount_amount']."
 应收金额：".$data['receivables']."
 支付宝：".$data['payment']."
-分头舍去：-".$data['rounding']."
+分头舍去：".$data['rounding']."
 实收金额：".$data['order_amount']."\r";
 
         } else if ($type == 'print_quickpay_orders') {
@@ -376,8 +372,8 @@ $content .= "<FS><center>".$store_info['merchants_name']."</center></FS>
 ----------- 在线买单 -----------
 优惠活动：".$data['favourable_activity']."
 --------------------------------
-应收金额：-".$data['receivables']."
-优惠金额：-".$data['discount_amount']."
+应收金额：".$data['receivables']."
+优惠金额：".$data['discount_amount']."
 支付宝：".$data['payment']."
 实收金额：".$data['order_amount']."\r";
        		
