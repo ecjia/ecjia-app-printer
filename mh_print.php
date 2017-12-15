@@ -293,11 +293,13 @@ $content .= "订单编号：".$data['order_sn']."
 if (!empty($data['goods_lists'])) {
 $content .= "--------------------------------";
 $content .= "<table><tr><td>商品</td><td>数量</td><td>单价</td></tr>";
+
 foreach ($data['goods_lists'] as $k => $v) {
-$content .= "<tr><td>".$v['goods_name']."</td></tr><tr><td> </td><td>".$v['goods_number']."</td><td>".$v['goods_amount']."</td></tr>";
+$content .= "<tr><td>".$v['goods_name']."</td><td>".$v['goods_number']."</td><td>".$v['goods_amount']."</td></tr>";
 }
 $content .= "<tr><td> </td><td> </td><td>总价：".$data['goods_subtotal']."</td></tr></table>";
 }
+
 $content .= "--------------------------------
 积分抵扣：".$data['integral_money']."  获得积分：".$data['integral_give']."
 积分余额：".$data['integral_balance']."
@@ -324,7 +326,7 @@ $content .= "<FB><center>".$data['payment']."（".$data['pay_status']."）</cent
 if (!empty($data['goods_lists'])) {
 $content .= "------------ 商品名 ------------<table><tr><td>商品</td><td>数量</td><td>单价</td></tr>";
 foreach ($data['goods_lists'] as $k => $v) {
-$content .= "<tr><td>".$v['goods_name']."</td></tr><tr><td> </td><td>".$v['goods_number']."</td><td>".$v['goods_amount']."</td></tr>";
+$content .= "<tr><td>".$v['goods_name']."</td><td>".$v['goods_number']."</td><td>".$v['goods_amount']."</td></tr>";
 }
 $content .= "<tr><td> </td><td> </td><td>总价：".$data['goods_subtotal']."</td></tr></table>";
 }
@@ -358,7 +360,7 @@ $content .= "收银员：".$data['cashier']."
 if (!empty($data['goods_lists'])) {
 $content .= "--------------------------------<table><tr><td>商品</td><td>数量</td><td>单价</td></tr>";
 foreach ($data['goods_lists'] as $k => $v) {
-$content .= "<tr><td>".$v['goods_name']."</td></tr><tr><td> </td><td>".$v['goods_number']."</td><td>".$v['goods_amount']."</td></tr>";
+$content .= "<tr><td>".$v['goods_name']."</td><td>".$v['goods_number']."</td><td>".$v['goods_amount']."</td></tr>";
 }
 $content .= "<tr><td> </td><td> </td><td>总价：".$data['goods_subtotal']."</td></tr></table>";
 }
@@ -390,6 +392,7 @@ $content .= "订单编号：".$data['order_sn']."
        		
         };
         
+        $content .= "<QR>". $data['order_sn'] ."</QR>";
         if (!empty($tail_content)) {
         	$tail_content = str_replace('<br/>', "\r", $tail_content);
         	$content .= "--------------------------------".$tail_content;
@@ -402,7 +405,7 @@ $content .= "订单编号：".$data['order_sn']."
         if (is_ecjia_error($rs)) {
         	return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
-  		return $this->showmessage('测试打印成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/order_ticket', array('type' => $type))));
+  		return $this->showmessage('测试打印已发送', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/order_ticket', array('type' => $type))));
     }
 
     public function reprint()
