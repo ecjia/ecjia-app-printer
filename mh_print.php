@@ -272,27 +272,27 @@ class mh_print extends ecjia_merchant
             return $this->showmessage('该小票类型不存在', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR, array('pjaxurl' => RC_Uri::url('printer/mh_print/order_ticket', array('type' => 'normal'))));
         }
         $store_info = RC_DB::table('store_franchisee')->where('store_id', $_SESSION['store_id'])->first();
-
         $data = with(new Ecjia\App\Printer\EventFactory)->event($type)->getDemoValues();
-
+        
         $content = '';
         if ($number > 1) {
         	$content = "<MN>".$number."</MN>";
         }
         if ($type == 'print_buy_orders') {
         	
-            $content .= "<FS><center>".$store_info['merchants_name']."</center></FS>
+$content .= "<FS><center>".$store_info['merchants_name']."</center></FS>
 <FS><center>".$store_info['contact_mobile']."</center></FS>
 订单编号：".$data['order_sn']."
 流水编号：".$data['order_trade_no']."
 会员账号：".$data['user_name']."
-下单时间：".$data['purchase_time'];
+下单时间：".$data['purchase_time']."\r";
 if (!empty($data['goods_lists'])) {
-$content .= "--------------------------------<table><tr><td>商品</td><td>数量</td><td>单价</td></tr>";
+$content .= "--------------------------------";
+$content .= "<table><tr><td>商品</td><td>数量</td><td>单价</td></tr>";
 foreach ($data['goods_lists'] as $k => $v) {
-$content .= "<tr><td>".$v['goods_name']."</td></tr><tr><td> </td><td>".$v['goods_number']."</td><td>".$v['goods_amount']."</td></tr> ";
+$content .= "<tr><td>".$v['goods_name']."</td></tr><tr><td> </td><td>".$v['goods_number']."</td><td>".$v['goods_amount']."</td></tr>";
 }
-$content .= "</table><FS><right>总价：".$data['goods_total']."</right></FS>";
+$content .= "<tr><td> </td><td> </td><td>总价：".$data['goods_subtotal']."</td></tr></table>";
 }
 $content .= "--------------------------------
 积分抵扣：".$data['integral_money']."  获得积分：".$data['integral_give']."
@@ -305,25 +305,25 @@ $content .= "--------------------------------
 分头舍去：-".$data['rounding']."
 实收金额：".$data['order_amount']."  找零金额：".$data['give_change']."
 --------------------------------
-备注内容：".$data['order_remarks']."
+备注内容：".$data['order_remarks']."\r
 <center>请妥善保管好购物凭证</center>
 <center>谢谢惠顾欢迎下次光临</center>";
 
         } else if ($type == 'print_takeaway_orders') {
         	
-            $content .= "<FS><center>".$store_info['merchants_name']."</center></FS>
+$content .= "<FS><center>".$store_info['merchants_name']."</center></FS>
 <FS><center>".$store_info['contact_mobile']."</center></FS>
 <FB><center>".$data['payment']."（".$data['pay_status']."）</center></FB>
 订单编号：".$data['order_sn']."
 流水编号：".$data['order_trade_no']."
 下单时间：".$data['purchase_time']."
-期望送达时间：".$data['expect_shipping_time'];
+期望送达时间：".$data['expect_shipping_time']."\r";
 if (!empty($data['goods_lists'])) {
 $content .= "------------ 商品名 ------------<table><tr><td>商品</td><td>数量</td><td>单价</td></tr>";
 foreach ($data['goods_lists'] as $k => $v) {
-$content .= "<tr><td>".$v['goods_name']."</td></tr><tr><td> </td><td>".$v['goods_number']."</td><td>".$v['goods_amount']."</td></tr> ";
+$content .= "<tr><td>".$v['goods_name']."</td></tr><tr><td> </td><td>".$v['goods_number']."</td><td>".$v['goods_amount']."</td></tr>";
 }
-$content .= "</table><FS><right>总价：".$data['goods_total']."</right></FS>";
+$content .= "<tr><td> </td><td> </td><td>总价：".$data['goods_subtotal']."</td></tr></table>";
 }
 $content .= "------------- 其他 -------------
 积分抵扣：-".$data['integral_money']."  获得积分：".$data['integral_give']."
@@ -339,34 +339,34 @@ $content .= "------------- 其他 -------------
 备注内容：".$data['order_remarks']."
 地址：".$data['consignee_address']."
 姓名：".$data['consignee_name']."
-手机号：".$data['consignee_mobile'];
+手机号：".$data['consignee_mobile']."\r";
 
         } else if ($type == 'print_store_orders') {
         	
-            $content .= "<FS><center>".$store_info['merchants_name']."</center></FS>
+$content .= "<FS><center>".$store_info['merchants_name']."</center></FS>
 <FS><center>".$store_info['contact_mobile']."</center></FS>
 收银员：".$data['cashier']."
 订单编号：".$data['order_sn']."
 流水编号：".$data['order_trade_no']."
 下单时间：".$data['purchase_time']."
-商家地址：".$data['merchant_address'];
+商家地址：".$data['merchant_address']."\r";
 if (!empty($data['goods_lists'])) {
 $content .= "--------------------------------<table><tr><td>商品</td><td>数量</td><td>单价</td></tr>";
 foreach ($data['goods_lists'] as $k => $v) {
-$content .= "<tr><td>".$v['goods_name']."</td></tr><tr><td> </td><td>".$v['goods_number']."</td><td>".$v['goods_amount']."</td></tr> ";
+$content .= "<tr><td>".$v['goods_name']."</td></tr><tr><td> </td><td>".$v['goods_number']."</td><td>".$v['goods_amount']."</td></tr>";
 }
-$content .= "</table><FS><right>总价：".$data['goods_total']."</right></FS>";
+$content .= "<tr><td> </td><td> </td><td>总价：".$data['goods_subtotal']."</td></tr></table>";
 }
 $content .= "--------------------------------
 优惠金额：".$data['discount_amount']."
 应收金额：".$data['receivables']."
 支付宝：".$data['payment']."
 分头舍去：-".$data['rounding']."
-实收金额：".$data['order_amount'];
+实收金额：".$data['order_amount']."\r";
 
         } else if ($type == 'print_quickpay_orders') {
         	
-       		$content .= "<FS><center>".$store_info['merchants_name']."</center></FS>
+$content .= "<FS><center>".$store_info['merchants_name']."</center></FS>
 <FS><center>".$store_info['contact_mobile']."</center></FS>
 订单编号：".$data['order_sn']."
 流水编号：".$data['order_trade_no']."
@@ -379,7 +379,7 @@ $content .= "--------------------------------
 应收金额：-".$data['receivables']."
 优惠金额：-".$data['discount_amount']."
 支付宝：".$data['payment']."
-实收金额：".$data['order_amount'];
+实收金额：".$data['order_amount']."\r";
        		
         };
         
