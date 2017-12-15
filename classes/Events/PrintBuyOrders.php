@@ -61,6 +61,9 @@ class PrintBuyOrders extends EventAbstract
     protected $template = '买家已成功确认收货，配送单号为：${express_sn}。如有问题请拨打客服电话：${service_phone}。';
 
     protected $availableValues = [
+        'merchant_name'    => '商家名称',
+        'merchant_mobile'  => '商家电话',
+        
     	'order_sn' 	       => '订单编号',
     	'order_trade_no'   => '流水编号',
     	'user_name'        => '会员账号',

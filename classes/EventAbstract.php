@@ -178,4 +178,17 @@ abstract class EventAbstract
         return $this->templateVar;
     }
     
+    
+    public function setMerchantName()
+    {
+        
+    }
+    
+    
+    public function setMerchantMobile()
+    {
+        
+    }
+    
+    
 }
