@@ -10,7 +10,7 @@
 		<div class="ticket-item">会员账号：{$data.user_name}</div>
 		<div class="ticket-item">下单时间：{$data.purchase_time}</div>
 	</div>
-	<div class="ticket_content top_dashed">
+	<div class="ticket_content">
 		<ul>
 			<li>商品</li>
 			<li>数量</li>
@@ -35,7 +35,7 @@
 		<div class="ticket-item">应收金额：{$data.receivables}</div>
 		<div class="ticket-item">支付宝：{$data.payment}</div>
 	</div>	
-	<div class="ticket_content">
+	<div class="ticket_content no_dashed">
 		<div class="ticket-item">满减满折：{$data.favourable_discount}</div>
 		<div class="ticket-item">红包折扣：{$data.bonus_discount}</div>
 		<div class="ticket-item">分头舍去：{$data.rounding}</div>
@@ -43,11 +43,7 @@
 			<div class="left-item">实收金额：{$data.order_amount}</div>
 			<div class="right-item">找零金额：{$data.give_change}</div>
 		</div>
-	</div>
-	<div class="ticket_content no_dashed">
-		备注内容：{$data.order_remarks}
-		<div class="t_c">请妥善保管好购物凭证</div>
-		<div class="t_c">谢谢惠顾，欢迎下次光临！</div>
+		<div class="ticket-item">备注内容：{$data.order_remarks}</div>
 	</div>
 	{if $info.tail_content}
 	<div class="ticket_content dashed">

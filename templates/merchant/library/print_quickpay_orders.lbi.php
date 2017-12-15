@@ -9,7 +9,7 @@
 		<div class="ticket-item">流水编号：{$data.order_trade_no}</div>
 		<div class="ticket-item">会员账号：{$data.user_account}</div>
 		<div class="ticket-item">买单时间：{$data.purchase_time}</div>
-		<div class="ticket-item">商家地址：{$data.merchant_name}</div>
+		<div class="ticket-item">商家地址：{$data.merchant_address}</div>
 	</div>
 	<div class="ticket_content">
 		<div class="title">  
