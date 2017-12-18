@@ -248,70 +248,6 @@ class mh_print extends ecjia_merchant
         $this->display('printer_record_list.dwt');
     }
 
-    //打印测试
-    public function printer_test()
-    {
-        $this->admin_priv('merchant_printer_update', ecjia::MSGTYPE_JSON);
-
-        $id = !empty($_POST['id']) ? intval($_POST['id']) : 0;
-
-        $content = !empty($_POST['content']) ? strip_tags($_POST['content']) : '';
-        if (empty($content)) {
-            return $this->showmessage('请输入要打印的内容', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
-        }
-        $print_number = !empty($_POST['print_number']) ? (intval($_POST['print_number']) > 9 ? 9 : intval($_POST['print_number'])) : 1;
-
-        $data     = RC_DB::table('printer_machine')->where('store_id', $_SESSION['store_id'])->where('id', $id)->first();
-        $order_sn = date('YmdHis') . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);
-
-        $content = "<MN>$print_number</MN>" . $content;
-        $rs      = ecjia_printer::printSend($data['machine_code'], $content, $order_sn);
-        if (is_ecjia_error($rs)) {
-            return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
-        }
-        return $this->showmessage('测试打印成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/view', array('id' => $id))));
-    }
-
-    //小票模板打印
-    public function print_order_ticker()
-    {
-        $this->admin_priv('merchant_printer_update', ecjia::MSGTYPE_JSON);
-        $type = trim($_POST['type']);
-
-        $array = array('print_buy_orders', 'print_takeaway_orders', 'print_store_orders', 'print_quickpay_orders');
-        if (!in_array($type, $array)) {
-            return $this->showmessage('该小票类型不存在', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR, array('pjaxurl' => RC_Uri::url('printer/mh_print/order_ticket', array('type' => 'normal'))));
-        }
-
-        $store_info     = RC_DB::table('store_franchisee')->where('store_id', $_SESSION['store_id'])->first();
-        $contact_mobile = RC_DB::table('merchants_config')->where('store_id', $_SESSION['store_id'])->where('code', 'shop_kf_mobile')->pluck('value');
-
-        $order_sn = date('YmdHis') . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);
-
-        $a                       = with(new Ecjia\App\Printer\EventFactory())->event($type);
-        $demo                    = $a->getDemoValues();
-        $demo['merchant_name']   = $store_info['merchants_name'];
-        $demo['merchant_mobile'] = $contact_mobile;
-        $demo['order_type']      = 'test'; //测试订单类型
-        $demo['order_sn']        = $order_sn; //测试订单编号
-
-        $result = RC_Api::api('printer', 'send_event_print', [
-            'store_id' => $_SESSION['store_id'],
-            'event'    => $type,
-            'value'    => $demo,
-        ]);
-        if (is_ecjia_error($result)) {
-            return $this->showmessage($result->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
-        }
-        return $this->showmessage('测试打印已发送', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/order_ticket', array('type' => $type))));
-    }
-
-    public function reprint()
-    {
-        $this->admin_priv('merchant_printer_update', ecjia::MSGTYPE_JSON);
-
-    }
-
     //编辑小票机名称
     public function edit_machine_name()
     {
@@ -404,6 +340,30 @@ class mh_print extends ecjia_merchant
         $this->showmessage('删除成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/view', array('id' => $id))));
     }
 
+    //打印测试
+    public function printer_test()
+    {
+        $this->admin_priv('merchant_printer_update', ecjia::MSGTYPE_JSON);
+
+        $id = !empty($_POST['id']) ? intval($_POST['id']) : 0;
+
+        $content = !empty($_POST['content']) ? strip_tags($_POST['content']) : '';
+        if (empty($content)) {
+            return $this->showmessage('请输入要打印的内容', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        }
+        $print_number = !empty($_POST['print_number']) ? (intval($_POST['print_number']) > 9 ? 9 : intval($_POST['print_number'])) : 1;
+
+        $data     = RC_DB::table('printer_machine')->where('store_id', $_SESSION['store_id'])->where('id', $id)->first();
+        $order_sn = date('YmdHis') . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);
+
+        $content = "<MN>$print_number</MN>" . $content;
+        $rs      = ecjia_printer::printSend($data['machine_code'], $content, $order_sn);
+        if (is_ecjia_error($rs)) {
+            return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        }
+        return $this->showmessage('测试打印成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/view', array('id' => $id))));
+    }
+
     //小票打印
     public function order_ticket()
     {
@@ -451,6 +411,40 @@ class mh_print extends ecjia_merchant
         $this->display('printer_order_ticket.dwt');
     }
 
+    //小票模板打印
+    public function print_order_ticker()
+    {
+        $this->admin_priv('merchant_printer_update', ecjia::MSGTYPE_JSON);
+        $type = trim($_POST['type']);
+
+        $array = array('print_buy_orders', 'print_takeaway_orders', 'print_store_orders', 'print_quickpay_orders');
+        if (!in_array($type, $array)) {
+            return $this->showmessage('该小票类型不存在', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR, array('pjaxurl' => RC_Uri::url('printer/mh_print/order_ticket', array('type' => 'normal'))));
+        }
+
+        $store_info     = RC_DB::table('store_franchisee')->where('store_id', $_SESSION['store_id'])->first();
+        $contact_mobile = RC_DB::table('merchants_config')->where('store_id', $_SESSION['store_id'])->where('code', 'shop_kf_mobile')->pluck('value');
+
+        $order_sn = date('YmdHis') . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);
+
+        $a                       = with(new Ecjia\App\Printer\EventFactory())->event($type);
+        $demo                    = $a->getDemoValues();
+        $demo['merchant_name']   = $store_info['merchants_name'];
+        $demo['merchant_mobile'] = $contact_mobile;
+        $demo['order_type']      = 'test'; //测试订单类型
+        $demo['order_sn']        = $order_sn; //测试订单编号
+
+        $result = RC_Api::api('printer', 'send_event_print', [
+            'store_id' => $_SESSION['store_id'],
+            'event'    => $type,
+            'value'    => $demo,
+        ]);
+        if (is_ecjia_error($result)) {
+            return $this->showmessage($result->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        }
+        return $this->showmessage('测试打印已发送', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/order_ticket', array('type' => $type))));
+    }
+
     //保存模板
     public function insert_template()
     {
@@ -486,6 +480,14 @@ class mh_print extends ecjia_merchant
         $this->showmessage('保存成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/order_ticket', array('type' => $template_code))));
     }
 
+    //再次打印
+    public function reprint()
+    {
+        $this->admin_priv('merchant_printer_update', ecjia::MSGTYPE_JSON);
+
+    }
+
+    //获取打印记录列表
     private function get_record_list()
     {
         $db_printer_view = RC_DB::table('printer_printlist as p')
@@ -499,6 +501,7 @@ class mh_print extends ecjia_merchant
         return array('item' => $data, 'page' => $page->show(2), 'desc' => $page->page_desc());
     }
 
+    //打印统计
     private function get_print_count()
     {
         $week_start_time     = RC_Time::local_mktime(0, 0, 0, RC_Time::local_date("m"), RC_Time::local_date("d") - RC_Time::local_date("w") + 1, RC_Time::local_date("Y"));
