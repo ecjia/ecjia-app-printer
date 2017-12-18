@@ -12,7 +12,7 @@
         <!-- {if $action_link} -->
         <a class="data-pjax btn plus_or_reply" id="sticky_a" href="{$action_link.href}"><i class="fontello-icon-reply"></i>{$action_link.text}</a>
         <!-- {/if} -->
-        <a class="data-pjax btn plus_or_reply" id="sticky_a" href='{url path="printer/admin_store_printer/view" args="id={$info.id}&store_id={$info.store_id}"}'>刷新小票机状态</a>
+        <a class="btn plus_or_reply toggle_view" id="sticky_a" href='{url path="printer/admin_store_printer/get_print_status" args="id={$info.id}&store_id={$info.store_id}"}'>刷新小票机状态</a>
     </h3>
 </div>
 

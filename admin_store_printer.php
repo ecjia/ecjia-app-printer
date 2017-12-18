@@ -330,6 +330,23 @@ class admin_store_printer extends ecjia_admin
     	RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->update(array('online_status' => 1));
     	$this->showmessage('重启成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_store_printer/view', array('id' => $id, 'store_id' => $store_id))));
     }
+    
+    //刷新打印机状态
+    public function get_print_status()
+    {
+    	$this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
+    	
+    	$store_id = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
+    	$id       = !empty($_GET['id']) ? intval($_GET['id']) : 0;
+    	 
+    	$data = RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->first();
+    	 
+    	$rs = ecjia_printer::getPrintStatus($data['machine_code']);
+    	if (is_ecjia_error($rs)) {
+    		return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+    	}
+    	$this->showmessage('刷新成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_store_printer/view', array('id' => $id, 'store_id' => $store_id))));
+    }
 
     //音量控制
     public function voice_control()
