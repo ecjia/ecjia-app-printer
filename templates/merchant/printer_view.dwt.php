@@ -11,7 +11,7 @@
 		<h2><!-- {if $ur_here}{$ur_here}{/if} --></h2>
   	</div>
   	<div class="pull-right">
-		<a class="btn btn-primary data-pjax plus_or_reply" id="sticky_a" href='{url path="printer/mh_print/view" args="id={$info.id}"}'>刷新小票机状态</a>
+		<a class="btn btn-primary plus_or_reply toggle_view" id="sticky_a" href='{url path="printer/mh_print/get_print_status" args="id={$info.id}"}'>刷新小票机状态</a>
   		{if $action_link}
 		<a href="{$action_link.href}" class="btn btn-primary data-pjax">
 			<i class="fa fa-reply"></i> {$action_link.text}

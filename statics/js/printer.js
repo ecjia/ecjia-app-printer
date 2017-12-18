@@ -7,6 +7,7 @@
         	 app.printer.slider();
         	 app.printer.remove_logo();
         	 app.printer.testForm();
+        	 app.printer.toggle_view();
         },
         
         form: function () {
@@ -171,6 +172,17 @@
             var options = $.extend(ecjia.admin.defaultOptions.validate, option);
             $("form[name='testForm']").validate(options);
        },
+       
+       toggle_view: function() {
+           $('.toggle_view').on('click', function (e) {
+               e.preventDefault();
+               var $this = $(this);
+               var url = $this.attr('href');
+               $.post(url, function (data) {
+               	ecjia.admin.showmessage(data);
+               }, 'json');
+           });
+       }
     };  
 })(ecjia.admin, jQuery);
  

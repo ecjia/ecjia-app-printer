@@ -7,6 +7,7 @@
         	 app.printer.slider();
         	 app.printer.remove_logo();
         	 app.printer.testForm();
+        	 app.printer.toggle_view();
         },
         
         form: function () {
@@ -167,6 +168,17 @@
         		});
         	});
        },
+       
+       toggle_view: function() {
+           $('.toggle_view').on('click', function (e) {
+               e.preventDefault();
+               var $this = $(this);
+               var url = $this.attr('href');
+               $.post(url, function (data) {
+            	   ecjia.merchant.showmessage(data);
+               }, 'json');
+           });
+       }
     };  
 })(ecjia.merchant, jQuery);
  
