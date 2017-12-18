@@ -479,6 +479,7 @@ class mh_print extends ecjia_merchant
         $this->showmessage('保存成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/order_ticket', array('type' => $template_code))));
     }
 
+    //打印订单
     public function print_order()
     {
         $order_id = intval($_GET['order_id']);
@@ -517,14 +518,14 @@ class mh_print extends ecjia_merchant
         if ($type == 'print_buy_orders') {
             $data = array(
                 'order_sn'            => $order['order_sn'], //订单编号
-				'order_trade_no'      => '201712187341413756', //流水编号
+                'order_trade_no'      => '201712187341413756', //流水编号
                 'user_name'           => !empty($order['user_name']) ? $order['user_name'] : '', //会员账号
                 'purchase_time'       => RC_Time::local_date('Y-m-d H:i:s', $order['add_time']), //下单时间
                 'integral_money'      => $order['integral_money'],
                 'receivables'         => $order['total_fee'], //应收金额
 
-             'integral_balance'    => '20.00', //积分余额
-				'integral_give'       => '49', //获得积分
+                'integral_balance'    => '20.00', //积分余额
+                'integral_give'       => '49', //获得积分
 
                 'payment'             => $order['pay_name'],
                 'favourable_discount' => $order['discount'], //满减满折
@@ -558,18 +559,18 @@ class mh_print extends ecjia_merchant
 
             $data = array(
                 'order_sn'             => $order['order_sn'], //订单编号
-				'order_trade_no'       => '201712187341413756', //流水编号
-                
+                'order_trade_no'       => '201712187341413756', //流水编号
+
                 'payment'              => $order['pay_name'], //支付方式
                 'pay_status'           => RC_Lang::get('orders::order.ps.' . $order['pay_status']), //支付状态
                 'purchase_time'        => RC_Time::local_date('Y-m-d H:i:s', $order['add_time']), //下单时间
                 'expect_shipping_time' => RC_Time::local_date('Y-m-d H:i:s', $order['expect_shipping_time']), //期望送达时间
 
                 'integral_money'       => $order['integral_money'], //积分抵扣
-                
-				'integral_balance'     => '20.00', //积分余额
-				'integral_give'        => '49', //获得积分
-                
+
+                'integral_balance'     => '20.00', //积分余额
+                'integral_give'        => '49', //获得积分
+
                 'receivables'          => $order['total_fee'], //应收金额
                 'favourable_discount'  => $order['discount'], //满减满折
                 'bonus_discount'       => $order['bonus'], //红包折扣
@@ -595,7 +596,7 @@ class mh_print extends ecjia_merchant
             'value'    => $data,
         ]);
         if (is_ecjia_error($result)) {
-        	return $this->showmessage($result->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+            return $this->showmessage($result->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         return $this->showmessage('打印已发送', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('orders/merchant/info', array('order_id' => $order_id))));
     }
