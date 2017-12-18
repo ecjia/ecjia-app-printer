@@ -76,7 +76,7 @@ class EventPrint extends Object
         $data = array(
             'store_id'          => $this->model->store_id,
             'order_sn'          => $template_var['order_sn'],
-            'order_type'        => '',
+            'order_type'        => $template_var['order_type'],
             'machine_code'      => $machine,//设备终端号
             'template_code'     => $template_code,//短信模板ID
             'content'           => $content,//短信内容
