@@ -110,6 +110,10 @@
 	white-space: nowrap
 }
 
+.printer_list .view .btn.btn-primary {
+	width: 50%;
+}
+
 .printer_box {
 	float: left;
 	height: 250px;
