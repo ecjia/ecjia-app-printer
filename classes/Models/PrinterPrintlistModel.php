@@ -49,9 +49,9 @@ namespace Ecjia\App\Printer\Models;
 
 use Royalcms\Component\Database\Eloquent\Model;
 
-class PrinterTemplateModel extends Model
+class PrinterPrintlistModel extends Model
 {
-    protected $table = 'printer_template';
+    protected $table = 'printer_printlist';
     
     protected $primaryKey = 'id';
     
@@ -62,13 +62,18 @@ class PrinterTemplateModel extends Model
      */
     protected $fillable = [
         'store_id',
-        'template_subject',
+        'order_sn',
+        'order_type',
+        'print_order_id',
+        'machine_code',
         'template_code',
-        'template_content',
-        'print_number',
-        'auto_print',
-        'tail_content',
-        'last_modify',
+        'content',	
+        'print_count',        
+        'print_time',		
+        'status',
+        'priority',
+        'last_error_message',
+        'last_send',
     ];
     
     /**
@@ -78,75 +83,6 @@ class PrinterTemplateModel extends Model
      */
     public $timestamps = false;
     
-    /**
-     * 限制查询只包括某一插件的短信模板。
-     *
-     * @return \Royalcms\Component\Database\Eloquent\Builder
-     */
-    public function scopeStore($query, $id)
-    {
-        return $query->where('store_id', $id);
-    }
-    
-    /**
-     * 获取模板数据
-     */
-    public function getTemplateById($id)
-    {
-        return $this->where('id', $id)->first();
-    }
-    
-    public function getTemplateByCode($code, $store_id)
-    {
-        return $this->store($store_id)->where('template_code', $code)->first();
-    }
-    
-    public function hasEnabled($code, $store_id)
-    {
-        $template = $this->getTemplateByCode($code, $store_id);
-        if ($template->status === 1)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    
-    /**
-     * 获取模板内容
-     * @param string $code
-     * @param string $store_id
-     * @return array template_id, template_content
-     */
-    public function getTemplateContentByCode($code, $store_id)
-    {
-        $data = $this->getTemplateByCode($code, $store_id);
-        
-        if ($data) {
-            return array($data['template_content']);
-        }
-        
-        return false;
-    }
-    
-    
-    /**
-     * 获取模板ID
-     * @param string $code
-     * @return array template_id, template_content
-     */
-    public function getTemplateIdByCode($code)
-    {
-        $data = $this->getTemplateByCode($code);
-    
-        if ($data) {
-            return array($data['template_id']);
-        }
-    
-        return false;
-    }
     
     
     
