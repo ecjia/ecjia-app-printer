@@ -61,9 +61,9 @@ class PrintQuickpayOrders extends EventAbstract
     protected $template = '';
 
     protected $availableValues = [
-    	'express_sn' 	=> '配送单号',
-    	'service_phone' => '客服电话',
-    	
+        'merchant_name'         => '商家名称',
+        'merchant_mobile'       => '商家电话',
+        
     	'order_sn' 	        	=> '订单编号',
     	'order_trade_no'    	=> '流水编号',
     	'user_name'				=> '会员账号',
@@ -73,10 +73,12 @@ class PrintQuickpayOrders extends EventAbstract
     	 
     	'favourable_activity'	=> '优惠活动',
     	
-    	'receivables'       => '应收金额',
-    	'discount_amount'   => '优惠金额',
-    	'payment'			=> '支付宝',
-    	'order_amount'      => '实收金额',
+    	'receivables'           => '应收金额',
+    	'discount_amount'       => '优惠金额',
+    	'payment'			    => '支付宝',
+    	'order_amount'          => '实收金额',
+        
+        'qrcode'                => '二维码'
     ];
     
     /**
@@ -85,7 +87,7 @@ class PrintQuickpayOrders extends EventAbstract
      */
     protected $demoValues = [
 	    'order_sn' 	       => '2017101294860', //订单编号
-	    'order_trade_no'   => '2017121470950', //流水编号
+	    'order_trade_no'   => '201712187341413756', //流水编号
 	    'user_account'	   => 'zhangsan',
 	    'purchase_time'    => '2017-10-12 10:00:00', //买单时间
 	    'merchant_address' => '上海市普陀区中山北路3553号301室',
@@ -96,11 +98,29 @@ class PrintQuickpayOrders extends EventAbstract
 	    'discount_amount'   => '5.00',  //优惠金额
 	    'payment'        	=> '44.00', //支付宝
 	    'order_amount'     	=> '44.00', //实收金额
+	    
+        'qrcode'            => '2017101294860',
     ];
     
     
     public function getTemplate()
     {
+        $template = "${print_number}<FS><center>${merchants_name}</center></FS>
+<FS><center>${merchants_mobile}</center></FS>
+订单编号：${order_sn}
+流水编号：${order_trade_no}
+会员账号：${user_name}
+买单时间：${purchase_time}
+商家地址：${merchant_address}\r
+----------- 在线买单 -----------
+优惠活动：${favourable_activity}
+--------------------------------
+优惠金额：${discount_amount}
+应收金额：${receivables}
+${payment}：${order_amount}
+实收金额：${order_amount}\r
+<QR>${qrcode}</QR>\r
+${tail_content}";
         return $this->template;
     }
     

@@ -61,9 +61,9 @@ class PrintTakeawayOrders extends EventAbstract
     protected $template = '';
 
     protected $availableValues = [
-	    'express_sn' 	=> '配送单号',
-	    'service_phone' => '客服电话',
-	    
+        'merchant_name'         => '商家名称',
+        'merchant_mobile'       => '商家电话',
+        
 	    'payment'           	=> '微信支付',
 	    'pay_status'			=> '支付状态',
 	    'order_sn' 	        	=> '订单编号',
@@ -71,18 +71,12 @@ class PrintTakeawayOrders extends EventAbstract
 	    'purchase_time'	        => '下单时间',
 	    'expect_shipping_time'  => '期望送达时间',
 	    
-	    'goods_lists' => [
-		    'goods_name'   => '商品',
-		    'goods_number' => '数量',
-		    'goods_amount' => '单价',
-	    ],
-	    'goods_subtotal' => '总计',
+	    'goods_subtotal'        => '总计',
 	    
-	    'integral_money'    => '积分抵扣',
-	    'integral_balance'  => '积分余额',
-	    'receivables'       => '应收金额',
-	    'integral_give'     => '获得积分',
-	    'wechat_pay'		=> '微信支付',
+	    'integral_money'        => '积分抵扣',
+	    'integral_balance'      => '积分余额',
+	    'receivables'           => '应收金额',
+	    'integral_give'         => '获得积分',
 	    
 	    'favourable_discount'   => '满减满折',
 	    'bonus_discount'        => '红包折扣',
@@ -93,7 +87,6 @@ class PrintTakeawayOrders extends EventAbstract
 	    'consignee_address'		=> '收货地址',
 	    'consignee_name'		=> '收货人姓名',
 	    'consignee_mobile'		=> '收货人手机号',
-	    'tail_content'          => '尾部内容',
     ];
     
     /**
@@ -102,7 +95,7 @@ class PrintTakeawayOrders extends EventAbstract
      */
     protected $demoValues = [
 	    'order_sn' 	       => '2017101294860', //订单编号
-	    'order_trade_no'   => '2017121470950', //流水编号
+	    'order_trade_no'   => '201712187341413756', //流水编号
 	    'payment'          => '微信支付', //支付方式
 	    'pay_status'	   => '已支付',	//支付状态
 	    
@@ -113,7 +106,6 @@ class PrintTakeawayOrders extends EventAbstract
 	    'integral_balance'  => '20.00', //积分余额
 	    'receivables'       => '49.00', //应收金额
 	    'integral_give'     => '49', //获得积分
-	    'wechat_pay'        => '44.00', //微信支付
 	    
 	    'favourable_discount'   => '0.00', //满减满折
 	    'bonus_discount'        => '0.00', //红包折扣
@@ -133,12 +125,40 @@ class PrintTakeawayOrders extends EventAbstract
 			    ['goods_name'   => '申扬 农家草鸡蛋 18枚装（6枚*3）', 'goods_number' => '1', 'goods_amount' => '30.00'],
 		],
 		    
-		'goods_subtotal' => '49.00' //商品总计
+		'goods_subtotal' => '49.00', //商品总计
+		    
+		'qrcode'         => '2017101294860',
 	];
 	
 	
 	public function getTemplate()
 	{
+	    $template = "${print_number}<FS><center>${merchants_name}</center></FS>
+<FS><center>${merchants_mobile}</center></FS>
+<FB><center>${payment}（${pay_status}）</center></FB>
+订单编号：${order_sn}
+流水编号：${order_trade_no}
+下单时间：${purchase_time}
+期望送达时间：${expect_shipping_time}\r
+------------ 商品名 ------------
+${goods_lists}
+------------- 其他 -------------
+积分抵扣：${integral_money}  获得积分：${integral_give}
+积分余额：${integral_balance}
+应收金额：${receivables}
+${payment}：${order_amount}
+--------------------------------
+满减满折：-${favourable_discount}
+红包折扣：${bonus_discount}
+分头舍去：-${rounding}
+实收金额：${order_amount}
+--------------------------------
+备注内容：${order_remarks}
+地址：${consignee_address}
+姓名：${consignee_name}
+手机号：${consignee_mobile}\r;
+<QR>${qrcode}</QR>\r
+${tail_content}";
 	    return $this->template;
 	}
     

@@ -61,9 +61,9 @@ class PrintStoreOrders extends EventAbstract
     protected $template = '';
 
     protected $availableValues = [
-    	'express_sn' 	=> '配送单号',
-    	'service_phone' => '客服电话',
-    	
+        'merchant_name'         => '商家名称',
+        'merchant_mobile'       => '商家电话',
+        
     	'cashier'           	=> '收银员',
     	'order_sn' 	        	=> '订单编号',
     	'order_trade_no'    	=> '流水编号',
@@ -93,7 +93,7 @@ class PrintStoreOrders extends EventAbstract
     protected $demoValues = [
 	    'cashier'           	=> '张三',
 	    'order_sn' 	        	=> '2017101294860',
-	    'order_trade_no'    	=> '2017121470950',
+	    'order_trade_no'    	=> '201712187341413756',
 	    'purchase_time'	        => '2017-10-12 10:00:00',
 	    'merchant_address'		=> '上海市普陀区中山北路3553号301室',
 	    
@@ -108,16 +108,33 @@ class PrintStoreOrders extends EventAbstract
 	    
 	    'discount_amount'   => '5.00',
 	    'receivables'       => '44.00',
-	    'payment'		    => '44.00',
+	    'payment'		    => '支付宝',
 	    'rounding'          => '0.00',
 	    'order_amount'      => '44.00',
 	    
-	    'tail_content'          => '尾部内容',
+	    'qrcode'            => '2017101294860',
     ];
     
     
     public function getTemplate()
     {
+        $template = "${print_number}<FS><center>${merchants_name}</center></FS>
+<FS><center>${merchants_mobile}</center></FS>
+收银员：${cashier}
+订单编号：${order_sn}
+流水编号：${order_trade_no}
+下单时间：${purchase_time}
+商家地址：${merchant_address}\r
+--------------------------------
+${goods_lists}
+--------------------------------
+优惠金额：${discount_amount}
+应收金额：${receivables}
+${payment}：${order_amount}
+分头舍去：${rounding}
+实收金额：${order_amount}\r
+<QR>${qrcode}</QR>\r
+${tail_content}";
         return $this->template;
     }
 }

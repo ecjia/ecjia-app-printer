@@ -61,19 +61,19 @@ class PrintBuyOrders extends EventAbstract
     protected $template = '';
 
     protected $availableValues = [
-        'merchant_name'    => '商家名称',
-        'merchant_mobile'  => '商家电话',
+        'merchant_name'         => '商家名称',
+        'merchant_mobile'       => '商家电话',
         
-    	'order_sn' 	       => '订单编号',
-    	'order_trade_no'   => '流水编号',
-    	'user_name'        => '会员账号',
-    	'purchase_time'	   => '下单时间',
+    	'order_sn' 	            => '订单编号',
+    	'order_trade_no'        => '流水编号',
+    	'user_name'             => '会员账号',
+    	'purchase_time'	        => '下单时间',
         
-        'integral_money'    => '积分抵扣',
-        'receivables'       => '应收金额',
-        'integral_balance'  => '积分余额',
-        'integral_give'     => '获得积分',
-        'payment'           => '支付宝',
+        'integral_money'        => '积分抵扣',
+        'receivables'           => '应收金额',
+        'integral_balance'      => '积分余额',
+        'integral_give'         => '获得积分',
+        'payment'               => '支付宝',
         
         'favourable_discount'   => '满减满折',
         'bonus_discount'        => '红包折扣',
@@ -84,13 +84,9 @@ class PrintBuyOrders extends EventAbstract
         'order_remarks'         => '订单备注内容',
         'tail_content'          => '尾部内容',
         
-        'goods_lists' => [
-        	'goods_name'   => '商品',
-        	'goods_number' => '数量',
-        	'goods_amount' => '单价',
-        ],
+        'goods_subtotal'        => '总计',
         
-        'goods_subtotal' => '总计',
+        'qrcode'                => '二维码',
     ];
     
     /**
@@ -107,7 +103,7 @@ class PrintBuyOrders extends EventAbstract
         'receivables'       => '49.00', //应收金额
         'integral_balance'  => '20.00', //积分余额
         'integral_give'     => '49', //获得积分
-        'payment'           => '44.00',
+        'payment'           => '支付宝',
         
         'favourable_discount'   => '0.00', //满减满折
         'bonus_discount'        => '0.00', //红包折扣
@@ -124,7 +120,8 @@ class PrintBuyOrders extends EventAbstract
             ['goods_name'   => '申扬 农家草鸡蛋 18枚装（6枚*3）', 'goods_number' => '1', 'goods_amount' => '30.00'],
         ],
         
-        'goods_subtotal' => '49.00' //商品总计
+        'goods_subtotal' => '49.00', //商品总计
+        'qrcode'         => '2017101294860',
     ];
     
     
@@ -138,18 +135,18 @@ class PrintBuyOrders extends EventAbstract
 下单时间：${purchase_time}
 --------------------------------
 ${goods_lists}   
-<FS><right>总价：${goods_total}</right></FS>
 --------------------------------
 积分抵扣：${integral_money}  获得积分：${integral_give}
 积分余额：${integral_balance}
 应收金额：${receivables}
-支付宝：${payment} 
+${payment}：${order_amount} 
 --------------------------------
 满减满折：-${favourable_discount}
 红包折扣：${bonus_discount}
 分头舍去：-${rounding}
 实收金额：${order_amount}  找零金额：${give_change}
-备注内容：${order_remarks}
+备注内容：${order_remarks}\r
+<QR>${qrcode}</QR>\r
 ${tail_content}";
         return $this->template;
     }

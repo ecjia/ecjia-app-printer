@@ -68,6 +68,12 @@ abstract class EventAbstract
     protected $goodsLists = [];
     
     /**
+     * 商品小计
+     * @var string
+     */
+    protected $goodsSubtotal;
+    
+    /**
      * 尾部自定义内容
      * @var string
      */
@@ -215,6 +221,12 @@ abstract class EventAbstract
     }
     
     
+    public function setGoodsSubtotal($subtotal)
+    {
+        $this->goodsSubtotal = $subtotal;
+    }
+    
+    
     public function getGoodsLists()
     {
         return $this->goodsLists;
@@ -228,6 +240,7 @@ abstract class EventAbstract
             foreach ($this->goodsLists as $goods) {
                 $content .= "<tr><td>".$goods['goods_name']."</td><td>".$goods['goods_number']."</td><td>".$goods['goods_amount']."</td></tr>";
             }
+            $content .= "<tr><td> </td><td> </td><td>总价：".$this->goodsSubtotal."</td></tr>";
             $content .= "</table>";
         }
         return $content;
