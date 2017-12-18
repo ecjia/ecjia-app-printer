@@ -110,17 +110,18 @@ class PrintQuickpayOrders extends EventAbstract
 <FS><center>${merchant_mobile}</center></FS>
 订单编号：${order_sn}
 流水编号：${order_trade_no}
-会员账号：${user_name}
+会员账号：${user_account}
 买单时间：${purchase_time}
-商家地址：${merchant_address}\r
+商家地址：${merchant_address}
 ----------- 在线买单 -----------
 优惠活动：${favourable_activity}
 --------------------------------
 优惠金额：${discount_amount}
 应收金额：${receivables}
 ${payment}：${order_amount}
-实收金额：${order_amount}\r
-<QR>${qrcode}</QR>\r
+实收金额：${order_amount}
+            		
+<QR>${qrcode}</QR>
 ${tail_content}';
         }
         return $this->template;

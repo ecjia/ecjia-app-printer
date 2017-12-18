@@ -125,7 +125,7 @@ class PrintStoreOrders extends EventAbstract
 订单编号：${order_sn}
 流水编号：${order_trade_no}
 下单时间：${purchase_time}
-商家地址：${merchant_address}\r
+商家地址：${merchant_address}
 --------------------------------
 ${goods_lists}
 --------------------------------
@@ -133,8 +133,9 @@ ${goods_lists}
 应收金额：${receivables}
 ${payment}：${order_amount}
 分头舍去：${rounding}
-实收金额：${order_amount}\r
-<QR>${qrcode}</QR>\r
+实收金额：${order_amount}
+            		
+<QR>${qrcode}</QR>
 ${tail_content}';
         }
         return $this->template;
