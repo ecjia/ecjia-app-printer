@@ -58,7 +58,7 @@ class PrintQuickpayOrders extends EventAbstract
 
     protected $description = '买家确认收货时及时通知商家';
 
-    protected $template = '买家已成功确认收货，配送单号为：${express_sn}。如有问题请拨打客服电话：${service_phone}。';
+    protected $template = '';
 
     protected $availableValues = [
     	'express_sn' 	=> '配送单号',
@@ -97,5 +97,11 @@ class PrintQuickpayOrders extends EventAbstract
 	    'payment'        	=> '44.00', //支付宝
 	    'order_amount'     	=> '44.00', //实收金额
     ];
+    
+    
+    public function getTemplate()
+    {
+        return $this->template;
+    }
     
 }

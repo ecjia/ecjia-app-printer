@@ -58,7 +58,7 @@ class PrintBuyOrders extends EventAbstract
 
     protected $description = '买家确认收货时及时通知商家';
 
-    protected $template = '买家已成功确认收货，配送单号为：${express_sn}。如有问题请拨打客服电话：${service_phone}。';
+    protected $template = '';
 
     protected $availableValues = [
         'merchant_name'    => '商家名称',
@@ -127,5 +127,10 @@ class PrintBuyOrders extends EventAbstract
         'goods_subtotal' => '49.00' //商品总计
     ];
     
+    
+    public function getTemplate()
+    {
+        return $this->template;
+    }
     
 }
