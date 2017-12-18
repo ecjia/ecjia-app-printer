@@ -50,16 +50,28 @@ namespace Ecjia\App\Printer;
 abstract class EventAbstract
 {
     /**
-     * 厂商模板变量，数组格式
-     * @var array
-     */
-    protected $templateVar = [];
-    
-    /**
      * 模板内容
      * @var string
      */
     protected $content;
+    
+    /**
+     * 打印份数
+     * @var integer
+     */
+    protected $printNumber = 1;
+    
+    /**
+     * 商品列表
+     * @var array
+     */
+    protected $goodsLists = [];
+    
+    /**
+     * 尾部自定义内容
+     * @var string
+     */
+    protected $tailContent;
     
     
     public function getCode()
@@ -131,6 +143,18 @@ abstract class EventAbstract
      */
     public function setContentByCustomVar(array $templateVar)
     {
+        if ($this->printNumber > 1) {
+            $templateVar['print_number'] = $this->getPrintNumber();
+        }
+        
+        if (!empty($this->tailContent)) {
+            $templateVar['tail_content'] = $this->getTailContent();
+        }
+        
+        if (!empty($this->goodsLists)) {
+            $templateVar['goods_lists'] = $this->getGoodsContent();
+        }
+        
         foreach ($templateVar as $key => $value) {
             $this->content = str_replace('${' . $key . '}', $value, $this->content);
         }
@@ -156,39 +180,73 @@ abstract class EventAbstract
         return $this->content;
     }
     
-    /**
-     * @param array $templateVar
-     * @param bool $hasKey
-     */
-    public function setTemplateVar(array $templateVar)
-    {
-        foreach ($templateVar as $key => $value)
-        {
-            $this->templateVar[$key] = $value;
-        }
     
+    public function setPrintNumber($number)
+    {
+        $this->printNumber = $number;
+        
+        return $this;
+    }
+    
+    public function getPrintNumber()
+    {
+        $content = "<MN>$this->printNumber</MN>";
+        return $content;
+    }
+    
+    public function setGoodsLists($lists)
+    {
+        $this->goodsLists = $lists;
+        
         return $this;
     }
     
     /**
-     * @return string
+     * 添加商品
+     * @param string $goods_name
+     * @param integer $goods_number
+     * @param string $goods_amount
      */
-    public function getTemplateVar()
+    public function addGoods($goods_name, $goods_number, $goods_amount)
     {
-        return $this->templateVar;
-    }
-    
-    
-    public function setMerchantName()
-    {
+        $this->goodsLists[] = ['goods_name' => $goods_name, 'goods_number' => $goods_number, 'goods_amount' => $goods_amount];
         
+        return $this;
     }
     
     
-    public function setMerchantMobile()
+    public function getGoodsLists()
     {
-        
+        return $this->goodsLists;
     }
     
+    
+    public function getGoodsContent()
+    {
+        if (!empty($this->goodsLists)) {
+            $content = "<table><tr><td>商品</td><td>数量</td><td>单价</td></tr>";
+            foreach ($this->goodsLists as $goods) {
+                $content .= "<tr><td>".$goods['goods_name']."</td><td>".$goods['goods_number']."</td><td>".$goods['goods_amount']."</td></tr>";
+            }
+            $content .= "</table>";
+        }
+        return $content;
+    }
+    
+    
+    public function setTailContent($content)
+    {
+        $this->tailContent = $content;
+    }
+    
+    
+    public function getTailContent()
+    {
+        $this->tailContent = str_replace('<br/>', "\r", $this->tailContent);
+        $this->tailContent = str_replace('<br />', "\r", $this->tailContent);
+        $content = "--------------------------------
+$this->tailContent";
+        return $content;
+    }
     
 }

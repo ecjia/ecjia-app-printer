@@ -99,7 +99,7 @@ class PrintBuyOrders extends EventAbstract
      */
     protected $demoValues = [
         'order_sn' 	       => '2017101294860', //订单编号
-    	'order_trade_no'   => '2017121470950', //流水编号
+    	'order_trade_no'   => '201712187341413756', //流水编号
     	'user_name'        => 'ecjia', //会员账号
     	'purchase_time'    => '2017-10-12 10:00:00', //下单时间
         
@@ -130,6 +130,27 @@ class PrintBuyOrders extends EventAbstract
     
     public function getTemplate()
     {
+        $template = "${print_number}<FS><center>${merchants_name}</center></FS>
+<FS><center>${merchants_mobile}</center></FS>
+订单编号：${order_sn}
+流水编号：${order_trade_no}
+会员账号：${user_name}
+下单时间：${purchase_time}
+--------------------------------
+${goods_lists}   
+<FS><right>总价：${goods_total}</right></FS>
+--------------------------------
+积分抵扣：${integral_money}  获得积分：${integral_give}
+积分余额：${integral_balance}
+应收金额：${receivables}
+支付宝：${payment} 
+--------------------------------
+满减满折：-${favourable_discount}
+红包折扣：${bonus_discount}
+分头舍去：-${rounding}
+实收金额：${order_amount}  找零金额：${give_change}
+备注内容：${order_remarks}
+${tail_content}";
         return $this->template;
     }
     
