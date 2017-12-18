@@ -8,6 +8,7 @@ use ecjia_printer;
 use Ecjia\App\Printer\Models\PrinterTemplateModel;
 use Ecjia\App\Printer\Models\PrinterPrintlistModel;
 use RC_Hook;
+use RC_Time;
 
 class EventPrint extends Object
 {
@@ -47,6 +48,10 @@ class EventPrint extends Object
      */
     public function send($machine, array $template_var)
     {
+        if (!$this->model || !$this->event) {
+            return new ecjia_error('not_found_object', '请先使用setTemplateModel或setEvent方法设置参数');
+        }
+        
         $this->event->setPrintNumber($this->model->print_number);
         $this->event->setGoodsLists($template_var['goods_lists']);
         $this->event->setGoodsSubtotal($template_var['goods_subtotal']);
@@ -88,6 +93,6 @@ class EventPrint extends Object
             $data['print_order_id']    = $result['id'];
         }
         
-        SmsSendlistModel::create($data);
+        PrinterPrintlistModel::create($data);
     }
 }
