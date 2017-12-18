@@ -114,34 +114,10 @@ abstract class EventAbstract
     {
         $str = '';
         foreach ($this->availableValues as $key => $value) {
-            if (is_array($value)) {
-                $str .= $key . '[';
-                foreach ($value as $key1 => $value1) {
-                    $str .= $key1 . '(' . $value1 . '), ';
-                }
-                $str = rtrim($str, ', ');
-                $str .= '], ';
-            } else {
-                $str .= $key . '(' . $value . '), ';
-            }
+            $str .= $key . '(' . $value . '), ';
         }
         
         return rtrim($str, ', ');
-    }
-    
-    public function hasEnabled()
-    {
-        $model = new \Ecjia\App\Sms\Models\SmsEventModel();
-        
-        $event = $model->getEventByCode($this->code);
-        if ($event->status == 'open') 
-        {
-            return true;
-        }
-        else 
-        {
-            return false;
-        }
     }
     
     /**
