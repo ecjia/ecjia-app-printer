@@ -88,7 +88,7 @@ class printer_send_event_print_api extends Component_Event_Api {
 	        return new ecjia_error('event_not_open', "请先开启打印".$eventHandler->getName()."模板");
 	    }
 	    
-	    $result = \Ecjia\App\Printer\PrinterManager::make()
+	    $result = \Ecjia\App\Printer\EventPrint::make()
         	    ->setTemplateModel($model)
         	    ->setEvent($eventHandler)
         	    ->send($machine, $value);
