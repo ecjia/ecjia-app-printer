@@ -133,8 +133,9 @@ class PrintTakeawayOrders extends EventAbstract
 	
 	public function getTemplate()
 	{
-	    $template = "${print_number}<FS><center>${merchants_name}</center></FS>
-<FS><center>${merchants_mobile}</center></FS>
+	    if (empty($this->template)) {
+	       $this->template = '${print_number}<FS><center>${merchant_name}</center></FS>
+<FS><center>${merchant_mobile}</center></FS>
 <FB><center>${payment}（${pay_status}）</center></FB>
 订单编号：${order_sn}
 流水编号：${order_trade_no}
@@ -158,7 +159,8 @@ ${payment}：${order_amount}
 姓名：${consignee_name}
 手机号：${consignee_mobile}\r;
 <QR>${qrcode}</QR>\r
-${tail_content}";
+${tail_content}';
+        }
 	    return $this->template;
 	}
     

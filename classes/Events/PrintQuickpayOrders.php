@@ -105,8 +105,9 @@ class PrintQuickpayOrders extends EventAbstract
     
     public function getTemplate()
     {
-        $template = "${print_number}<FS><center>${merchants_name}</center></FS>
-<FS><center>${merchants_mobile}</center></FS>
+        if (empty($this->template)) {
+            $this->template = '${print_number}<FS><center>${merchant_name}</center></FS>
+<FS><center>${merchant_mobile}</center></FS>
 订单编号：${order_sn}
 流水编号：${order_trade_no}
 会员账号：${user_name}
@@ -120,7 +121,8 @@ class PrintQuickpayOrders extends EventAbstract
 ${payment}：${order_amount}
 实收金额：${order_amount}\r
 <QR>${qrcode}</QR>\r
-${tail_content}";
+${tail_content}';
+        }
         return $this->template;
     }
     

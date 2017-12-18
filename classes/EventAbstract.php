@@ -151,16 +151,23 @@ abstract class EventAbstract
     {
         if ($this->printNumber > 1) {
             $templateVar['print_number'] = $this->getPrintNumber();
+        } else {
+            $templateVar['print_number'] = '';
         }
         
         if (!empty($this->tailContent)) {
             $templateVar['tail_content'] = $this->getTailContent();
+        } else {
+            $templateVar['tail_content'] = '';
         }
         
         if (!empty($this->goodsLists)) {
             $templateVar['goods_lists'] = $this->getGoodsContent();
+        } else {
+            $templateVar['goods_lists'] = '';
         }
         
+        $this->content = $this->getTemplate();
         foreach ($templateVar as $key => $value) {
             $this->content = str_replace('${' . $key . '}', $value, $this->content);
         }
