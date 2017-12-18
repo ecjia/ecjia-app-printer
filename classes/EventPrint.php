@@ -67,7 +67,7 @@ class EventPrint extends Object
             return $result;
         }
 
-        return true;
+        return $result;
     }
     
     
