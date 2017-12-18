@@ -74,11 +74,11 @@ class printer_send_event_print_api extends Component_Event_Api {
         if (array_key_exists('machine', $options)) {
             $machine = $options['machine'];
         } else {
-            $machineModel = with(new \Ecjia\App\Printer\Models\PrinterMachineModel())->getAvailableMachine ($store_id);
+            $machineModel = with(new \Ecjia\App\Printer\Models\PrinterMachineModel())->getAvailableMachine($store_id);
             if (! $machineModel) {
                 return new ecjia_error('not_found_available_machine', '没有找到可用打印设备，或未添加任何打印设备，或打印设备处于离线状态。');
             }
-            $machine = $model->machine_code;
+            $machine = $machineModel->machine_code;
         }
 	    
 	    $eventHandler = with(new Ecjia\App\Printer\EventFactory())->event($event);
