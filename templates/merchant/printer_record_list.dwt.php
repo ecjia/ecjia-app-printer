@@ -46,9 +46,9 @@
 								<tr>
 	                                <th class="w100">订单编号</th>
 	                                <th class="w120">打印机名称</th>
-	                                <th class="w150">内容</th>
+	                                <th>内容</th>
 	                                <th class="w120">打印时间</th>
-	                                <th class="w60">打印状态</th>
+	                                <th class="w80">打印状态</th>
 	                            </tr>
 							</thead>
 							<tbody>
