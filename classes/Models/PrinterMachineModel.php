@@ -44,57 +44,103 @@
 //
 //  ---------------------------------------------------------------------------------
 //
-defined('IN_ECJIA') or exit('No permission resources.');
 
-/**
- * 发送打印消息的接口
- * @author royalwang
- */
-class printer_send_event_print_api extends Component_Event_Api {
-	
+namespace Ecjia\App\Printer\Models;
+
+use Royalcms\Component\Database\Eloquent\Model;
+
+class PrinterMachineModel extends Model
+{
+    protected $table = 'printer_machine';
+    
+    protected $primaryKey = 'id';
+    
     /**
-     * @param $store_id integer 商家ID
-     * @param $machine  string  终端号
-     * @param $event    string  发送事件
-     * @param $value    array   模板变量值
-     * @return boolean | ecjia_error
+     * 可以被批量赋值的属性。
+     *
+     * @var array
      */
-	public function call(&$options) {	
-	    
-	    // $store_id, $machine, $event, $value
-	    
-	    if (!array_key_exists('store_id', $options) || !array_key_exists('event', $options) || !array_key_exists('value', $options)) {
-	        return new ecjia_error('invalid_argument', __('调用send_event_print，无效参数'));
-	    }
-	    
-	    $store_id = $options['store_id'];
-	    $event = $options['event'];
-	    $value = $options['value'];
-	    
-        if (array_key_exists('machine', $options)) {
-            $machine = $options['machine'];
-        } else {
-            $machineModel = with(new \Ecjia\App\Printer\Models\PrinterTemplateModel())->getAvailableMachine($store_id);
-            if (! $machineModel) {
-                return new ecjia_error('not_found_available_machine', '没有找到可用打印设备，或未添加任何打印设备，或打印设备处于离线状态。');
-            }
-            $machine = $model->machine_code;
+    protected $fillable = [
+        'store_id',
+        'machine_name',
+        'machine_code',
+        'machine_key',
+        'machine_mobile',
+        'machine_logo',
+        'voice_type',
+        'voice',
+        'version',
+        'print_width',
+        'hardware',
+        'software',
+        'print_type',
+        'getorder',
+        'online_status',
+        'online_update_time',
+        'add_time',
+        'enabled',
+    ];
+    
+    /**
+     * 该模型是否被自动维护时间戳
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+    
+    /**
+     * 限制查询只包括某一商家的设备。
+     *
+     * @return \Royalcms\Component\Database\Eloquent\Builder
+     */
+    public function scopeStore($query, $id)
+    {
+        return $query->where('store_id', $id);
+    }
+    
+    /**
+     * 限制查询只包括在线的设备。
+     *
+     * @return \Royalcms\Component\Database\Eloquent\Builder
+     */
+    public function scopeOnline($query) 
+    {
+        return $query->where('online_status', 1);
+    }
+    
+    /**
+     * 获取模板数据
+     */
+    public function getTemplateById($id)
+    {
+        return $this->where('id', $id)->first();
+    }
+    
+    public function getTemplateByCode($code, $store_id)
+    {
+        return $this->store($store_id)->where('template_code', $code)->first();
+    }
+    
+    public function hasEnabled($code, $store_id)
+    {
+        $template = $this->getTemplateByCode($code, $store_id);
+        if ($template->status === 1)
+        {
+            return true;
         }
-	    
-	    $eventHandler = with(new Ecjia\App\Printer\EventFactory())->event($event);
-	    
-	    $model = with(new \Ecjia\App\Printer\Models\PrinterTemplateModel())->getTemplateByCode($event, $store_id);
-	    if ($model->status !== 1) {
-	        return new ecjia_error('event_not_open', "请先开启打印".$eventHandler->getName()."模板");
-	    }
-	    
-	    $result = \Ecjia\App\Printer\PrinterManager::make()
-        	    ->setTemplateModel($model)
-        	    ->setEvent($eventHandler)
-        	    ->send($machine, $value);
-	    
-	    return $result;
-	}
+        else
+        {
+            return false;
+        }
+    }
+    
+    /**
+     * 获取一个可用的在线设备
+     */
+    public function getAvailableMachine($store_id)
+    {
+        return $this->store($store_id)->online()->first();
+    }
+    
+    
 }
-
-// end
