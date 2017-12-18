@@ -140,7 +140,7 @@ class PrintTakeawayOrders extends EventAbstract
 订单编号：${order_sn}
 流水编号：${order_trade_no}
 下单时间：${purchase_time}
-期望送达时间：${expect_shipping_time}\r
+期望送达时间：${expect_shipping_time}
 ------------ 商品名 ------------
 ${goods_lists}
 ------------- 其他 -------------
@@ -157,8 +157,9 @@ ${payment}：${order_amount}
 备注内容：${order_remarks}
 地址：${consignee_address}
 姓名：${consignee_name}
-手机号：${consignee_mobile}\r;
-<QR>${qrcode}</QR>\r
+手机号：${consignee_mobile}
+	       		
+<QR>${qrcode}</QR>
 ${tail_content}';
         }
 	    return $this->template;

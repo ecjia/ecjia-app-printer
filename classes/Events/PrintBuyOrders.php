@@ -146,8 +146,9 @@ ${payment}：${order_amount}
 红包折扣：${bonus_discount}
 分头舍去：-${rounding}
 实收金额：${order_amount}  找零金额：${give_change}
-备注内容：${order_remarks}\r
-<QR>${qrcode}</QR>\r
+备注内容：${order_remarks}
+            		
+<QR>${qrcode}</QR>
 ${tail_content}';
         }
         return $this->template;
