@@ -170,7 +170,7 @@
        },
        
        toggle_view: function() {
-           $('.toggle_view').on('click', function (e) {
+           $('.toggle_view').off('click').on('click', function (e) {
                e.preventDefault();
                var $this = $(this);
                var url = $this.attr('href');

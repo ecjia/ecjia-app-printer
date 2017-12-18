@@ -197,6 +197,8 @@ class mh_print extends ecjia_merchant
         if (is_ecjia_error($rs)) {
             return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
+        $rs['machine_logo'] = $rs['logo_url'];
+        unset($rs['logo_url']);
         RC_DB::table('printer_machine')->where('store_id', $_SESSION['store_id'])->where('id', $id)->update($rs);
         $this->showmessage('刷新成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/view', array('id' => $id))));
     }
@@ -425,14 +427,11 @@ class mh_print extends ecjia_merchant
         $store_info     = RC_DB::table('store_franchisee')->where('store_id', $_SESSION['store_id'])->first();
         $contact_mobile = RC_DB::table('merchants_config')->where('store_id', $_SESSION['store_id'])->where('code', 'shop_kf_mobile')->pluck('value');
 
-        $order_sn = date('YmdHis') . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);
-
         $a                       = with(new Ecjia\App\Printer\EventFactory())->event($type);
         $demo                    = $a->getDemoValues();
         $demo['merchant_name']   = $store_info['merchants_name'];
         $demo['merchant_mobile'] = $contact_mobile;
         $demo['order_type']      = 'test'; //测试订单类型
-        $demo['order_sn']        = $order_sn; //测试订单编号
 
         $result = RC_Api::api('printer', 'send_event_print', [
             'store_id' => $_SESSION['store_id'],
@@ -478,6 +477,127 @@ class mh_print extends ecjia_merchant
             ecjia_merchant::admin_log($template_subject, 'add', 'printer_template');
         }
         $this->showmessage('保存成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/order_ticket', array('type' => $template_code))));
+    }
+
+    public function print_order()
+    {
+        $order_id = intval($_GET['order_id']);
+        $order    = RC_Api::api('orders', 'order_info', array('order_id' => $order_id, 'store_id' => $_SESSION['store_id']));
+
+        $type          = 'print_buy_orders';
+        $shipping_data = ecjia_shipping::getPluginDataById($order['shipping_id']);
+        if ($shipping_data['shipping_code'] == 'ship_o2o_express') {
+            $type = 'print_takeaway_orders';
+        }
+
+        $store_info     = RC_DB::table('store_franchisee')->where('store_id', $_SESSION['store_id'])->first();
+        $contact_mobile = RC_DB::table('merchants_config')->where('store_id', $_SESSION['store_id'])->where('code', 'shop_kf_mobile')->pluck('value');
+
+        $goods_list = array();
+
+        $data = RC_DB::table('order_goods as o')
+            ->leftJoin('products as p', RC_DB::raw('p.product_id'), '=', RC_DB::raw('o.product_id'))
+            ->leftJoin('goods as g', RC_DB::raw('o.goods_id'), '=', RC_DB::raw('g.goods_id'))
+            ->selectRaw("o.*, IF(o.product_id > 0, p.product_number, g.goods_number) AS storage,
+                    o.goods_attr, g.suppliers_id, p.product_sn, g.goods_img, g.goods_sn as goods_sn")
+            ->where(RC_DB::raw('o.order_id'), $order_id)
+            ->get();
+
+        if (!empty($data)) {
+            foreach ($data as $key => $row) {
+                $row['formated_subtotal']    = price_format($row['goods_price'] * $row['goods_number']);
+                $row['formated_goods_price'] = price_format($row['goods_price']);
+                $goods_list[]                = array(
+                    'goods_name'   => $row['goods_name'],
+                    'goods_number' => $row['goods_number'],
+                    'goods_amount' => $row['goods_price'],
+                );
+            }
+        }
+        if ($type == 'print_buy_orders') {
+            $data = array(
+                'order_sn'            => $order['order_sn'], //订单编号
+				'order_trade_no'      => '201712187341413756', //流水编号
+                'user_name'           => !empty($order['user_name']) ? $order['user_name'] : '', //会员账号
+                'purchase_time'       => RC_Time::local_date('Y-m-d H:i:s', $order['add_time']), //下单时间
+                'integral_money'      => $order['integral_money'],
+                'receivables'         => $order['total_fee'], //应收金额
+
+             'integral_balance'    => '20.00', //积分余额
+				'integral_give'       => '49', //获得积分
+
+                'payment'             => $order['pay_name'],
+                'favourable_discount' => $order['discount'], //满减满折
+                'bonus_discount'      => $order['bonus'], //红包折扣
+                'rounding'            => '0.00', //分头舍去
+                'order_amount'        => $order['money_paid'], //实收金额
+                'give_change'         => '0.00', //找零金额
+                'order_remarks'       => $order['postscript'],
+                'goods_lists'         => $goods_list,
+                'goods_subtotal'      => $order['goods_amount'], //商品总计
+                'qrcode'              => $order['order_sn'],
+            );
+        } elseif ($type == 'print_takeaway_orders') {
+            $address = '';
+            if (!empty($order['province'])) {
+                $address .= ecjia_region::getRegionName($order['province']);
+            }
+            if (!empty($order['city'])) {
+                $address .= ecjia_region::getRegionName($order['city']);
+            }
+            if (!empty($order['district'])) {
+                $address .= ecjia_region::getRegionName($order['district']);
+            }
+            if (!empty($order['street'])) {
+                $address .= ecjia_region::getRegionName($order['street']);
+            }
+            if (!empty($address)) {
+                $address .= ' ';
+            }
+            $address .= $order['address'];
+
+            $data = array(
+                'order_sn'             => $order['order_sn'], //订单编号
+				'order_trade_no'       => '201712187341413756', //流水编号
+                
+                'payment'              => $order['pay_name'], //支付方式
+                'pay_status'           => RC_Lang::get('orders::order.ps.' . $order['pay_status']), //支付状态
+                'purchase_time'        => RC_Time::local_date('Y-m-d H:i:s', $order['add_time']), //下单时间
+                'expect_shipping_time' => RC_Time::local_date('Y-m-d H:i:s', $order['expect_shipping_time']), //期望送达时间
+
+                'integral_money'       => $order['integral_money'], //积分抵扣
+                
+				'integral_balance'     => '20.00', //积分余额
+				'integral_give'        => '49', //获得积分
+                
+                'receivables'          => $order['total_fee'], //应收金额
+                'favourable_discount'  => $order['discount'], //满减满折
+                'bonus_discount'       => $order['bonus'], //红包折扣
+                'rounding'             => '0.00', //分头舍去
+                'order_amount'         => $order['money_paid'], //实收金额
+                'order_remarks'        => $order['postscript'],
+                'consignee_address'    => $address,
+                'consignee_name'       => $order['consignee'],
+                'consignee_mobile'     => $order['mobile'],
+                'goods_lists'          => $goods_list,
+                'goods_subtotal'       => $order['goods_amount'], //商品总计
+                'qrcode'               => $order['order_sn'],
+            );
+        }
+
+        $data['merchant_name']   = $store_info['merchants_name'];
+        $data['merchant_mobile'] = $contact_mobile;
+        $data['order_type']      = 'buy_order';
+
+        $result = RC_Api::api('printer', 'send_event_print', [
+            'store_id' => $_SESSION['store_id'],
+            'event'    => $type,
+            'value'    => $data,
+        ]);
+        if (is_ecjia_error($result)) {
+        	return $this->showmessage($result->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        }
+        return $this->showmessage('打印已发送', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('orders/merchant/info', array('order_id' => $order_id))));
     }
 
     //再次打印
