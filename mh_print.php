@@ -181,7 +181,6 @@ class mh_print extends ecjia_merchant
     	if (is_ecjia_error($rs)) {
     		return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
     	}
-    	 
     	RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->update(array('online_status' => 1));
     	$this->showmessage('重启成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/view', array('id' => $id))));
     }
@@ -194,11 +193,11 @@ class mh_print extends ecjia_merchant
     	$id = !empty($_GET['id']) ? intval($_GET['id']) : 0;
     
     	$data = RC_DB::table('printer_machine')->where('store_id', $_SESSION['store_id'])->where('id', $id)->first();
-    
     	$rs = ecjia_printer::getPrintStatus($data['machine_code']);
     	if (is_ecjia_error($rs)) {
     		return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
     	}
+    	RC_DB::table('printer_machine')->where('store_id', $_SESSION['store_id'])->where('id', $id)->update($rs);
     	$this->showmessage('刷新成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/view', array('id' => $id))));
     }
     
