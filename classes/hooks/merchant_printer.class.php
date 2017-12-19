@@ -44,27 +44,44 @@
 //
 //  ---------------------------------------------------------------------------------
 //
+use Ecjia\App\Printer\Merchant\ConfigMenu;
+
 defined('IN_ECJIA') or exit('No permission resources.');
 
-/**
- * 后台菜单API
- * @author royalwang
- */
-class printer_merchant_printer_menu_api extends Component_Event_Api {
+class printer_merchant_hooks {
+
+    public static function display_merchant_printer_menus() {
+        $screen = ecjia_screen::get_current_screen();
+        $code = $screen->get_option('current_code');
+        
+        $menus = with(new ConfigMenu($_SESSION['store_name'], $_SESSION['staff_id']))->authMenus();
+
+        echo '<div class="setting-group">'.PHP_EOL;
+        echo '<span class="setting-group-title"><i class="fontello-icon-cog"></i>小票机</span>'.PHP_EOL;
+        echo '<ul class="nav nav-list m_t10">'.PHP_EOL; //
+
+        foreach ($menus as $key => $group) {
+            if ($group->action == 'divider') {
+                echo '<li class="divider"></li>';
+            } elseif ($group->action == 'nav-header') {
+                echo '<li class="nav-header">' . $group->name . '</li>';
+            } else {
+                echo '<li><a class="setting-group-item'; //data-pjax
+
+                if ($code == $group->action) {
+                    echo ' llv-active';
+                }
+
+                echo '" href="' . $group->link . '">' . $group->name . '</a></li>'.PHP_EOL;
+            }
+        }
+
+        echo '</ul>'.PHP_EOL;
+        echo '</div>'.PHP_EOL;
+    }
 	
-	public function call(&$options) {	
-	    $menus = array(
-	        ecjia_admin::make_admin_menu('nav-header', '小票打印', '', 0)->add_purview(array('store_printer_manage')),
-	    	ecjia_admin::make_admin_menu('store_printer', '小票机', RC_Uri::url('printer/admin_store_printer/init'), 1)->add_purview('store_printer_manage'),
-	    	ecjia_admin::make_admin_menu('store_printer_record', '打印记录', RC_Uri::url('printer/admin_store_printer/record_list'), 2)->add_purview('store_printer_record_manage'),
-	        ecjia_admin::make_admin_menu('nav-header', '小票模板', '', 10)->add_purview(array('store_printer_manage')),
-	        ecjia_admin::make_admin_menu('print_buy_orders', '普通订单小票', RC_Uri::url('printer/mh_print/order_ticket', ['type' => 'print_buy_orders']), 11)->add_purview('store_printer_template'),
-	        ecjia_admin::make_admin_menu('print_takeaway_orders', '外卖订单小票', RC_Uri::url('printer/mh_print/order_ticket', ['type' => 'print_takeaway_orders']), 12)->add_purview('store_printer_template'),
-	        ecjia_admin::make_admin_menu('print_store_orders', '到店购物小票', RC_Uri::url('printer/mh_print/order_ticket', ['type' => 'print_store_orders']), 13)->add_purview('store_printer_template'),
-	        ecjia_admin::make_admin_menu('print_quickpay_orders', '优惠买单小票', RC_Uri::url('printer/mh_print/order_ticket', ['type' => 'print_quickpay_orders']), 14)->add_purview('store_printer_template'),
-	    );
-        return $menus;
-	}
 }
+
+RC_Hook::add_action( 'display_merchant_printer_menus', array('printer_merchant_hooks', 'display_merchant_printer_menus') );
 
 // end

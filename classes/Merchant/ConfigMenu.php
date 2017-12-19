@@ -69,7 +69,7 @@ class ConfigMenu
      * @param string $user_id      用户ID
      * @param string $user_type    用户类型
      */
-    public function __construct($store, $user_id, $user_type = 'admin')
+    public function __construct($store, $user_id, $user_type = 'merchant')
     {
         if (defined('RC_SITE')) {
             $this->cacheKey = 'merchant_printer_menus' . $store . constant('RC_SITE');
