@@ -427,8 +427,8 @@ class mh_print extends ecjia_merchant
         $store_info     = RC_DB::table('store_franchisee')->where('store_id', $_SESSION['store_id'])->first();
         $contact_mobile = RC_DB::table('merchants_config')->where('store_id', $_SESSION['store_id'])->where('code', 'shop_kf_mobile')->pluck('value');
 
-        $a                       = with(new Ecjia\App\Printer\EventFactory())->event($type);
-        $demo                    = $a->getDemoValues();
+        $event                   = with(new Ecjia\App\Printer\EventFactory())->event($type);
+        $demo                    = $event->getDemoValues();
         $demo['merchant_name']   = $store_info['merchants_name'];
         $demo['merchant_mobile'] = $contact_mobile;
         $demo['order_type']      = 'test'; //测试订单类型
