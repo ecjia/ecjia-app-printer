@@ -18,6 +18,7 @@
         <div class="panel">
             <div class="panel-body">
                 <div class="col-lg-3">
+                    <!-- {ecjia:hook id=display_merchant_printer_menus} -->
                     <div class="setting-group">
                         <span class="setting-group-title"><i class="fa fa-gear"></i> 小票打印设置</span>
                         <ul class="nav nav-list m_t10 change">
