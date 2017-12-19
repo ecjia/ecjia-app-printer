@@ -515,17 +515,25 @@ class mh_print extends ecjia_merchant
                 );
             }
         }
+
+        $order_trade_no = RC_DB::table('payment_record')->where('order_sn', 'LIKE', '%' . mysql_like_quote($order['order_sn']) . '%')->pluck('trade_no');
+		$integral_balance = RC_DB::table('users')->where('user_id', $order['user_id'])->pluck('pay_points');
+		
+		RC_Loader::load_app_func('admin_order', 'orders');
+		$integral = integral_to_give($order);
+		$integral_give = !empty($integral['custom_points']) ? $integral['custom_points'] : 0;
+        
         if ($type == 'print_buy_orders') {
             $data = array(
                 'order_sn'            => $order['order_sn'], //订单编号
-                'order_trade_no'      => '201712187341413756', //流水编号
+                'order_trade_no'      => $order_trade_no, //流水编号
                 'user_name'           => !empty($order['user_name']) ? $order['user_name'] : '', //会员账号
                 'purchase_time'       => RC_Time::local_date('Y-m-d H:i:s', $order['add_time']), //下单时间
                 'integral_money'      => $order['integral_money'],
                 'receivables'         => $order['total_fee'], //应收金额
 
-                'integral_balance'    => '20.00', //积分余额
-                'integral_give'       => '49', //获得积分
+                'integral_balance'    => $integral_balance, //积分余额
+                'integral_give'       => $integral_give, //获得积分
 
                 'payment'             => $order['pay_name'],
                 'favourable_discount' => $order['discount'], //满减满折
@@ -559,17 +567,15 @@ class mh_print extends ecjia_merchant
 
             $data = array(
                 'order_sn'             => $order['order_sn'], //订单编号
-                'order_trade_no'       => '201712187341413756', //流水编号
-
+                'order_trade_no'       => $order_trade_no, //流水编号
                 'payment'              => $order['pay_name'], //支付方式
                 'pay_status'           => RC_Lang::get('orders::order.ps.' . $order['pay_status']), //支付状态
                 'purchase_time'        => RC_Time::local_date('Y-m-d H:i:s', $order['add_time']), //下单时间
                 'expect_shipping_time' => RC_Time::local_date('Y-m-d H:i:s', $order['expect_shipping_time']), //期望送达时间
-
                 'integral_money'       => $order['integral_money'], //积分抵扣
 
-                'integral_balance'     => '20.00', //积分余额
-                'integral_give'        => '49', //获得积分
+                'integral_balance'     => $integral_balance, //积分余额
+                'integral_give'        => $integral_give, //获得积分
 
                 'receivables'          => $order['total_fee'], //应收金额
                 'favourable_discount'  => $order['discount'], //满减满折
