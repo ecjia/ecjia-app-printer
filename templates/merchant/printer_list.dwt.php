@@ -53,7 +53,7 @@
 		        				</div>
 		        			</li>
 		        			<!-- {foreachelse} -->
-		        			<div class="no_printer">暂时没有找到任何记录</div>
+		        			<div class="no_printer">没有找到任何记录</div>
 		        			<!-- {/foreach} -->
 		        		</ul>
 		        	</div>
