@@ -55,7 +55,9 @@
 }
 
 .no_printer {
-	margin-top: 100px
+	height: 100px;
+    line-height: 100px;
+	background-color: #f9f9f9;
 }
 
 .ticket_box {

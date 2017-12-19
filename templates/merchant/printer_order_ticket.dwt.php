@@ -20,21 +20,7 @@
         <div class="panel">
             <div class="panel-body">
                 <div class="col-lg-3">
-                    <div class="setting-group">
-                        <span class="setting-group-title"><i class="fa fa-gear"></i> 小票打印设置</span>
-                        <ul class="nav nav-list m_t10 change">
-                        	<li class="nav-list-title">打印机管理</li>
-                        	<li><a class="setting-group-item data-pjax {if $type eq 'printer_manage'}llv-active{/if}" href='{url path="printer/mh_print/init"}'>打印机管理</a></li>
-                        	<li><a class="setting-group-item data-pjax m_t5 {if $type eq 'printer_record'}llv-active{/if}" href='{url path="printer/mh_print/record_list"}'>打印记录</a></li>
-                        </ul>
-                        <ul class="nav nav-list m_t10 change">
-                        	<li class="nav-list-title">小票分类模版</li>
-                        	<li><a class="setting-group-item data-pjax {if $smarty.get.type eq 'print_buy_orders'}llv-active{/if}" href='{url path="printer/mh_print/order_ticket" args="type=print_buy_orders"}'>普通订单小票</a></li>
-                        	<li><a class="setting-group-item data-pjax m_t5 {if $smarty.get.type eq 'print_takeaway_orders'}llv-active{/if}" href='{url path="printer/mh_print/order_ticket" args="type=print_takeaway_orders"}'>外卖订单小票</a></li>
-                        	<li><a class="setting-group-item data-pjax m_t5 {if $smarty.get.type eq 'print_store_orders'}llv-active{/if}" href='{url path="printer/mh_print/order_ticket" args="type=print_store_orders"}'>到店购物小票</a></li>
-                        	<li><a class="setting-group-item data-pjax m_t5 {if $smarty.get.type eq 'print_quickpay_orders'}llv-active{/if}" href='{url path="printer/mh_print/order_ticket" args="type=print_quickpay_orders"}'>优惠买单小票</a></li>
-                        </ul>
-                    </div>
+                    <!-- {ecjia:hook id=display_merchant_printer_menus} -->
                 </div>
                 
                 <div class="col-lg-9">
