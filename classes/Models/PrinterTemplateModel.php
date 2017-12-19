@@ -104,7 +104,7 @@ class PrinterTemplateModel extends Model
     public function hasEnabled($code, $store_id)
     {
         $template = $this->getTemplateByCode($code, $store_id);
-        if ($template->status === 1)
+        if (intval($template->status) === 1)
         {
             return true;
         }
