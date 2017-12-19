@@ -550,6 +550,7 @@ class mh_print extends ecjia_merchant
                 'goods_subtotal'      => $order['goods_amount'], //商品总计
                 'qrcode'              => $order['order_sn'],
             );
+            $data['order_type'] = 'buy';
         } elseif ($type == 'print_takeaway_orders') {
             $address = '';
             if (!empty($order['province'])) {
@@ -594,11 +595,11 @@ class mh_print extends ecjia_merchant
                 'goods_subtotal'       => $order['goods_amount'], //商品总计
                 'qrcode'               => $order['order_sn'],
             );
+            $data['order_type'] = 'takeaway';
         }
 
         $data['merchant_name']   = $store_info['merchants_name'];
         $data['merchant_mobile'] = $contact_mobile;
-        $data['order_type']      = 'buy_order';
 
         $result = RC_Api::api('printer', 'send_event_print', [
             'store_id' => $_SESSION['store_id'],
@@ -628,7 +629,11 @@ class mh_print extends ecjia_merchant
         $count = $db_printer_view->count();
         $page  = new ecjia_merchant_page($count, 10, 5);
         $data  = $db_printer_view->selectRaw('p.*, m.machine_name')->take(10)->skip($page->start_id - 1)->orderBy('id', 'desc')->get();
-
+        if (!empty($data)) {
+        	foreach ($data as $k => $v) {
+        		$data[$k]['content'] = !empty($v['content']) ? htmlspecialchars($v['content']) : '';
+        	}
+        }
         return array('item' => $data, 'page' => $page->show(2), 'desc' => $page->page_desc());
     }
 

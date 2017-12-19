@@ -2,7 +2,7 @@
 <!-- {extends file="ecjia-merchant.dwt.php"} -->
 <!-- {block name="footer"} -->
 <script type="text/javascript">
-//     ecjia.merchant.printer.init();
+    ecjia.merchant.printer.init();
 </script>
 <!-- {/block} -->
 <!-- {block name="home-content"} -->
@@ -31,10 +31,11 @@
 							<thead>
 								<tr>
 	                                <th class="w100">订单编号</th>
+	                                <th class="w100">打印订单编号</th>
+	                                <th class="w100">订单类型</th>
 	                                <th class="w120">打印机名称</th>
-	                                <th>内容</th>
 	                                <th class="w120">打印时间</th>
-	                                <th class="w80">打印状态</th>
+	                                <th class="w60">打印状态</th>
 	                            </tr>
 							</thead>
 							<tbody>
@@ -43,11 +44,24 @@
 	                                <td class="hide-edit-area">
 	                                	{$list.order_sn}
 	                                	<div class="edit-list">
+	                                		<a class="view_print_content" href="javascript:;">查看打印内容</a>&nbsp;|&nbsp;
+	                                		<input type="hidden" value="{$list.content}" />
 	                                		<a class="data-pjax" href="javascript:;">重新打印</a>
 	                                	</div>
 	                                </td>
+	                                <td>{$list.print_order_id}</td>
+	                                <td>
+	                                	{if $list.order_type eq 'test'}
+	                                	测试订单
+	                                	{else if $list.order_type eq 'buy'}
+	                                	普通订单
+	                                	{else if $list.order_type eq 'takeaway'}
+	                                	到店购物订单
+	                                	{else if $list.order_type eq 'quickpay'}
+	                                	优惠买单订单
+	                                	{/if}
+	                                </td>
 	                                <td>{$list.machine_name}</td>
-	                                <td>{$list.content}</td>
 	                                <td>{RC_Time::local_date('Y-m-d H:i:s', $list['print_time'])}</td>
 	                                <td>
 	                                	{if $list.status eq 0}
@@ -73,4 +87,19 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="print_content">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button class="close" data-dismiss="modal">×</button>
+				<h3>打印内容</h3>
+			</div>
+			<div class="modal-body min_h335">
+				<pre></pre>
+			</div>
+		</div>
+	</div>
+</div>
+
 <!-- {/block} -->
