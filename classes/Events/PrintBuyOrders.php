@@ -101,7 +101,7 @@ class PrintBuyOrders extends EventAbstract
         
         'integral_money'    => '5.00', //积分抵扣
         'receivables'       => '49.00', //应收金额
-        'integral_balance'  => '20.00', //积分余额
+        'integral_balance'  => '20', //积分余额
         'integral_give'     => '49', //获得积分
         'payment'           => '支付宝',
         

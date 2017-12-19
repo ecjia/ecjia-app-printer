@@ -103,7 +103,7 @@ class PrintTakeawayOrders extends EventAbstract
 	    'expect_shipping_time' => '2017-10-12 13:00:00', //期望送达时间
 	    
 	    'integral_money'    => '5.00', //积分抵扣
-	    'integral_balance'  => '20.00', //积分余额
+	    'integral_balance'  => '20', //积分余额
 	    'receivables'       => '49.00', //应收金额
 	    'integral_give'     => '49', //获得积分
 	    
