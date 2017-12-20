@@ -61,7 +61,7 @@ class EventPrint extends Object
         
         $result = ecjia_printer::printSend($machine, $content, $template_var['order_sn']);
         
-        $this->addRecord($machine, $this->model->template_code, $template_var, $content, $result);
+        $this->addRecord($machine, $this->model->template_code, $template_var['order_sn'], $template_var['order_type'], $content, $result);
 
         if (is_ecjia_error($result)) {
             return $result;
@@ -70,13 +70,36 @@ class EventPrint extends Object
         return $result;
     }
     
+    /**
+     * 重新打印此条订单
+     */
+    public function resend($id)
+    {
+        $model = PrinterPrintlistModel::find($id);
+        if (empty($model)) {
+            return new ecjia_error('not_found_print_id', '没有找到此打印记录');
+        }
+
+        $content    = $model->content . "\r<center>提示：此单为重新打印订单</center>";
+        
+        $result = ecjia_printer::printSend($machine, $content, $order_sn);
+        
+        $this->addRecord($model->machine_code, $model->template_code, $model->order_sn, $model->order_type, $content, $result);
+        
+        if (is_ecjia_error($result)) {
+            return $result;
+        }
+        
+        return $result;
+    }
     
-    public function addRecord($machine, $template_code, $template_var, $content, $result, $priority = 1)
+    
+    public function addRecord($machine, $template_code, $order_sn, $order_type, $content, $result, $priority = 1)
     {
         $data = array(
             'store_id'          => $this->model->store_id,
-            'order_sn'          => $template_var['order_sn'],
-            'order_type'        => $template_var['order_type'],
+            'order_sn'          => $order_sn,
+            'order_type'        => $order_type,
             'machine_code'      => $machine,//设备终端号
             'template_code'     => $template_code,//短信模板ID
             'content'           => $content,//短信内容
