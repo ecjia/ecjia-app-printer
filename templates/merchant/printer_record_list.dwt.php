@@ -47,6 +47,9 @@
 	                                		<a class="view_print_content" href="javascript:;">查看打印内容</a>&nbsp;|&nbsp;
 	                                		<input type="hidden" value="{$list.content}" />
 	                                		<a class="data-pjax toggle_view" href="{RC_Uri::url('printer/mh_print/reprint')}&id={$list.id}">重新打印</a>
+			                               	{if $list.status eq 0 || $list.status eq 2}
+		                            		&nbsp;|&nbsp;<a class="data-pjax toggle_view" href="{RC_Uri::url('printer/mh_print/cancel_print')}&id={$list.id}&page={$smarty.get.page}">取消打印</a>
+		                            		{/if}
 	                                	</div>
 	                            	</td>
 	                                <td>{$list.order_sn}</td>
@@ -70,7 +73,7 @@
 	                                	打印完成
 	                                	{else if $list.status eq 2}
 	                                	打印异常
-	                                	{else if $list.status eq 3}
+	                                	{else if $list.status eq 10}
 	                                	取消打印
 	                                	{/if}
 	                                </td>

@@ -117,7 +117,7 @@
 				<form class="form-horizontal" method="post" name="theForm" action="{url path='printer/mh_print/upload_logo'}">
 					<div class="form-group">
 						<label class="control-label col-lg-3">{t}上传LOGO：{/t}</label>
-						<div class="col-lg-6">
+						<div class="col-lg-8">
 							<div class="fileupload fileupload-{if $info.machine_logo}exists{else}new{/if}" data-provides="fileupload">
 		                        {if $info.machine_logo}
 		                        <div class="fileupload-{if $info.machine_logo}exists{else}new{/if} thumbnail" style="max-width: 60px;">
@@ -132,7 +132,7 @@
 		                        </span>
 		                        <a class="btn btn-danger btn-sm fileupload-exists {if $info.machine_logo}remove_logo{/if}" {if $info.machine_logo}data-toggle="ajaxremove" data-msg="您确定要删除该小票机logo吗？"{else}data-dismiss="fileupload"{/if} data-href='{url path='printer/mh_print/del_file' args="id={$info.id}"}' >删除</a>
 		                    </div>
-		                    <span class="help-block">推荐图片宽高：350px 文件大小：40kb</span>
+		                    <span class="help-block">推荐图片宽高200px，不超过350px，文件大小不超过40kb</span>
 						</div>
 					</div>
 					<div class="form-group t_c">
