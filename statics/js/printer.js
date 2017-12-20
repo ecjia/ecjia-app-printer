@@ -8,6 +8,7 @@
         	 app.printer.remove_logo();
         	 app.printer.testForm();
         	 app.printer.toggle_view();
+        	 app.printer.view_print_content();
         },
         
         form: function () {
@@ -182,7 +183,15 @@
                	ecjia.admin.showmessage(data);
                }, 'json');
            });
-       }
+       },
+       view_print_content: function() {
+    	   $('.view_print_content').off('click').on('click', function() {
+    		   var $this = $(this),
+					val = $this.parent('.edit-list').find('input').val();
+    		   $('.modal-body').find('pre').html(val);
+    		   $('#print_content').modal('show');
+    	   });
+      }
     };  
 })(ecjia.admin, jQuery);
  

@@ -49,9 +49,7 @@
 	                                		<a class="data-pjax" href="javascript:;">重新打印</a>
 	                                	</div>
 	                            	</td>
-	                                <td>
-	                                	{$list.order_sn}
-	                                </td>
+	                                <td>{$list.order_sn}</td>
 	                                <td>{$list.print_order_id}</td>
 	                                <td>
 	                                	{if $list.order_type eq 'test'}

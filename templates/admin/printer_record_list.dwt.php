@@ -25,24 +25,39 @@
                 <table class="table table-striped table-hide-edit">
                     <thead>
                         <tr>
+							<th class="w120">打印机名称</th>
                             <th class="w100">订单编号</th>
-                            <th class="w120">打印机名称</th>
-                            <th class="w150">内容</th>
-                            <th class="w100">打印时间</th>
-                            <th class="w50">打印状态</th>
+                            <th class="w100">打印编号</th>
+                          	<th class="w100">订单类型</th>
+                          	<th class="w120">打印时间</th>
+                          	<th class="w120">打印状态</th>
                         </tr>
                     </thead>
                     <tbody>
                         <!-- {foreach from=$record_list.item item=list} -->
                         <tr>
-                            <td class="hide-edit-area">
-                            	{$list.order_sn}
-                            	<div class="edit-list">
+                        	<td class="hide-edit-area">
+                        		{$list.machine_name}
+                        		<div class="edit-list">
+                        			<a class="view_print_content" href="javascript:;">查看打印内容</a>&nbsp;|&nbsp;
+	                             	<input type="hidden" value="{$list.content}" />
                             		<a class="data-pjax" href="javascript:;">重新打印</a>
                             	</div>
-                            </td>
-                            <td>{$list.machine_name}</td>
-                            <td>{$list.content}</td>
+                        	</td>
+                        	
+                            <td>{$list.order_sn}</td>
+                            <td>{$list.print_order_id}</td>
+                      		<td>
+								{if $list.order_type eq 'test'}
+								测试订单
+								{else if $list.order_type eq 'buy'}
+								普通订单
+								{else if $list.order_type eq 'takeaway'}
+								到店购物订单
+								{else if $list.order_type eq 'quickpay'}
+								优惠买单订单
+								{/if}                                	
+	                  		</td>
                             <td>{RC_Time::local_date('Y-m-d H:i:s', $list['print_time'])}</td>
                             <td>
                             	{if $list.status eq 0}
@@ -65,5 +80,15 @@
             </section>
 		</div>
     </div>
+</div>
+
+<div class="modal hide fade" id="print_content">
+	<div class="modal-header">
+		<button class="close" data-dismiss="modal">×</button>
+		<h3>{t}打印内容{/t}</h3>
+	</div>
+	<div class="modal-body">
+		<pre></pre>
+	</div>
 </div>
 <!-- {/block} -->
