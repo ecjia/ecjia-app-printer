@@ -30,10 +30,10 @@
 						<table class="table table-striped smpl_tbl table-hide-edit">
 							<thead>
 								<tr>
+									<th class="w120">打印机名称</th>
 	                                <th class="w100">订单编号</th>
-	                                <th class="w100">打印订单编号</th>
+	                                <th class="w100">打印编号</th>
 	                                <th class="w100">订单类型</th>
-	                                <th class="w120">打印机名称</th>
 	                                <th class="w120">打印时间</th>
 	                                <th class="w60">打印状态</th>
 	                            </tr>
@@ -41,13 +41,16 @@
 							<tbody>
 				            	<!-- {foreach from=$record_list.item item=list} -->
 	                            <tr>
-	                                <td class="hide-edit-area">
-	                                	{$list.order_sn}
-	                                	<div class="edit-list">
+	                            	<td class="hide-edit-area">
+	                            		{$list.machine_name}
+	                            		<div class="edit-list">
 	                                		<a class="view_print_content" href="javascript:;">查看打印内容</a>&nbsp;|&nbsp;
 	                                		<input type="hidden" value="{$list.content}" />
 	                                		<a class="data-pjax" href="javascript:;">重新打印</a>
 	                                	</div>
+	                            	</td>
+	                                <td>
+	                                	{$list.order_sn}
 	                                </td>
 	                                <td>{$list.print_order_id}</td>
 	                                <td>
@@ -61,7 +64,6 @@
 	                                	优惠买单订单
 	                                	{/if}
 	                                </td>
-	                                <td>{$list.machine_name}</td>
 	                                <td>{RC_Time::local_date('Y-m-d H:i:s', $list['print_time'])}</td>
 	                                <td>
 	                                	{if $list.status eq 0}
@@ -101,5 +103,4 @@
 		</div>
 	</div>
 </div>
-
 <!-- {/block} -->
