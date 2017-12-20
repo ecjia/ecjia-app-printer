@@ -82,7 +82,7 @@ class EventPrint extends Object
 
         $content    = $model->content . "\r<center>提示：此单为重新打印订单</center>";
         
-        $result = ecjia_printer::printSend($machine, $content, $order_sn);
+        $result = ecjia_printer::printSend($model->machine_code, $content, $model->order_sn);
         
         $this->addRecord($model->store_id, $model->machine_code, $model->template_code, $model->order_sn, $model->order_type, $content, $result);
         
