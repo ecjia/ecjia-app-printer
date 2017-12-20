@@ -619,6 +619,15 @@ class mh_print extends ecjia_merchant
     {
         $this->admin_priv('mh_printer_record_update', ecjia::MSGTYPE_JSON);
 
+        $id = !empty($_GET['id']) ? intval($_GET['id']) : 0;
+        if (empty($id)) {
+        	return $this->showmessage(__('请选择您要操作的记录'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        }
+        $rs = with(new Ecjia\App\Printer\EventPrint)->resend($id);
+        if (is_ecjia_error($rs)) {
+        	return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        }
+        return $this->showmessage('打印已发送', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
     }
 
     //获取打印记录列表

@@ -46,7 +46,7 @@
 	                            		<div class="edit-list">
 	                                		<a class="view_print_content" href="javascript:;">查看打印内容</a>&nbsp;|&nbsp;
 	                                		<input type="hidden" value="{$list.content}" />
-	                                		<a class="data-pjax" href="javascript:;">重新打印</a>
+	                                		<a class="data-pjax toggle_view" href="{RC_Uri::url('printer/mh_print/reprint')}&id={$list.id}">重新打印</a>
 	                                	</div>
 	                            	</td>
 	                                <td>{$list.order_sn}</td>

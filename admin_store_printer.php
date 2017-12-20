@@ -409,42 +409,6 @@ class admin_store_printer extends ecjia_admin
         return $this->showmessage('测试打印成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_store_printer/view', array('id' => $id, 'store_id' => $store_id))));
     }
 
-    public function record_list()
-    {
-        $this->admin_priv('printer_record_manage');
-
-        $store_id = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
-        if (empty($store_id)) {
-            return $this->showmessage(__('请选择您要操作的店铺'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
-        }
-        $store = RC_DB::table('store_franchisee')->where('store_id', $store_id)->first();
-
-        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here($store['merchants_name'], RC_Uri::url('store/admin/preview', array('store_id' => $store_id))));
-        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('打印记录'));
-
-        ecjia_screen::get_current_screen()->set_sidebar_display(false);
-        ecjia_screen::get_current_screen()->add_option('store_name', $store['merchants_name']);
-        ecjia_screen::get_current_screen()->add_option('current_code', 'store_printer_record');
-
-        if ($store['manage_mode'] == 'self') {
-            $this->assign('action_link', array('href' => RC_Uri::url('store/admin/init'), 'text' => '自营店铺列表'));
-        } else {
-            $this->assign('action_link', array('href' => RC_Uri::url('store/admin/join'), 'text' => RC_Lang::get('store::store.store_list')));
-        }
-        $this->assign('ur_here', $store['merchants_name'] . ' - ' . '打印记录');
-
-        $record_list = $this->get_record_list();
-        $this->assign('record_list', $record_list);
-
-        $this->display('printer_record_list.dwt');
-    }
-
-    public function reprint()
-    {
-        $this->admin_priv('printer_record_update', ecjia::MSGTYPE_JSON);
-
-    }
-
     public function edit_machine_name()
     {
         $this->admin_priv('printer_update', ecjia::MSGTYPE_JSON);
@@ -533,6 +497,50 @@ class admin_store_printer extends ecjia_admin
 
         ecjia_admin::admin_log($info['machine_logo'], 'remove', 'machine_logo');
         $this->showmessage('删除成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_store_printer/view', array('id' => $id, 'store_id' => $store_id))));
+    }
+    
+    public function record_list()
+    {
+    	$this->admin_priv('printer_record_manage');
+    
+    	$store_id = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
+    	if (empty($store_id)) {
+    		return $this->showmessage(__('请选择您要操作的店铺'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+    	}
+    	$store = RC_DB::table('store_franchisee')->where('store_id', $store_id)->first();
+    
+    	ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here($store['merchants_name'], RC_Uri::url('store/admin/preview', array('store_id' => $store_id))));
+    	ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('打印记录'));
+    
+    	ecjia_screen::get_current_screen()->set_sidebar_display(false);
+    	ecjia_screen::get_current_screen()->add_option('store_name', $store['merchants_name']);
+    	ecjia_screen::get_current_screen()->add_option('current_code', 'store_printer_record');
+    
+    	if ($store['manage_mode'] == 'self') {
+    		$this->assign('action_link', array('href' => RC_Uri::url('store/admin/init'), 'text' => '自营店铺列表'));
+    	} else {
+    		$this->assign('action_link', array('href' => RC_Uri::url('store/admin/join'), 'text' => RC_Lang::get('store::store.store_list')));
+    	}
+    	$this->assign('ur_here', $store['merchants_name'] . ' - ' . '打印记录');
+    
+    	$record_list = $this->get_record_list();
+    	$this->assign('record_list', $record_list);
+    
+    	$this->display('printer_record_list.dwt');
+    }
+    
+    public function reprint()
+    {
+    	$this->admin_priv('printer_record_update', ecjia::MSGTYPE_JSON);
+    	$id = !empty($_GET['id']) ? intval($_GET['id']) : 0;
+    	if (empty($id)) {
+    		return $this->showmessage(__('请选择您要操作的记录'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+    	}
+    	$rs = with(new Ecjia\App\Printer\EventPrint)->resend($id);
+    	if (is_ecjia_error($rs)) {
+    		return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+    	}
+    	return $this->showmessage('打印已发送', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
     }
 
     private function get_record_list()
