@@ -61,7 +61,24 @@ class callback extends ecjia_front
      * 打印机状态推送推送地址
      */
     public function print_push() {
-
+        $notify_name        = $this->request->input('notify_name');
+        $push_time          = $this->request->input('push_time');
+        $sign               = $this->request->input('sign');
+        $machine_code       = $this->request->input('machine_code');
+        $print_order_id     = $this->request->input('order_id');
+        $state              = $this->request->input('state');
+        $print_time         = $this->request->input('print_time');
+        $order_sn           = $this->request->input('origin_id');
+        $machine_code       = $this->request->input('machine_code');
+        
+        if (ecjia_printer::verifySign(['notify_name' => $notify_name, 'push_time' => $push_time], $sign)) {
+            if ($notify_name == 'printer_finish') {
+                ecjia_printer::printPush($machine_code, $print_order_id, $order_sn, $state, $print_time);
+                echo json_encode(['data' => 'OK']);
+            }
+        } else {
+            echo json_encode(['data' => 'Invalid signature']);
+        }
     }
     
     /**
@@ -77,7 +94,7 @@ class callback extends ecjia_front
         
         if (ecjia_printer::verifySign(['notify_name' => $notify_name, 'push_time' => $push_time], $sign)) {
             if ($notify_name == 'printer_print_status') {
-                ecjia_printer::statusPush($machine_code, $online, $push_time);
+                ecjia_printer::statusPush($machine_code, $online);
                 echo json_encode(['data' => 'OK']);
             }
         } else {

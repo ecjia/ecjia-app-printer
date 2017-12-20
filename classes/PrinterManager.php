@@ -334,12 +334,27 @@ class PrinterManager
     /**
      * 打印机状态推送更新
      * @param string $machine_code
-     * @param string $online
+     * @param integer $online
      * @param string $push_time
      */
-    public function statusPush($machine_code, $online, $push_time)
+    public function statusPush($machine_code, $online)
     {
         return RC_DB::table('printer_machine')->where('machine_code', $machine_code)->update(['online_status' => $online, 'online_update_time' => \RC_Time::gmtime()]);
+    }
+    
+    /**
+     * 打印机打印完成推送更新
+     * @param string $machine_code
+     * @param string $print_order_id
+     * @param string $order_sn
+     * @param integer $state
+     * @param integer $print_time
+     */
+    public function printPush($machine_code, $print_order_id, $order_sn, $state, $print_time)
+    {
+        $print_time = \RC_Time::local_strtotime(date('Y-m-d H:i:s', $print_time));
+        return RC_DB::table('printer_printlist')->where('machine_code', $machine_code)->where('print_order_id', $print_order_id)
+                    ->update(['status' => $state, 'print_time' => $print_time]);
     }
     
     /**
