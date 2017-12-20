@@ -131,6 +131,8 @@ class mh_print extends ecjia_merchant
         $statics_url = RC_App::apps_url('statics/', __FILE__);
         $this->assign('statics_url', $statics_url);
         $this->assign('control_url', RC_Uri::url('printer/mh_print/voice_control', array('id' => $id)));
+        $this->assign('print_type_url', RC_Uri::url('printer/mh_print/edit_print_type', array('id' => $id)));
+        $this->assign('getorder_url', RC_Uri::url('printer/mh_print/edit_getorder', array('id' => $id)));
 
         $count = $this->get_print_count();
         $this->assign('count', $count);
@@ -234,6 +236,47 @@ class mh_print extends ecjia_merchant
             RC_DB::table('printer_machine')->where('store_id', $_SESSION['store_id'])->where('id', $id)->update(array('voice' => $voice));
             $this->showmessage('音量修改成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/view', array('id' => $id))));
         }
+    }
+    
+    //修改按键打印
+    public function edit_print_type()
+    {
+    	$this->admin_priv('mh_printer_update', ecjia::MSGTYPE_JSON);
+    	
+    	$id     = !empty($_GET['id']) ? intval($_GET['id']) : 0;
+    	$type   = isset($_POST['type']) ? trim($_POST['type']) : '';
+    	$type 	= $type == 'btnopen' ? 'btnclose' : 'btnopen';
+    	
+//     	$rs = ecjia_printer::setSound($info['machine_code'], $response_type, $voice);
+//     	if (is_ecjia_error($rs)) {
+//     		return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+//     	}
+    	
+    	RC_DB::table('printer_machine')->where('store_id', $_SESSION['store_id'])->where('id', $id)->update(array('print_type' => $type));
+    	$this->showmessage('按键打印修改成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/view', array('id' => $id))));
+    }
+    
+    //修改订单确认
+    public function edit_getorder()
+    {
+    	$this->admin_priv('mh_printer_update', ecjia::MSGTYPE_JSON);
+    	
+    	$id     = !empty($_GET['id']) ? intval($_GET['id']) : 0;
+    	$type   = isset($_POST['type']) ? trim($_POST['type']) : '';
+    	$type 	= $type == 'open' ? 'close' : 'open';
+    	
+    	$info = RC_DB::table('printer_machine')->where('store_id', $_SESSION['store_id'])->where('id', $id)->first();
+    	if ($type == 'open') {
+    		$rs = ecjia_printer::openGetOrder($info['machine_code']);
+    	} elseif ($type == 'close') {
+    		$rs = ecjia_printer::closeGetOrder($info['machine_code']);
+    	}
+    	if (is_ecjia_error($rs)) {
+    		return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+    	}
+    	
+    	RC_DB::table('printer_machine')->where('store_id', $_SESSION['store_id'])->where('id', $id)->update(array('getorder' => $type));
+    	$this->showmessage('按键打印修改成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/view', array('id' => $id))));
     }
 
     //编辑小票机名称

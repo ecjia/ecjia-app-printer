@@ -26,7 +26,7 @@
                     	<div class="pull-left">小票机列表</div>
 						<div class="clearfix"></div>
   					</h3>
-		  			<div class="printer_list wookmark">
+		  			<div class="printer_list wookmark merchant_printer">
 		        		<ul>
 		        			<!-- {foreach from=$list item=val} -->
 		        			<li class="thumbnail">

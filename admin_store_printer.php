@@ -534,7 +534,7 @@ class admin_store_printer extends ecjia_admin
     	}
     	$this->assign('ur_here', $store['merchants_name'] . ' - ' . '打印记录');
     
-    	$record_list = $this->get_record_list();
+    	$record_list = $this->get_record_list($store_id);
     	$this->assign('record_list', $record_list);
     
     	$this->display('printer_record_list.dwt');
@@ -579,11 +579,15 @@ class admin_store_printer extends ecjia_admin
     	return $this->showmessage('取消成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => $pjaxurl));
     }
 
-    private function get_record_list()
+    private function get_record_list($store_id = 0)
     {
         $db_printer_view = RC_DB::table('printer_printlist as p')
             ->leftJoin('printer_machine as m', RC_DB::raw('p.machine_code'), '=', RC_DB::raw('m.machine_code'));
 
+        if (!empty($store_id)) {
+        	$db_printer_view->where(RC_DB::raw('p.store_id'), $store_id);
+        }
+        
         $count = $db_printer_view->count();
         $page  = new ecjia_page($count, 10, 5);
         $data  = $db_printer_view->selectRaw('p.*, m.machine_name')->take(10)->skip($page->start_id - 1)->orderBy('id', 'desc')->get();
