@@ -61,7 +61,7 @@ class EventPrint extends Object
         
         $result = ecjia_printer::printSend($machine, $content, $template_var['order_sn']);
         
-        $this->addRecord($machine, $this->model->template_code, $template_var['order_sn'], $template_var['order_type'], $content, $result);
+        $this->addRecord($this->model->store_id, $machine, $this->model->template_code, $template_var['order_sn'], $template_var['order_type'], $content, $result);
 
         if (is_ecjia_error($result)) {
             return $result;
@@ -84,7 +84,7 @@ class EventPrint extends Object
         
         $result = ecjia_printer::printSend($machine, $content, $order_sn);
         
-        $this->addRecord($model->machine_code, $model->template_code, $model->order_sn, $model->order_type, $content, $result);
+        $this->addRecord($model->store_id, $model->machine_code, $model->template_code, $model->order_sn, $model->order_type, $content, $result);
         
         if (is_ecjia_error($result)) {
             return $result;
@@ -94,10 +94,10 @@ class EventPrint extends Object
     }
     
     
-    public function addRecord($machine, $template_code, $order_sn, $order_type, $content, $result, $priority = 1)
+    public function addRecord($store_id, $machine, $template_code, $order_sn, $order_type, $content, $result, $priority = 1)
     {
         $data = array(
-            'store_id'          => $this->model->store_id,
+            'store_id'          => $store_id,
             'order_sn'          => $order_sn,
             'order_type'        => $order_type,
             'machine_code'      => $machine,//设备终端号
