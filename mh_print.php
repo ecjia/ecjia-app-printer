@@ -247,10 +247,15 @@ class mh_print extends ecjia_merchant
         $type = isset($_POST['type']) ? trim($_POST['type']) : '';
         $type = $type == 'btnopen' ? 'btnclose' : 'btnopen';
 
-//         $rs = ecjia_printer::setSound($info['machine_code'], $response_type, $voice);
-        //         if (is_ecjia_error($rs)) {
-        //             return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
-        //         }
+ 		$info = RC_DB::table('printer_machine')->where('store_id', $_SESSION['store_id'])->where('id', $id)->first();
+        if ($type == 'btnopen') {
+            $rs = ecjia_printer::openBtnPrint($info['machine_code']);
+        } elseif ($type == 'btnclose') {
+            $rs = ecjia_printer::closeBtnPrint($info['machine_code']);
+        }
+        if (is_ecjia_error($rs)) {
+            return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        }
 
         RC_DB::table('printer_machine')->where('store_id', $_SESSION['store_id'])->where('id', $id)->update(array('print_type' => $type));
         $this->showmessage('按键打印修改成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/view', array('id' => $id))));
