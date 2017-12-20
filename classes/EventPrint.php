@@ -112,6 +112,7 @@ class EventPrint extends Object
         if (is_ecjia_error($result))
         {
             $data['last_error_message'] = $result->get_error_message();
+            $data['status'] = 2;
         } else {
             $data['print_order_id']    = $result['id'];
         }
