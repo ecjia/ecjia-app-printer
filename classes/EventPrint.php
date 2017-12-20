@@ -79,8 +79,13 @@ class EventPrint extends Object
         if (empty($model)) {
             return new ecjia_error('not_found_print_id', '没有找到此打印记录');
         }
-
-        $content    = $model->content . "\r\r<center>提示：此单为重新打印订单</center>";
+        
+        $tips = '提示：此单为重新打印订单';
+        if (!strpos($model->content, $tips)) {
+            $content = $model->content . "\r\r<center>$tips</center>";
+        } else {
+            $content = $model->content;
+        }
         
         $result = ecjia_printer::printSend($model->machine_code, $content, $model->order_sn);
         
