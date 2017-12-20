@@ -69,7 +69,7 @@
                             	打印完成
                             	{else if $list.status eq 2}
                             	打印异常
-                            	{else if $list.status eq 3}
+                            	{else if $list.status eq 10}
                             	取消打印
                             	{/if}
                             </td>

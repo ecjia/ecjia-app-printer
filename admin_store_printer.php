@@ -567,6 +567,9 @@ class admin_store_printer extends ecjia_admin
     	if (is_ecjia_error($rs)) {
     		return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
     	}
+    	//修改状态为已取消
+    	RC_DB::table('printer_printlist')->where('id', $id)->update(array('status' => 10));
+    	
     	$arr = array('store_id' => $info['store_id']);
     	$page = !empty($_GET['page']) ? intval($_GET['page']) : 0;
     	if (!empty($page)) {
