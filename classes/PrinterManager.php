@@ -253,6 +253,44 @@ class PrinterManager
         }
     }
     
+    
+    /**
+     * 开启按键打印
+     * @param string $machine_code
+     */
+    public function openBtnPrint($machine_code)
+    {
+        try {
+            $resp = $this->printer->request('yly/printer/btnprint', function ($req) use ($machine_code) {
+                $req->setMachineCode($machine_code);
+                $req->setResponseType('btnopen');
+            });
+    
+                return $resp;
+        } catch (Exception $e) {
+            return new ecjia_error('ecjia_printer_get_order', $e->getMessage());
+        }
+    }
+    
+    
+    /**
+     * 关闭按键打印
+     * @param string $machine_code
+     */
+    public function closeBtnPrint($machine_code)
+    {
+        try {
+            $resp = $this->printer->request('yly/printer/btnprint', function ($req) use ($machine_code) {
+                $req->setMachineCode($machine_code);
+                $req->setResponseType('btnclose');
+            });
+    
+                return $resp;
+        } catch (Exception $e) {
+            return new ecjia_error('ecjia_printer_get_order', $e->getMessage());
+        }
+    }
+    
     /**
      * 获取机型打印宽度接口
      * @param string $machine_code
