@@ -94,7 +94,7 @@ class admin_store_printer extends ecjia_admin
      */
     public function init()
     {
-        $this->admin_priv('store_printer_manage');
+        $this->admin_priv('printer_manage');
 
         $store_id = intval($_GET['store_id']);
         if (empty($store_id)) {
@@ -131,7 +131,7 @@ class admin_store_printer extends ecjia_admin
      */
     public function add()
     {
-        $this->admin_priv('store_printer_update');
+        $this->admin_priv('printer_update');
 
         $store_id = intval($_GET['store_id']);
         $store    = RC_DB::table('store_franchisee')->where('store_id', $store_id)->first();
@@ -157,7 +157,7 @@ class admin_store_printer extends ecjia_admin
      */
     public function insert()
     {
-        $this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
+        $this->admin_priv('printer_update', ecjia::MSGTYPE_JSON);
 
         $machine_name   = !empty($_POST['machine_name']) ? trim($_POST['machine_name']) : '';
         $machine_code   = !empty($_POST['machine_code']) ? trim($_POST['machine_code']) : '';
@@ -221,7 +221,7 @@ class admin_store_printer extends ecjia_admin
     //删除
     public function delete()
     {
-        $this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
+        $this->admin_priv('printer_delete', ecjia::MSGTYPE_JSON);
 
         $store_id = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
         $id       = !empty($_GET['id']) ? intval($_GET['id']) : 0;
@@ -242,7 +242,7 @@ class admin_store_printer extends ecjia_admin
     //查看
     public function view()
     {
-        $this->admin_priv('store_printer_manage');
+        $this->admin_priv('printer_manage');
 
         $store_id = intval($_GET['store_id']);
         $id       = intval($_GET['id']);
@@ -280,7 +280,7 @@ class admin_store_printer extends ecjia_admin
     //取消所有未打印
     public function cancel()
     {
-        $this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
+        $this->admin_priv('printer_update', ecjia::MSGTYPE_JSON);
 
         $store_id = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
         $id       = !empty($_GET['id']) ? intval($_GET['id']) : 0;
@@ -296,7 +296,7 @@ class admin_store_printer extends ecjia_admin
     //关机
     public function close()
     {
-        $this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
+        $this->admin_priv('printer_update', ecjia::MSGTYPE_JSON);
 
         $store_id = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
         $id       = !empty($_GET['id']) ? intval($_GET['id']) : 0;
@@ -315,7 +315,7 @@ class admin_store_printer extends ecjia_admin
     //重启
     public function restart()
     {
-    	$this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
+    	$this->admin_priv('printer_update', ecjia::MSGTYPE_JSON);
     	
     	$store_id = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
     	$id       = !empty($_GET['id']) ? intval($_GET['id']) : 0;
@@ -334,7 +334,7 @@ class admin_store_printer extends ecjia_admin
     //刷新打印机状态
     public function get_print_status()
     {
-    	$this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
+    	$this->admin_priv('printer_update', ecjia::MSGTYPE_JSON);
     	
     	$store_id = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
     	$id       = !empty($_GET['id']) ? intval($_GET['id']) : 0;
@@ -354,7 +354,7 @@ class admin_store_printer extends ecjia_admin
     //音量控制
     public function voice_control()
     {
-        $this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
+        $this->admin_priv('printer_update', ecjia::MSGTYPE_JSON);
 
         $action   = trim($_POST['action']);
         $store_id = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
@@ -387,7 +387,7 @@ class admin_store_printer extends ecjia_admin
 
     public function printer_test()
     {
-        $this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
+        $this->admin_priv('printer_update', ecjia::MSGTYPE_JSON);
 
         $store_id = !empty($_POST['store_id']) ? intval($_POST['store_id']) : 0;
         $id       = !empty($_POST['id']) ? intval($_POST['id']) : 0;
@@ -411,7 +411,7 @@ class admin_store_printer extends ecjia_admin
 
     public function record_list()
     {
-        $this->admin_priv('store_printer_record_manage');
+        $this->admin_priv('printer_record_manage');
 
         $store_id = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
         if (empty($store_id)) {
@@ -441,13 +441,13 @@ class admin_store_printer extends ecjia_admin
 
     public function reprint()
     {
-        $this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
+        $this->admin_priv('printer_record_update', ecjia::MSGTYPE_JSON);
 
     }
 
     public function edit_machine_name()
     {
-        $this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
+        $this->admin_priv('printer_update', ecjia::MSGTYPE_JSON);
 
         $id           = !empty($_POST['pk']) ? intval($_POST['pk']) : 0;
         $machine_name = !empty($_POST['value']) ? trim($_POST['value']) : '';
@@ -462,7 +462,7 @@ class admin_store_printer extends ecjia_admin
 
     public function edit_machine_mobile()
     {
-        $this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
+        $this->admin_priv('printer_update', ecjia::MSGTYPE_JSON);
 
         $id             = !empty($_POST['pk']) ? intval($_POST['pk']) : 0;
         $machine_mobile = !empty($_POST['value']) ? trim($_POST['value']) : '';
@@ -475,7 +475,7 @@ class admin_store_printer extends ecjia_admin
 
     public function upload_logo()
     {
-        $this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
+        $this->admin_priv('printer_update', ecjia::MSGTYPE_JSON);
 
         $store_id = !empty($_POST['store_id']) ? intval($_POST['store_id']) : 0;
         $id       = !empty($_POST['id']) ? intval($_POST['id']) : 0;
@@ -514,7 +514,7 @@ class admin_store_printer extends ecjia_admin
 
     public function del_file()
     {
-        $this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
+        $this->admin_priv('printer_update', ecjia::MSGTYPE_JSON);
 
         $store_id = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
         $id       = !empty($_GET['id']) ? intval($_GET['id']) : 0;

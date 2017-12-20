@@ -54,14 +54,14 @@ class printer_merchant_printer_menu_api extends Component_Event_Api {
 	
 	public function call(&$options) {	
 	    $menus = array(
-	        ecjia_admin::make_admin_menu('nav-header', '小票打印', '', 0)->add_purview(array('merchant_printer_manage')),
-	    	ecjia_admin::make_admin_menu('merchant_printer', '小票机', RC_Uri::url('printer/mh_print/init'), 1)->add_purview('merchant_printer_manage'),
-	    	ecjia_admin::make_admin_menu('merchant_printer_record', '打印记录', RC_Uri::url('printer/mh_print/record_list'), 2)->add_purview('merchant_printer_record_manage'),
-	        ecjia_admin::make_admin_menu('nav-header', '小票模板', '', 10)->add_purview(array('merchant_printer_manage')),
-	        ecjia_admin::make_admin_menu('print_buy_orders', '普通订单小票', RC_Uri::url('printer/mh_print/order_ticket', ['type' => 'print_buy_orders']), 11)->add_purview('merchant_printer_template'),
-	        ecjia_admin::make_admin_menu('print_takeaway_orders', '外卖订单小票', RC_Uri::url('printer/mh_print/order_ticket', ['type' => 'print_takeaway_orders']), 12)->add_purview('merchant_printer_template'),
-	        ecjia_admin::make_admin_menu('print_store_orders', '到店购物小票', RC_Uri::url('printer/mh_print/order_ticket', ['type' => 'print_store_orders']), 13)->add_purview('merchant_printer_template'),
-	        ecjia_admin::make_admin_menu('print_quickpay_orders', '优惠买单小票', RC_Uri::url('printer/mh_print/order_ticket', ['type' => 'print_quickpay_orders']), 14)->add_purview('merchant_printer_template'),
+	        ecjia_admin::make_admin_menu('nav-header', '小票打印', '', 0)->add_purview(array('mh_printer_manage')),
+	    	ecjia_admin::make_admin_menu('merchant_printer', '小票机', RC_Uri::url('printer/mh_print/init'), 1)->add_purview('mh_printer_manage'),
+	    	ecjia_admin::make_admin_menu('merchant_printer_record', '打印记录', RC_Uri::url('printer/mh_print/record_list'), 2)->add_purview('mh_printer_recored'),
+	        ecjia_admin::make_admin_menu('nav-header', '小票模板', '', 10)->add_purview(array('mh_printer_template')),
+	        ecjia_admin::make_admin_menu('print_buy_orders', '普通订单小票', RC_Uri::url('printer/mh_print/order_ticket', ['type' => 'print_buy_orders']), 11)->add_purview('mh_printer_template'),
+	        ecjia_admin::make_admin_menu('print_takeaway_orders', '外卖订单小票', RC_Uri::url('printer/mh_print/order_ticket', ['type' => 'print_takeaway_orders']), 12)->add_purview('mh_printer_template'),
+	        ecjia_admin::make_admin_menu('print_store_orders', '到店购物小票', RC_Uri::url('printer/mh_print/order_ticket', ['type' => 'print_store_orders']), 13)->add_purview('mh_printer_template'),
+	        ecjia_admin::make_admin_menu('print_quickpay_orders', '优惠买单小票', RC_Uri::url('printer/mh_print/order_ticket', ['type' => 'print_quickpay_orders']), 14)->add_purview('mh_printer_template'),
 	    );
         return $menus;
 	}

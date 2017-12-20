@@ -46,19 +46,23 @@
 //
 defined('IN_ECJIA') or exit('No permission resources.');
 
-class printer_admin_hooks {
-	
-   public static function append_admin_setting_group($menus) {
-       $setting = ecjia_admin_setting::singleton();
-       
-       $menus[] = ecjia_admin::make_admin_menu('nav-header', '小票打印', '', 22)->add_purview(array('printer_manage'));
-       $menus[] = ecjia_admin::make_admin_menu('printer_setting', '打印机设置', RC_Uri::url('printer/admin_config/init'), 23)->add_purview('printer_manage')->add_icon('fontello-icon-chat-empty');
-       
-       return $menus;
-   }
-    
+/**
+ * 商家后台权限API
+ */
+class printer_merchant_purview_api extends Component_Event_Api {
+    public function call(&$options) {
+        $purviews = array(
+        	array('action_name' => '小票机管理', 'action_code' => 'mh_printer_manage', 'relevance' => ''),
+        	array('action_name' => '小票机更新', 'action_code' => 'mh_printer_update', 'relevance' => ''),
+        		
+        	array('action_name' => '小票模板管理', 'action_code' => 'mh_printer_template', 'relevance' => ''),
+        	array('action_name' => '小票模板更新', 'action_code' => 'mh_printer_template_update', 'relevance' => ''),
+        		
+        	array('action_name' => '打印记录管理', 'action_code' => 'mh_printer_recored', 'relevance' => ''),
+        	array('action_name' => '打印记录更新', 'action_code' => 'mh_printer_record_update', 'relevance' => ''),
+        );
+        return $purviews;
+    }
 }
-
-RC_Hook::add_action( 'append_admin_setting_group', array('printer_admin_hooks', 'append_admin_setting_group') );
 
 // end

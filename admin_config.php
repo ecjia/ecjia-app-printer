@@ -81,7 +81,7 @@ class admin_config extends ecjia_admin
      */
     public function init()
     {
-        $this->admin_priv('store_printer_manage');
+        $this->admin_priv('printer_manage');
         
         ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('打印机设置'));
         
@@ -101,7 +101,8 @@ class admin_config extends ecjia_admin
     }
     
     public function update() {
-    	$this->admin_priv('store_printer_update', ecjia::MSGTYPE_JSON);
+    	$this->admin_priv('printer_manage', ecjia::MSGTYPE_JSON);
+    	
     	$app_key 	= !empty($_POST['app_key']) 	? trim($_POST['app_key'])		: '';
     	$app_secret = !empty($_POST['app_secret']) 	? trim($_POST['app_secret'])	: '';
     	
