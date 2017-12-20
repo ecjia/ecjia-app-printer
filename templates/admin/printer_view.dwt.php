@@ -127,6 +127,7 @@
 									</span>
 									<a class="btn fileupload-exists {if $info.machine_logo}remove_logo{/if}" {if !$info.machine_logo}data-dismiss="fileupload" href="javascript:;"{else}data-toggle="ajaxremove" data-msg="您确定要删除该小票机logo吗？" href='{url path="printer/admin_store_printer/del_file" args="id={$info.id}&store_id={$info.store_id}"}' title="{lang key='system::system.drop'}"{/if}>删除</a>
 								</div>
+								<span class="help-block">推荐图片宽高200px，不超过350px，文件大小不超过40kb</span>
 							</div>
 						</div>
 						<div class="control-group t_c">

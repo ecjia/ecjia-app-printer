@@ -276,7 +276,11 @@ class mh_print extends ecjia_merchant
         $file_name = '';
         /* 处理上传的LOGO图片 */
         if ((isset($_FILES['machine_logo']['error']) && $_FILES['machine_logo']['error'] == 0) || (!isset($_FILES['machine_logo']['error']) && isset($_FILES['machine_logo']['tmp_name']) && $_FILES['machine_logo']['tmp_name'] != 'none')) {
-            $upload     = RC_Upload::uploader('image', array('save_path' => 'data/printer', 'auto_sub_dirs' => false));
+        	$size = $_FILES['machine_logo']['size'];
+        	if ($size/1000 > 40) {
+        		return $this->showmessage('图片大小不能超过40kb', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        	}
+        	$upload     = RC_Upload::uploader('image', array('save_path' => 'data/printer', 'auto_sub_dirs' => false));
             $image_info = $upload->upload($_FILES['machine_logo']);
 
             if (!empty($image_info)) {
@@ -288,6 +292,14 @@ class mh_print extends ecjia_merchant
 
         $info = RC_DB::table('printer_machine')->where('store_id', $_SESSION['store_id'])->where('id', $id)->first();
         if (!empty($file_name)) {
+        	$file_url = RC_Upload::upload_url($file_name);
+        	$img = RC_Image::make($file_url);
+        	$width = $img->width();
+        	$height = $img->height();
+        	if ($width > 350 || $height > 350) {
+        		return $this->showmessage('图片宽高不能超过350px', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        	}
+        	
             $rs = ecjia_printer::setIcon($info['machine_code'], RC_Upload::upload_url($file_name));
             if (is_ecjia_error($rs)) {
                 return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
@@ -628,6 +640,29 @@ class mh_print extends ecjia_merchant
         	return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
         return $this->showmessage('打印已发送', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
+    }
+    
+    //取消打印
+    public function cancel_print()
+    {
+    	$this->admin_priv('mh_printer_record_update', ecjia::MSGTYPE_JSON);
+    	 
+    	$id = !empty($_GET['id']) ? intval($_GET['id']) : 0;
+    	$info = RC_DB::table('printer_printlist')->where('id', $id)->where('store_id', $_SESSION['store_id'])->first();
+    	if (empty($info)) {
+    		return $this->showmessage(__('请选择您要操作的记录'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+    	}
+    	$rs = ecjia_printer::cancelOne($info['machine_code'], $info['print_order_id']);
+    	if (is_ecjia_error($rs)) {
+    		return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+    	}
+    	$arr = array('store_id' => $info['store_id']);
+    	$page = !empty($_GET['page']) ? intval($_GET['page']) : 0;
+    	if (!empty($page)) {
+    		$arr['page'] = $page;
+    	}
+    	$pjaxurl = RC_Uri::url('printer/mh_print/record_list', $arr);
+    	return $this->showmessage('取消成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => $pjaxurl));
     }
 
     //获取打印记录列表
