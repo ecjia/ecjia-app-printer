@@ -96,7 +96,7 @@ class PrintQuickpayOrders extends EventAbstract
 	    
 	    'receivables'       => '49.00', //应收金额
 	    'discount_amount'   => '5.00',  //优惠金额
-	    'payment'        	=> '44.00', //支付宝
+	    'payment'        	=> '支付宝', //支付宝
 	    'order_amount'     	=> '44.00', //实收金额
 	    
         'qrcode'            => '2017101294860',
