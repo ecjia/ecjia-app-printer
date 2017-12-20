@@ -85,11 +85,12 @@ class callback extends ecjia_front
      * 打印完成推送地址
      */
     public function status_push() {
-        $notify_name = $this->request->input('notify_name');
-        $machine_code = $this->request->input('machine_code');
-        $online = $this->request->input('online');
-        $push_time = $this->request->input('push_time');
-        $sign = $this->request->input('sign');
+        $notify_name    = $this->request->input('notify_name');
+        $push_time      = $this->request->input('push_time');
+        $sign           = $this->request->input('sign');
+        $machine_code   = $this->request->input('machine_code');
+        $online         = $this->request->input('online');
+        
         //RC_Logger::getLogger('error')->debug($this->request->all());
         
         if (ecjia_printer::verifySign(['notify_name' => $notify_name, 'push_time' => $push_time], $sign)) {
@@ -106,7 +107,21 @@ class callback extends ecjia_front
      * 接单拒单推送地址
      */
     public function order_push() {
-    
+        $notify_name = $this->request->input('notify_name');
+        $push_time          = $this->request->input('push_time');
+        $sign               = $this->request->input('sign');
+        $machine_code       = $this->request->input('machine_code');
+        $print_order_id     = $this->request->input('order_id');
+        $state              = $this->request->input('state');
+        
+        if (ecjia_printer::verifySign(['notify_name' => $notify_name, 'push_time' => $push_time], $sign)) {
+            if ($notify_name == 'printer_finish') {
+                //接单、拒单逻辑未实现
+                echo json_encode(['data' => 'OK']);
+            }
+        } else {
+            echo json_encode(['data' => 'Invalid signature']);
+        }
     }
 
 }
