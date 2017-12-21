@@ -134,7 +134,7 @@ class mh_print extends ecjia_merchant
         $this->assign('print_type_url', RC_Uri::url('printer/mh_print/edit_print_type', array('id' => $id)));
         $this->assign('getorder_url', RC_Uri::url('printer/mh_print/edit_getorder', array('id' => $id)));
 
-        $count = $this->get_print_count();
+        $count = $this->get_print_count($info['machine_code']);
         $this->assign('count', $count);
 
         $this->display('printer_view.dwt');
@@ -247,7 +247,7 @@ class mh_print extends ecjia_merchant
         $type = isset($_POST['type']) ? trim($_POST['type']) : '';
         $type = $type == 'btnopen' ? 'btnclose' : 'btnopen';
 
- 		$info = RC_DB::table('printer_machine')->where('store_id', $_SESSION['store_id'])->where('id', $id)->first();
+        $info = RC_DB::table('printer_machine')->where('store_id', $_SESSION['store_id'])->where('id', $id)->first();
         if ($type == 'btnopen') {
             $rs = ecjia_printer::openBtnPrint($info['machine_code']);
         } elseif ($type == 'btnclose') {
@@ -735,32 +735,35 @@ class mh_print extends ecjia_merchant
     }
 
     //打印统计
-    private function get_print_count()
+    private function get_print_count($machine_code = '')
     {
-        $week_start_time     = RC_Time::local_mktime(0, 0, 0, RC_Time::local_date("m"), RC_Time::local_date("d") - RC_Time::local_date("w") + 1, RC_Time::local_date("Y"));
+        $week_start_time = RC_Time::local_mktime(0, 0, 0, RC_Time::local_date("m"), RC_Time::local_date("d") - RC_Time::local_date("w") + 1, RC_Time::local_date("Y"));
+        $now             = RC_Time::gmtime();
+
         $count['week_count'] = RC_DB::table('printer_printlist')
             ->where('store_id', $_SESSION['store_id'])
-            ->where('machine_code', $info['machine_code'])
+            ->where('machine_code', $machine_code)
             ->where('status', 1)
             ->where('print_time', '>', $week_start_time)
-            ->where('print_time', '<', RC_Time::gmtime())
+            ->where('print_time', '<', $now)
             ->SUM('print_count');
 
-        $now                        = RC_Time::gmtime();
-        $start                      = RC_Time::local_mktime(0, 0, 0, RC_Time::local_date("m", $now), RC_Time::local_date("d", $now), RC_Time::local_date("Y", $now));
+        $start = RC_Time::local_mktime(0, 0, 0, RC_Time::local_date("m", $now), RC_Time::local_date("d", $now), RC_Time::local_date("Y", $now));
+
         $count['today_print_count'] = RC_DB::table('printer_printlist')
             ->where('store_id', $_SESSION['store_id'])
-            ->where('machine_code', $info['machine_code'])
+            ->where('machine_code', $machine_code)
             ->where('status', 1)
             ->where('print_time', '>', $start)
-            ->where('print_time', '<', RC_Time::gmtime())
+            ->where('print_time', '<', $now)
             ->SUM('print_count');
+
         $count['today_unprint_count'] = RC_DB::table('printer_printlist')
             ->where('store_id', $_SESSION['store_id'])
-            ->where('machine_code', $info['machine_code'])
+            ->where('machine_code', $machine_code)
             ->where('status', '!=', 1)
-            ->where('print_time', '>', $start)
-            ->where('print_time', '<', RC_Time::gmtime())
+            ->where('last_send', '>', $start)
+            ->where('last_send', '<', $now)
             ->SUM('print_count');
 
         return $count;
