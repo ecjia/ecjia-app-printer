@@ -104,6 +104,7 @@ class PrintBuyOrders extends EventAbstract
         'integral_balance'  => '20', //积分余额
         'integral_give'     => '49', //获得积分
         'payment'           => '支付宝',
+        'shipping_fee'      => '5.00', //配送费
         
         'favourable_discount'   => '0.00', //满减满折
         'bonus_discount'        => '0.00', //红包折扣
@@ -137,15 +138,15 @@ class PrintBuyOrders extends EventAbstract
 --------------------------------
 ${goods_lists}   
 --------------------------------
-积分抵扣：${integral_money}  获得积分：${integral_give}
+积分抵扣：-${integral_money}  获得积分：${integral_give}
 积分余额：${integral_balance}
-应收金额：${receivables}
-${payment}：${order_amount} 
---------------------------------
 满减满折：-${favourable_discount}
-红包折扣：${bonus_discount}
-分头舍去：-${rounding}
-实收金额：${order_amount}  找零金额：${give_change}
+红包折扣：-${bonus_discount}         
+--------------------------------
+配送费：${shipping_fee}
+应收金额：${receivables}
+实收金额：${order_amount} 
+${payment}：${order_amount}
 备注内容：${order_remarks}
             		
 <QR>${qrcode}</QR>
