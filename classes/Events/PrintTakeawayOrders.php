@@ -111,7 +111,7 @@ class PrintTakeawayOrders extends EventAbstract
 	    
 	    'favourable_discount'   => '0.00', //满减满折
 	    'bonus_discount'        => '0.00', //红包折扣
-	    'rounding'              => '0.00', //分头舍去
+
 	    'order_amount'          => '44.00', //实收金额
 	    'order_remarks'         => '订单备注内容',
 	    

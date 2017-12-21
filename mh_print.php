@@ -153,11 +153,11 @@ class mh_print extends ecjia_merchant
         }
         //修改该店铺下该台打印机未打印的记录
         RC_DB::table('printer_printlist')
-	        ->where('store_id', $_SESSION['store_id'])
-	        ->where('machine_code', $data['machine_code'])
-	        ->where('status', 0)
-	        ->update(array('status' => 10));
-	        
+            ->where('store_id', $_SESSION['store_id'])
+            ->where('machine_code', $data['machine_code'])
+            ->where('status', 0)
+            ->update(array('status' => 10));
+
         $this->showmessage('取消成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/view', array('id' => $id))));
     }
 
@@ -469,7 +469,7 @@ class mh_print extends ecjia_merchant
 
         $statics_url = RC_App::apps_url('statics/', __FILE__);
         $this->assign('statics_url', $statics_url);
-        
+
         $this->display('printer_order_ticket.dwt');
     }
 
