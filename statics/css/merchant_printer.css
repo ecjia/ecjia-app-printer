@@ -67,7 +67,8 @@
 	width: 100%;
 	overflow: hidden;
 	display: block;
-	-webkit-padding-start: 0
+	-webkit-padding-start: 0;
+	padding: 0;
 }
 
 .no_printer {
