@@ -26,10 +26,11 @@
 		<div class="ticket-item">优惠金额：{$data.discount_amount}</div>
 		<div class="ticket-item">支付宝：{$data.payment}</div>
 		<div class="ticket-item">实收金额：{$data.order_amount}</div>
+		<div class="ticket-item qrcode"><img src="{$statics_url}images/qrcode.png" /></div>
 	</div>
 	{if $info.tail_content}
 	<div class="ticket_content dashed">
 		{$info.tail_content}
 	</div>	
-	{/if}					
+	{/if}
 </div>

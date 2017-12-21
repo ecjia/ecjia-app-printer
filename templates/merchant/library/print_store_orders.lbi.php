@@ -35,6 +35,7 @@
 		<div class="ticket-item">支付宝：{$data.payment}</div>
 		<div class="ticket-item">分头舍去：{$data.rounding}</div>
 		<div class="ticket-item">实收金额：{$data.order_amount}</div>
+		<div class="ticket-item qrcode"><img src="{$statics_url}images/qrcode.png" /></div>
 	</div>
 	{if $info.tail_content}
 	<div class="ticket_content dashed">

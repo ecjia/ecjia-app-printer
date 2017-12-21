@@ -59,6 +59,7 @@
 		<div class="ticket-item">地址：{$data.consignee_address}</div>
 		<div class="ticket-item">姓名：{$data.consignee_name}</div>
 		<div class="ticket-item">手机号：{$data.consignee_mobile}</div>
+		<div class="ticket-item qrcode"><img src="{$statics_url}images/qrcode.png" /></div>
 	</div>	
 	{if $info.tail_content}
 	<div class="ticket_content dashed">

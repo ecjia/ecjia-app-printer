@@ -244,6 +244,16 @@ textarea.form-control.test_textarea {
 	height: 150px;
 }
 
+.ticket-item.qrcode {
+	text-align: center;
+    margin: 10px auto;
+}
+
+.ticket-item.qrcode img {
+	width: 120px;
+    height: 120px;
+}
+
 .onoffswitch {
 	position: relative;
 	width: 98px;

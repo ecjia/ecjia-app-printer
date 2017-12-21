@@ -467,6 +467,9 @@ class mh_print extends ecjia_merchant
         $contact_mobile = RC_DB::table('merchants_config')->where('store_id', $_SESSION['store_id'])->where('code', 'shop_kf_mobile')->pluck('value');
         $this->assign('contact_mobile', $contact_mobile);
 
+        $statics_url = RC_App::apps_url('statics/', __FILE__);
+        $this->assign('statics_url', $statics_url);
+        
         $this->display('printer_order_ticket.dwt');
     }
 

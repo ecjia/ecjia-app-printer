@@ -46,6 +46,7 @@
 			<div class="right-item">找零金额：{$data.give_change}</div>
 		</div>
 		<div class="ticket-item">备注内容：{$data.order_remarks}</div>
+		<div class="ticket-item qrcode"><img src="{$statics_url}images/qrcode.png" /></div>
 	</div>
 	{if $info.tail_content}
 	<div class="ticket_content dashed">
