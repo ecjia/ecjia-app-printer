@@ -79,11 +79,10 @@
 						<div class="status-item">
 							{if $info.online_status eq 2}
 							<img src="{$statics_url}images/status/abnormal.png" />
-							缺纸
 							{else}
 							<img src="{$statics_url}images/status/normal.png" />
-							正常
 							{/if}
+							缺纸
 						</div>
 					</div>
 				</div>
@@ -93,8 +92,12 @@
 					<div class="info_content">
 						<div class="voice_type">
 							<span class="label_type">响铃类型</span>
-				            <div class="info-toggle-button" data-url="{$control_url}">
-				                <input class="nouniform" name="voice_type" type="checkbox" {if $info.voice_type eq 'buzzer'}checked{/if} value="{$info.voice_type}"/>
+							<div class="switch info-toggle-button" data-url="{$control_url}">
+				                <input type="checkbox" {if $info.voice_type eq 'buzzer'}checked value="buzzer"{else}value="horn"{/if} name="voice_type" class="onoffswitch-checkbox" id="voice_type">
+				                <label class="onoffswitch-label" for="voice_type">
+				                    <span class="onoffswitch-inner"></span>
+				                    <span class="onoffswitch-switch"></span>
+				                </label>
 				            </div>
 			            </div>
 						<div class="voice-item">音量调节<span class="voice_value">{$info.voice}</span></div>
@@ -112,14 +115,22 @@
 					
 						<div class="content-item">
 							<span class="label_type">按键打印</span>
-				            <div class="info-toggle-print-type" data-url="{$print_type_url}">
-				                <input class="nouniform" name="print_type" type="checkbox" {if $info.print_type eq 'btnopen'}checked{/if} value="{$info.print_type}"/>
+							<div class="switch info-toggle-print-type" data-url="{$print_type_url}">
+				                <input type="checkbox" {if $info.print_type eq 'btnopen'}checked value="btnopen"{else}value="btnclose"{/if} name="print_type" class="onoffswitch-checkbox" id="print_type">
+				                <label class="onoffswitch-label" for="print_type">
+				                    <span class="onoffswitch-inner"></span>
+				                    <span class="onoffswitch-switch"></span>
+				                </label>
 				            </div>
 			            </div>
 			            <div class="content-item">
 							<span class="label_type">订单确认</span>
-				            <div class="info-toggle-getorder" data-url="{$getorder_url}">
-				                <input class="nouniform" name="getorder" type="checkbox" {if $info.getorder eq 'open'}checked{/if} value="{$info.getorder}"/>
+							<div class="switch info-toggle-getorder" data-url="{$getorder_url}">
+				                <input type="checkbox" {if $info.getorder eq 'open'}checked value="open"{else}value="close"{/if} name="getorder" class="onoffswitch-checkbox" id="getorder">
+				                <label class="onoffswitch-label" for="getorder">
+				                    <span class="onoffswitch-inner"></span>
+				                    <span class="onoffswitch-switch"></span>
+				                </label>
 				            </div>
 			            </div>
 					</div>

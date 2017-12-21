@@ -45,86 +45,41 @@
         
         toggleButton: function() {
         	//响铃类型
-			$('.info-toggle-button').toggleButtons({
-				label: {  
-                     enabled: "蜂鸣器",  
-                     disabled: "喇叭"  
-                },  
-                style: {
-                    enabled: "info",
-                    disabled: "success"
-                },
-                onChange: function($el, status, e) {  
-                    var type = $('input[name="voice_type"]').val();
-                    if (status && type == 'buzzer') {
-                    	return false
-                    } else if (!status && type == 'horn') {
-                    	return false;
-                    }
-                    var url = $('.info-toggle-button').attr('data-url');
-                    var info = {
-                    	'type': type,
-                    	'action': 'edit_type'
-                    }
-                   	$.post(url, info, function(data) {
-                   		ecjia.merchant.showmessage(data);
-                   	});
-                },  
-            });
+			$('#voice_type').on('click', function() {
+				var type = $('#voice_type').val(),
+					url = $('.info-toggle-button').attr('data-url');
+				var info = {
+	            	'type': type,
+	            	'action': 'edit_type'
+				}
+	           	$.post(url, info, function(data) {
+	           		ecjia.merchant.showmessage(data);
+	           	});
+			});
 			
 			//按键打印
-			$('.info-toggle-print-type').toggleButtons({
-				label: {  
-                     enabled: "开启",  
-                     disabled: "关闭"  
-                },  
-                style: {
-                    enabled: "info",
-                    disabled: "success"
-                },
-                onChange: function($el, status, e) {
-                    var type = $('input[name="print_type"]').val();
-                    if (status && type == 'btnopen') {
-                    	return false
-                    } else if (!status && type == 'btnclose') {
-                    	return false;
-                    }
-                    var url = $('.info-toggle-print-type').attr('data-url');
-                    var info = {
-                    	'type': type,
-                    }
-                   	$.post(url, info, function(data) {
-                   		ecjia.merchant.showmessage(data);
-                   	});
-                },  
-            });
+			$('#print_type').on('click', function() {
+				var type = $('#print_type').val(),
+					url = $('.info-toggle-print-type').attr('data-url');
+				var info = {
+	            	'type': type,
+				}
+	           	$.post(url, info, function(data) {
+	           		ecjia.merchant.showmessage(data);
+	           	});
+			});
 			
 			//订单确认
-			$('.info-toggle-getorder').toggleButtons({
-				label: {  
-                     enabled: "开启",  
-                     disabled: "关闭"  
-                },  
-                style: {
-                    enabled: "info",
-                    disabled: "success"
-                },
-                onChange: function($el, status, e) {  
-                    var type = $('input[name="getorder"]').val();
-                    if (status && type == 'open') {
-                    	return false
-                    } else if (!status && type == 'close') {
-                    	return false;
-                    }
-                    var url = $('.info-toggle-getorder').attr('data-url');
-                    var info = {
-                    	'type': type,
-                    }
-                   	$.post(url, info, function(data) {
-                   		ecjia.merchant.showmessage(data);
-                   	});
-                },  
-            });
+			$('#getorder').on('click', function() {
+				var type = $('#getorder').val(),
+					url = $('.info-toggle-getorder').attr('data-url');
+				var info = {
+	            	'type': type,
+				}
+	           	$.post(url, info, function(data) {
+	           		ecjia.merchant.showmessage(data);
+	           	});
+			});
 			
 			//小票模板
 			$('.template-toggle-button').toggleButtons({

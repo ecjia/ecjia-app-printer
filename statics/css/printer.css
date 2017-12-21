@@ -259,7 +259,11 @@
 
 .voice_type, .content-item {
 	position: relative;
-	padding: 10px 0
+	padding: 15px 0
+}
+
+.admin_printer .voice_type, .admin_printer .content-item {
+	padding: 7px 0
 }
 
 .voice_type .toggle-button label,.voice_type .toggle-button span, .content-item .toggle-button label, .content-item .toggle-button span {
@@ -283,10 +287,11 @@
 }
 
 #voice-slider {
-	width: 100%;
-	height: 10px;
-	background-color: #fff;
-	margin-top: 20px
+    width: 95%;
+    height: 10px;
+    background-color: #fff;
+    margin-top: 20px;
+    margin-left: 15px;
 }
 
 .noUi-handle:after,.noUi-handle:before {

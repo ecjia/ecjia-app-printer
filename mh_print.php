@@ -404,8 +404,10 @@ class mh_print extends ecjia_merchant
         $data     = RC_DB::table('printer_machine')->where('store_id', $_SESSION['store_id'])->where('id', $id)->first();
         $order_sn = date('YmdHis') . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);
 
-        $content = "<MN>$print_number</MN>" . $content;
-        $rs      = ecjia_printer::printSend($data['machine_code'], $content, $order_sn);
+        if ($print_number > 1) {
+            $content = "<MN>$print_number</MN>" . $content;
+        }
+        $rs = ecjia_printer::printSend($data['machine_code'], $content, $order_sn);
         if (is_ecjia_error($rs)) {
             return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }

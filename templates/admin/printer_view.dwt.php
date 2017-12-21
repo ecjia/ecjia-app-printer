@@ -17,7 +17,7 @@
 </div>
 
 <div class="row-fluid m_b20">
-    <div class="span12">
+    <div class="span12 admin_printer">
 		<div class="printer_box basic_info">
 			<div class="title">基本信息</div>
 			<div class="info_content">
@@ -72,11 +72,10 @@
 				<div class="status-item">
 					{if $info.online_status eq 2}
 					<img src="{$statics_url}images/status/abnormal.png" />
-					缺纸
 					{else}
 					<img src="{$statics_url}images/status/normal.png" />
-					正常
 					{/if}
+					缺纸
 				</div>
 			</div>
 		</div>
