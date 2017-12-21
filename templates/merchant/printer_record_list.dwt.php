@@ -26,7 +26,7 @@
                     	<div class="pull-left">打印记录</div>
 						<div class="clearfix"></div>
   					</h3>
-  					<div class="panel-body panel-body-small">
+  					<div class="panel-body-small">
 						<table class="table table-striped smpl_tbl table-hide-edit">
 							<thead>
 								<tr>
