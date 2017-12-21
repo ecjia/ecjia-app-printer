@@ -585,11 +585,21 @@ class mh_print extends ecjia_merchant
         $integral      = integral_to_give($order);
         $integral_give = !empty($integral['custom_points']) ? $integral['custom_points'] : 0;
 
+        /* 取得用户名 */
+        if ($order['user_id'] > 0) {
+        	$user = RC_Api::api('user', 'user_info', array('user_id' => $order['user_id']));
+        	if (!empty($user)) {
+        		$order['user_name'] = $user['user_name'];
+        	}
+        } else {
+        	$order['user_name'] = '匿名用户';
+        }
+        
         if ($type == 'print_buy_orders') {
             $data = array(
                 'order_sn'            => $order['order_sn'], //订单编号
                 'order_trade_no'      => $order_trade_no, //流水编号
-                'user_name'           => !empty($order['user_name']) ? $order['user_name'] : '', //会员账号
+                'user_name'           => $order['user_name'], //会员账号
                 'purchase_time'       => RC_Time::local_date('Y-m-d H:i:s', $order['add_time']), //下单时间
                 'integral_money'      => $order['integral_money'],
                 'receivables'         => $order['total_fee'], //应收金额
