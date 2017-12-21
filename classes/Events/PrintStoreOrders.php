@@ -129,7 +129,7 @@ class PrintStoreOrders extends EventAbstract
 --------------------------------
 ${goods_lists}
 --------------------------------
-优惠金额：${discount_amount}
+优惠金额：-${discount_amount}
 应收金额：${receivables}
 实收金额：${order_amount}
 ${payment}：${order_amount}

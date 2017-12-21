@@ -116,7 +116,7 @@ class PrintQuickpayOrders extends EventAbstract
 ----------- 在线买单 -----------
 优惠活动：${favourable_activity}
 --------------------------------
-优惠金额：${discount_amount}
+优惠金额：-${discount_amount}
 应收金额：${receivables}
 实收金额：${order_amount}
 ${payment}：${order_amount} 
