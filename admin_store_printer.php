@@ -292,6 +292,13 @@ class admin_store_printer extends ecjia_admin
         if (is_ecjia_error($rs)) {
             return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
+        //修改该店铺下该台打印机未打印的记录
+        RC_DB::table('printer_printlist')
+        	->where('store_id', $store_id)
+        	->where('machine_code', $data['machine_code'])
+        	->where('status', 0)
+        	->update(array('status' => 10));
+        
         $this->showmessage('取消成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_store_printer/view', array('id' => $id, 'store_id' => $store_id))));
     }
 
