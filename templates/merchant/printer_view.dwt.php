@@ -59,6 +59,33 @@
 		        			{/if}
 						</div>
 					</div>
+					<div class="info-content status">
+						<div class="status-item">
+							{if $info.online_status eq 1}
+							<img src="{$statics_url}images/status/on-line.png" />
+							{else}
+							<img src="{$statics_url}images/status/not-no-line.png" />
+							{/if}
+							在线
+						</div>
+						<div class="status-item">
+							{if $info.online_status eq 0}
+							<img src="{$statics_url}images/status/off-line.png" />
+							{else}
+							<img src="{$statics_url}images/status/not-off-line.png" />
+							{/if}
+							离线
+						</div>
+						<div class="status-item">
+							{if $info.online_status eq 2}
+							<img src="{$statics_url}images/status/abnormal.png" />
+							缺纸
+							{else}
+							<img src="{$statics_url}images/status/normal.png" />
+							正常
+							{/if}
+						</div>
+					</div>
 				</div>
 				
 				<div class="printer_box voice_handle">
@@ -82,9 +109,7 @@
 						<div class="help-block">取消后，此台小票机设备将不再打印剩下的所有订单</div>
 						<a class="btn btn-primary m_t10" data-toggle="modal" href="#testPrint">打印测试</a>
 						<div class="help-block">点击打印后可测试此台小票机是否可用</div>
-					</div>
 					
-					<div class="info_content">
 						<div class="content-item">
 							<span class="label_type">按键打印</span>
 				            <div class="info-toggle-print-type" data-url="{$print_type_url}">
