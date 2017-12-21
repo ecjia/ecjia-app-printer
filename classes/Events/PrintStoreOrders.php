@@ -131,10 +131,9 @@ ${goods_lists}
 --------------------------------
 优惠金额：${discount_amount}
 应收金额：${receivables}
-${payment}：${order_amount}
-分头舍去：${rounding}
 实收金额：${order_amount}
-            		
+${payment}：${order_amount}
+                            		
 <QR>${qrcode}</QR>
 ${tail_content}';
         }
