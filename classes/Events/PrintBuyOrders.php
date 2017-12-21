@@ -74,6 +74,7 @@ class PrintBuyOrders extends EventAbstract
         'integral_balance'      => '积分余额',
         'integral_give'         => '获得积分',
         'payment'               => '支付宝',
+        'shipping_fee'          => '配送费',
         
         'favourable_discount'   => '满减满折',
         'bonus_discount'        => '红包折扣',
