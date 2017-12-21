@@ -106,6 +106,7 @@ class PrintTakeawayOrders extends EventAbstract
 	    'integral_balance'  => '20', //积分余额
 	    'receivables'       => '49.00', //应收金额
 	    'integral_give'     => '49', //获得积分
+        'shipping_fee'      => '5.00', //配送费
 	    
 	    'favourable_discount'   => '0.00', //满减满折
 	    'bonus_discount'        => '0.00', //红包折扣
