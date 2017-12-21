@@ -169,7 +169,7 @@ abstract class EventAbstract
     public function getContent()
     {
         if (ecjia_config::get('printer_display_platform')) {
-            $shop_name = '***'.ecjia_config::get('shop_name').'***';
+            $shop_name = '*** '.ecjia_config::get('shop_name').' ***';
             if (!strpos($this->content, $shop_name)) {
                 $this->content .= "\r\r<FS><center>{$shop_name}</center></FS>";
             }
