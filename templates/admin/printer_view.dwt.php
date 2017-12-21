@@ -52,6 +52,33 @@
         			{/if}
 				</div>
 			</div>
+			<div class="info-content status">
+				<div class="status-item">
+					{if $info.online_status eq 1}
+					<img src="{$statics_url}images/status/on-line.png" />
+					{else}
+					<img src="{$statics_url}images/status/not-no-line.png" />
+					{/if}
+					在线
+				</div>
+				<div class="status-item">
+					{if $info.online_status eq 0}
+					<img src="{$statics_url}images/status/off-line.png" />
+					{else}
+					<img src="{$statics_url}images/status/not-off-line.png" />
+					{/if}
+					离线
+				</div>
+				<div class="status-item">
+					{if $info.online_status eq 2}
+					<img src="{$statics_url}images/status/abnormal.png" />
+					缺纸
+					{else}
+					<img src="{$statics_url}images/status/normal.png" />
+					正常
+					{/if}
+				</div>
+			</div>
 		</div>
 		
 		<div class="printer_box voice_handle">
@@ -72,9 +99,22 @@
 			<div class="title">打印控制</div>
 			<div class="info_content">
 				<a class="btn btn-info" data-toggle="ajaxremove" data-msg="您确定要取消所有未打印吗？" href='{RC_Uri::url("printer/admin_store_printer/cancel", "id={$info.id}&store_id={$info.store_id}")}'>取消所有未打印</a>
-				<div class="help-block">取消后，此台小票机设备将不再打印剩下的所有订单</div>
+				<div class="help-block m_b10">取消后，此台小票机设备将不再打印剩下的所有订单</div>
 				<a class="btn btn-info m_t10" data-toggle="modal" href="#testPrint">打印测试</a>
-				<div class="help-block">点击打印后可测试此台小票机是否可用</div>
+				<div class="help-block m_b10">点击打印后可测试此台小票机是否可用</div>
+				
+				<div class="content-item">
+					<span class="label_type">按键打印</span>
+		            <div class="info-toggle-print-type" data-url="{$print_type_url}">
+		                <input class="nouniform" name="print_type" type="checkbox" {if $info.print_type eq 'btnopen'}checked{/if} value="{$info.print_type}"/>
+		            </div>
+	            </div>
+	            <div class="content-item">
+					<span class="label_type">订单确认</span>
+		            <div class="info-toggle-getorder" data-url="{$getorder_url}">
+		                <input class="nouniform" name="getorder" type="checkbox" {if $info.getorder eq 'open'}checked{/if} value="{$info.getorder}"/>
+		            </div>
+	            </div>
 			</div>
 		</div>
 		

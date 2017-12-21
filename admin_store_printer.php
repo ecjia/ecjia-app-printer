@@ -270,6 +270,8 @@ class admin_store_printer extends ecjia_admin
         $statics_url = RC_App::apps_url('statics/', __FILE__);
         $this->assign('statics_url', $statics_url);
         $this->assign('control_url', RC_Uri::url('printer/admin_store_printer/voice_control', array('id' => $id, 'store_id' => $store_id)));
+        $this->assign('print_type_url', RC_Uri::url('printer/admin_store_printer/edit_print_type', array('id' => $id, 'store_id' => $store_id)));
+        $this->assign('getorder_url', RC_Uri::url('printer/admin_store_printer/edit_getorder', array('id' => $id, 'store_id' => $store_id)));
 
         $count = $this->get_print_count($store_id, $info['machine_code']);
         $this->assign('count', $count);
@@ -385,6 +387,55 @@ class admin_store_printer extends ecjia_admin
         }
     }
 
+    //修改按键打印
+    public function edit_print_type()
+    {
+        $this->admin_priv('printer_update', ecjia::MSGTYPE_JSON);
+
+        $id       = !empty($_GET['id']) ? intval($_GET['id']) : 0;
+        $store_id = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
+        $type     = isset($_POST['type']) ? trim($_POST['type']) : '';
+        $type     = $type == 'btnopen' ? 'btnclose' : 'btnopen';
+
+        $info = RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->first();
+        if ($type == 'btnopen') {
+            $rs = ecjia_printer::openBtnPrint($info['machine_code']);
+        } elseif ($type == 'btnclose') {
+            $rs = ecjia_printer::closeBtnPrint($info['machine_code']);
+        }
+        if (is_ecjia_error($rs)) {
+            return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        }
+
+        RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->update(array('print_type' => $type));
+        $this->showmessage('按键打印修改成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_store_printer/view', array('id' => $id, 'store_id' => $store_id))));
+    }
+
+    //修改订单确认
+    public function edit_getorder()
+    {
+        $this->admin_priv('printer_update', ecjia::MSGTYPE_JSON);
+
+        $id       = !empty($_GET['id']) ? intval($_GET['id']) : 0;
+        $store_id = !empty($_GET['store_id']) ? intval($_GET['store_id']) : 0;
+        $type     = isset($_POST['type']) ? trim($_POST['type']) : '';
+        $type     = $type == 'open' ? 'close' : 'open';
+
+        $info = RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->first();
+        if ($type == 'open') {
+            $rs = ecjia_printer::openGetOrder($info['machine_code']);
+        } elseif ($type == 'close') {
+            $rs = ecjia_printer::closeGetOrder($info['machine_code']);
+        }
+        if (is_ecjia_error($rs)) {
+            return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+        }
+
+        RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->update(array('getorder' => $type));
+        $this->showmessage('订单确认修改成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_store_printer/view', array('id' => $id, 'store_id' => $store_id))));
+    }
+
+    //打印测试
     public function printer_test()
     {
         $this->admin_priv('printer_update', ecjia::MSGTYPE_JSON);
@@ -409,6 +460,7 @@ class admin_store_printer extends ecjia_admin
         return $this->showmessage('测试打印成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_store_printer/view', array('id' => $id, 'store_id' => $store_id))));
     }
 
+    //编辑打印机名称
     public function edit_machine_name()
     {
         $this->admin_priv('printer_update', ecjia::MSGTYPE_JSON);
@@ -424,6 +476,7 @@ class admin_store_printer extends ecjia_admin
         $this->showmessage('小票机名称修改成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
     }
 
+    //编辑打印机手机号
     public function edit_machine_mobile()
     {
         $this->admin_priv('printer_update', ecjia::MSGTYPE_JSON);
@@ -437,6 +490,7 @@ class admin_store_printer extends ecjia_admin
         $this->showmessage('手机卡号修改成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
     }
 
+    //上传logo
     public function upload_logo()
     {
         $this->admin_priv('printer_update', ecjia::MSGTYPE_JSON);
@@ -487,6 +541,7 @@ class admin_store_printer extends ecjia_admin
         $this->showmessage('上传成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_store_printer/view', array('id' => $id, 'store_id' => $store_id))));
     }
 
+    //删除打印机logo
     public function del_file()
     {
         $this->admin_priv('printer_update', ecjia::MSGTYPE_JSON);
@@ -510,6 +565,7 @@ class admin_store_printer extends ecjia_admin
         $this->showmessage('删除成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_store_printer/view', array('id' => $id, 'store_id' => $store_id))));
     }
 
+    //打印记录列表
     public function record_list()
     {
         $this->admin_priv('printer_record_manage');
@@ -540,6 +596,7 @@ class admin_store_printer extends ecjia_admin
         $this->display('printer_record_list.dwt');
     }
 
+    //再次打印
     public function reprint()
     {
         $this->admin_priv('printer_record_update', ecjia::MSGTYPE_JSON);
@@ -554,6 +611,7 @@ class admin_store_printer extends ecjia_admin
         return $this->showmessage('打印已发送', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
     }
 
+    //取消单条打印记录
     public function cancel_print()
     {
         $this->admin_priv('printer_record_update', ecjia::MSGTYPE_JSON);
@@ -579,6 +637,7 @@ class admin_store_printer extends ecjia_admin
         return $this->showmessage('取消成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => $pjaxurl));
     }
 
+    //获取打印记录列表
     private function get_record_list($store_id = 0)
     {
         $db_printer_view = RC_DB::table('printer_printlist as p')
@@ -595,6 +654,7 @@ class admin_store_printer extends ecjia_admin
         return array('item' => $data, 'page' => $page->show(2), 'desc' => $page->page_desc());
     }
 
+    //打印统计
     private function get_print_count($store_id = 0, $machine_code = '')
     {
         $week_start_time = RC_Time::local_mktime(0, 0, 0, RC_Time::local_date("m"), RC_Time::local_date("d") - RC_Time::local_date("w") + 1, RC_Time::local_date("Y"));

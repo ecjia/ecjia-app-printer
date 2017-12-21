@@ -281,7 +281,7 @@ class mh_print extends ecjia_merchant
         }
 
         RC_DB::table('printer_machine')->where('store_id', $_SESSION['store_id'])->where('id', $id)->update(array('getorder' => $type));
-        $this->showmessage('按键打印修改成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/view', array('id' => $id))));
+        $this->showmessage('订单确认修改成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/mh_print/view', array('id' => $id))));
     }
 
     //编辑小票机名称
@@ -690,7 +690,7 @@ class mh_print extends ecjia_merchant
         return $this->showmessage('打印已发送', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS);
     }
 
-    //取消打印
+    //取消单条打印记录
     public function cancel_print()
     {
         $this->admin_priv('mh_printer_record_update', ecjia::MSGTYPE_JSON);

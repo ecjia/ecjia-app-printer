@@ -370,6 +370,10 @@
 
 .info-content.status .status-item img {
 	padding-right: 5px;
-    width: 60px;
+	width: 55px;
     height: 55px;
+}
+
+.info-content.status.merchant_printer .status-item img {
+	width: 60px;
 }

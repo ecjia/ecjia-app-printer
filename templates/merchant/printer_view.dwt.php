@@ -59,7 +59,7 @@
 		        			{/if}
 						</div>
 					</div>
-					<div class="info-content status">
+					<div class="info-content status merchant_printer">
 						<div class="status-item">
 							{if $info.online_status eq 1}
 							<img src="{$statics_url}images/status/on-line.png" />
