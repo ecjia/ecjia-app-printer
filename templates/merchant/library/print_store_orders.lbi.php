@@ -30,11 +30,10 @@
 		<span class="total">总计：{$data.goods_subtotal}</span>
 	</div>	
 	<div class="ticket_content no_dashed">
-		<div class="ticket-item">优惠金额：{$data.discount_amount}</div>
+		<div class="ticket-item">优惠金额：-{$data.discount_amount}</div>
 		<div class="ticket-item">应收金额：{$data.receivables}</div>
-		<div class="ticket-item">支付宝：{$data.payment}</div>
-		<div class="ticket-item">分头舍去：{$data.rounding}</div>
 		<div class="ticket-item">实收金额：{$data.order_amount}</div>
+		<div class="ticket-item">支付宝：{$data.order_amount}</div>
 		<div class="ticket-item qrcode"><img src="{$statics_url}images/qrcode.png" /></div>
 	</div>
 	{if $info.tail_content}

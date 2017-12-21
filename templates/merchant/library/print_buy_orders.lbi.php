@@ -30,21 +30,21 @@
 	</div>	
 	<div class="ticket_content">
 		<div class="ticket-item">
-			<div class="left-item">积分抵扣：{$data.integral_money}</div>
+			<div class="left-item">积分抵扣：-{$data.integral_money}</div>
 			<div class="right-item">获得积分：{$data.integral_give}</div>
 		</div>
 		<div class="ticket-item">积分余额：{$data.integral_balance}</div>
-		<div class="ticket-item">应收金额：{$data.receivables}</div>
-		<div class="ticket-item">支付宝：{$data.payment}</div>
+		<div class="ticket-item">满减满折：-{$data.favourable_discount}</div>
+		<div class="ticket-item">红包折扣：-{$data.bonus_discount}</div>
+		
+		
 	</div>	
 	<div class="ticket_content no_dashed">
-		<div class="ticket-item">满减满折：{$data.favourable_discount}</div>
-		<div class="ticket-item">红包折扣：{$data.bonus_discount}</div>
-		<div class="ticket-item">分头舍去：{$data.rounding}</div>
-		<div class="ticket-item">
-			<div class="left-item">实收金额：{$data.order_amount}</div>
-			<div class="right-item">找零金额：{$data.give_change}</div>
-		</div>
+		<div class="ticket-item">配送费：{$data.shipping_fee}</div>
+		<div class="ticket-item">应收金额：{$data.receivables}</div>
+		<div class="ticket-item">实收金额：{$data.order_amount}</div>
+		<div class="ticket-item">支付宝：{$data.order_amount}</div>
+		
 		<div class="ticket-item">备注内容：{$data.order_remarks}</div>
 		<div class="ticket-item qrcode"><img src="{$statics_url}images/qrcode.png" /></div>
 	</div>

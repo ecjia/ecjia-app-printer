@@ -45,14 +45,14 @@
 			<div class="right-item">获得积分：{$data.integral_give}</div>
 		</div>
 		<div class="ticket-item">积分余额：{$data.integral_balance}</div>
-		<div class="ticket-item">应收金额：{$data.receivables}</div>
-		<div class="ticket-item">微信支付：{$data.wechat_pay}</div>
+		<div class="ticket-item">满减满折：-{$data.favourable_discount}</div>
+		<div class="ticket-item">红包折扣：-{$data.bonus_discount}</div>
 	</div>	
 	<div class="ticket_content">
-		<div class="ticket-item">满减满折：{$data.favourable_discount}</div>
-		<div class="ticket-item">红包折扣：{$data.bonus_discount}</div>
-		<div class="ticket-item">分头舍去：{$data.rounding}</div>
+		<div class="ticket-item">配送费用：{$data.shipping_fee}</div>
+		<div class="ticket-item">应收金额：{$data.receivables}</div>
 		<div class="ticket-item">实收金额：{$data.order_amount}</div>
+		<div class="ticket-item">微信支付：{$data.order_amount}</div>
 	</div>
 	<div class="ticket_content no_dashed">
 		备注内容：{$data.order_remarks}
