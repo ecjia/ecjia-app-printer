@@ -7,7 +7,6 @@
 		{/if}
 	</div>
 	<div class="ticket_content">
-		<div class="ticket-item">收银员：{$data.cashier}</div>
 		<div class="ticket-item">订单编号：{$data.order_sn}</div>
 		<div class="ticket-item">流水编号：{$data.order_trade_no}</div>
 		<div class="ticket-item">下单时间：{$data.purchase_time}</div>
