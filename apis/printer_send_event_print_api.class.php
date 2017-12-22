@@ -57,11 +57,13 @@ class printer_send_event_print_api extends Component_Event_Api {
      * @param $machine  string  终端号
      * @param $event    string  发送事件
      * @param $value    array   模板变量值
+     * @param $auto_print    boolean   是否允许自动打印
      * @return boolean | ecjia_error
      */
 	public function call(&$options) {	
 	    
 	    // $store_id, $machine, $event, $value
+	    // $auto_print 可选
 	    
 	    if (!array_key_exists('store_id', $options) || !array_key_exists('event', $options) || !array_key_exists('value', $options)) {
 	        return new ecjia_error('invalid_argument', __('调用send_event_print，无效参数'));
@@ -70,6 +72,7 @@ class printer_send_event_print_api extends Component_Event_Api {
 	    $store_id = $options['store_id'];
 	    $event = $options['event'];
 	    $value = $options['value'];
+	    $auto_print = array_get($options, 'auto_print', false);
 	    
         if (array_key_exists('machine', $options)) {
             $machine = $options['machine'];
@@ -86,6 +89,10 @@ class printer_send_event_print_api extends Component_Event_Api {
 	    $model = with(new \Ecjia\App\Printer\Models\PrinterTemplateModel())->getTemplateByCode($event, $store_id);
 	    if (intval($model->status) !== 1) {
 	        return new ecjia_error('event_not_open', "请先开启打印".$eventHandler->getName()."模板");
+	    }
+	    
+	    if ($auto_print && intval($model->auto_print) !== 1) {
+	        return new ecjia_error('event_not_open_auto_print', "请先开启自动打印".$eventHandler->getName()."事件");
 	    }
 	    
 	    $result = \Ecjia\App\Printer\EventPrint::make()
