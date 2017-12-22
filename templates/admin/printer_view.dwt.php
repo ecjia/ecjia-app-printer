@@ -24,10 +24,10 @@
 				<div class="info_left">
 					<a data-toggle="modal" href="#uploadLogo"><img class="machine_logo" src="{if $info.machine_logo}{$info.machine_logo}{else}{$statics_url}images/click_upload.png{/if}" /></a>
 					<div class="left_bottom">
-						<a data-toggle="ajaxremove" data-msg="您确定要关闭该小票机吗？" href='{RC_Uri::url("printer/admin_store_printer/close", "id={$info.id}&store_id={$info.store_id}")}'>
+						<a data-toggle="ajaxremove" data-msg="您确定要关闭该小票机吗？" href='{RC_Uri::url("printer/admin_store_printer/close", "id={$info.id}&store_id={$info.store_id}")}' title="关闭">
 							<img class="close_img" src="{$statics_url}images/close.png" />
 						</a>
-						<a data-toggle="ajaxremove" data-msg="您确定要重启该小票机吗？" href='{RC_Uri::url("printer/admin_store_printer/restart", "id={$info.id}&store_id={$info.store_id}")}'>
+						<a data-toggle="ajaxremove" data-msg="您确定要重启该小票机吗？" href='{RC_Uri::url("printer/admin_store_printer/restart", "id={$info.id}&store_id={$info.store_id}")}' title="重启">
 							<img class="refresh_img" src="{$statics_url}images/refresh.png" />
 						</a>
 					</div>
