@@ -121,7 +121,6 @@ class PrintStoreOrders extends EventAbstract
         if (empty($this->template)) {
             $this->template = '${print_number}<FS><center>${merchant_name}</center></FS>
 <FS><center>${merchant_mobile}</center></FS>
-收银员：${cashier}
 订单编号：${order_sn}
 流水编号：${order_trade_no}
 下单时间：${purchase_time}
