@@ -41,7 +41,7 @@
 		   <span class="line"></span>  
 		</div> 
 		<div class="ticket-item">
-			<div class="left-item">积分抵扣：{$data.integral_money}</div>
+			<div class="left-item">积分抵扣：-{$data.integral_money}</div>
 			<div class="right-item">获得积分：{$data.integral_give}</div>
 		</div>
 		<div class="ticket-item">积分余额：{$data.integral_balance}</div>

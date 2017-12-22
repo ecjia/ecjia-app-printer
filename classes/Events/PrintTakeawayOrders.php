@@ -146,7 +146,7 @@ class PrintTakeawayOrders extends EventAbstract
 ------------ 商品名 ------------
 ${goods_lists}
 ------------- 其他 -------------
-积分抵扣：${integral_money}  获得积分：${integral_give}
+积分抵扣：-${integral_money}  获得积分：${integral_give}
 积分余额：${integral_balance}
 满减满折：-${favourable_discount}
 红包折扣：-${bonus_discount}
