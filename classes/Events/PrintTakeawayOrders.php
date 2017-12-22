@@ -101,7 +101,7 @@ class PrintTakeawayOrders extends EventAbstract
 	    'pay_status'	   => '已支付',	//支付状态
 	    
 	    'purchase_time'    => '2017-10-12 10:00:00', //下单时间
-	    'expect_shipping_time' => '2017-10-12 13:00:00', //期望送达时间
+	    'expect_shipping_time' => '2017-10-12 08:00-10:00', //期望送达时间
 	    
 	    'integral_money'    => '5.00', //积分抵扣
 	    'integral_balance'  => '20', //积分余额
