@@ -53,7 +53,7 @@
 							{if $info.online_status eq 1}
 		        			<span class="status">在线</span>
 		        			{else if $info.online_status eq 2}
-		        			<span class="status error">缺纸</span>
+		        			<span class="status">缺纸</span>
 		        			{else if $info.online_status eq 0}
 		        			<span class="status error">离线</span>
 		        			{/if}
