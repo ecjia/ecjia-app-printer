@@ -545,7 +545,7 @@ class admin_store_printer extends ecjia_admin
             $file_name = $info['machine_logo'];
         }
 
-        ecjia_admin::admin_log($info['machine_logo'], 'edit', 'machine_logo');
+        ecjia_admin::admin_log($file_name, 'edit', 'machine_logo');
         RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->update(array('machine_logo' => $file_name));
         $this->showmessage('上传成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_store_printer/view', array('id' => $id, 'store_id' => $store_id))));
     }
