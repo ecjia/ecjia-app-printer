@@ -248,9 +248,6 @@ class admin_store_printer extends ecjia_admin
         $id       = intval($_GET['id']);
         $store    = RC_DB::table('store_franchisee')->where('store_id', $store_id)->first();
         $info     = RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->first();
-        if (!empty($info['machine_logo'])) {
-            $info['machine_logo'] = RC_Upload::upload_url($info['machine_logo']);
-        }
         if (!empty($info['machine_key'])) {
             $len                      = strlen($info['machine_key']);
             $info['machine_key_star'] = substr_replace($info['machine_key'], str_repeat('*', $len), 0, $len);
@@ -538,15 +535,21 @@ class admin_store_printer extends ecjia_admin
             }
             //删除旧logo
             if (!empty($info['machine_logo'])) {
-                $disk = RC_Filesystem::disk();
-                $disk->delete(RC_Upload::upload_path() . $info['machine_logo']);
+            	$disk = RC_Filesystem::disk();
+            	 
+            	$url = $info['machine_logo'];
+            	$upload_url = RC_Upload::upload_url();
+            	$bool = strstr($url, $upload_url);
+            	if ($bool) {
+            		$url = str_replace($upload_url.'/', '', $url);
+            	}
+            	$disk->delete(RC_Upload::upload_path() . $url);
             }
         } else {
-            $file_name = $info['machine_logo'];
+            $file_url = $info['machine_logo'];
         }
-
-        ecjia_admin::admin_log($file_name, 'edit', 'machine_logo');
-        RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->update(array('machine_logo' => $file_name));
+        ecjia_admin::admin_log($file_url, 'edit', 'machine_logo');
+        RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->update(array('machine_logo' => $file_url));
         $this->showmessage('上传成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_store_printer/view', array('id' => $id, 'store_id' => $store_id))));
     }
 
@@ -565,7 +568,14 @@ class admin_store_printer extends ecjia_admin
                 return $this->showmessage($rs->get_error_message(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
             }
             $disk = RC_Filesystem::disk();
-            $disk->delete(RC_Upload::upload_path() . $info['machine_logo']);
+
+            $url = $info['machine_logo'];
+            $upload_url = RC_Upload::upload_url();
+            $bool = strstr($url, $upload_url);
+            if ($bool) {
+            	$url = str_replace($upload_url.'/', '', $url);
+            }
+            $disk->delete(RC_Upload::upload_path() . $url);
         }
 
         RC_DB::table('printer_machine')->where('store_id', $store_id)->where('id', $id)->update(array('machine_logo' => ''));
