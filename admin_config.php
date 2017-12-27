@@ -55,8 +55,7 @@ class admin_config extends ecjia_admin
     {
         parent::__construct();
 
-        RC_Loader::load_app_func('global');
-        assign_adminlog_content();
+        Ecjia\App\Printer\Helper::assign_adminlog_content();
 
         //全局JS和CSS
         RC_Script::enqueue_script('jquery-validate');
