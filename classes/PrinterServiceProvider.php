@@ -46,9 +46,9 @@
 //
 namespace Ecjia\App\Printer;
 
-use Royalcms\Component\App\AppServiceProvider;
+use Royalcms\Component\App\AppParentServiceProvider;
 
-class PrinterServiceProvider extends AppServiceProvider 
+class PrinterServiceProvider extends AppParentServiceProvider 
 {
     /**
      * Bootstrap any application services.
