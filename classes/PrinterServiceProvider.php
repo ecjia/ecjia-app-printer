@@ -57,7 +57,7 @@ class PrinterServiceProvider extends AppParentServiceProvider
      */
     public function boot() 
     {
-        $this->package('ecjia/app-printer');
+        $this->package('ecjia/app-printer', null, dirname(__DIR__));
     }
 
 	/**
