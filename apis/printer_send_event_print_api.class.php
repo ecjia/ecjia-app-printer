@@ -87,10 +87,10 @@ class printer_send_event_print_api extends Component_Event_Api {
 	    $eventHandler = with(new Ecjia\App\Printer\EventFactory())->event($event);
 	    
 	    $model = with(new \Ecjia\App\Printer\Models\PrinterTemplateModel())->getTemplateByCode($event, $store_id);
-	    if (intval($model->status) !== 1) {
-	        return new ecjia_error('event_not_open', "请先开启打印".$eventHandler->getName()."模板");
-	    }
-	    
+        if (intval($model->status) !== 1 && ! ecjia::config('printer_offline_send')) {
+            return new ecjia_error('event_not_open', "请先开启打印".$eventHandler->getName()."模板");
+        }
+
 	    if ($auto_print && intval($model->auto_print) !== 1) {
 	        return new ecjia_error('event_not_open_auto_print', "请先开启自动打印".$eventHandler->getName()."事件");
 	    }
