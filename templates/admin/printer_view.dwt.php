@@ -127,7 +127,7 @@
 				</div>
 				<div class="stats-item">
 					<div class="item-li"><img src="{$statics_url}images/today_print.png" /></div>
-					<div class="item-li count">{$count.today_print_count}{$count.today_print_count}{else}0{/if}</div>
+					<div class="item-li count">{if $count.today_print_count}{$count.today_print_count}{else}0{/if}</div>
 					<div class="item-li name">今日打印量</div>
 				</div>
 				<div class="stats-item">
