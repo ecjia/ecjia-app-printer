@@ -20,7 +20,9 @@
 	<div class="ticket_content">
 		<div class="ticket-item">会员账号：{$data.user_name}</div>
 		<div class="ticket-item">支付渠道：{$data.payment}</div>
+		{if $data.pay_account}
 		<div class="ticket-item">支付账号：{$data.pay_account}</div>
+		{/if}
 		<div class="ticket-item">支付流水号：{$data.trade_no}</div>
 	</div>
 	<div class="ticket_content no_dashed">
