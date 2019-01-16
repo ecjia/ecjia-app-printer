@@ -71,7 +71,8 @@ class PrintRefundOrders extends EventAbstract
     	'refund_time'	        => '日期时间',
     	'cashier'	        	=> '收银员',
     	
-    	
+    	'bonus'					=> '红包抵扣',
+    	'integral_money'		=> '积分抵扣',
     	'discount_amount'       => '优惠金额',
     	'receivables'           => '应收金额',
     	'order_amount'          => '实收金额',
@@ -100,7 +101,8 @@ class PrintRefundOrders extends EventAbstract
 	    'refund_time'	   => '2019-01-11 10:00:00',			//日期时间（退款时间）
 	    'cashier'	   	   => '1号收银员',							//收银员
 	   
-	    
+	    'bonus'   			=> '￥0.00',  						//红包抵扣
+	    'integral_money'   	=> '￥0.00',  						//积分抵扣
 	    'discount_amount'   => '￥5.00',  						//优惠金额
 	    'receivables'       => '￥49.00', 							//应收金额
 	    'order_amount'     	=> '￥44.00', 							//实收金额

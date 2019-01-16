@@ -29,6 +29,8 @@
 		<span class="total">总计：{$data.goods_subtotal}</span>
 	</div>	
 	<div class="ticket_content no_dashed">
+		<div class="ticket-item">红包抵扣：-{$data.bonus}</div>
+		<div class="ticket-item">积分抵扣：-{$data.integral_money}</div>
 		<div class="ticket-item">优惠金额：-{$data.discount_amount}</div>
 		<div class="ticket-item">应收金额：{$data.receivables}</div>
 		<div class="ticket-item">实收金额：{$data.order_amount}</div>
