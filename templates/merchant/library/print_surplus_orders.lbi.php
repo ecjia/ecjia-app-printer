@@ -14,8 +14,10 @@
 		<div class="ticket-item">日期和时间：{$data.recharge_time}</div>
 	</div>
 	<div class="ticket_content">
-		<div class="ticket-item"><span class="amount">优惠金额：{$data.discount_amount}</span>实收金额：{$data.order_amount}</div>
-		<div class="ticket-item"><span class="pay-points">账户积分：{$data.user_pay_points}</span>账户余额：{$data.user_money}</div>
+		<div class="ticket-item">优惠金额：{$data.discount_amount}</div>
+		<div class="ticket-item">实收金额：{$data.order_amount}</div>
+		<div class="ticket-item">账户积分：{$data.user_pay_points}</div>
+		<div class="ticket-item">账户余额：{$data.user_money}</div>
 	</div>
 	<div class="ticket_content">
 		<div class="ticket-item">会员账号：{$data.user_name}</div>

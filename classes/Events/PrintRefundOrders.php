@@ -119,21 +119,24 @@ class PrintRefundOrders extends EventAbstract
     {
         if (empty($this->template)) {
             $this->template = '${print_number}<FS><center>${merchant_name}</center></FS>
-<FS><center>${merchant_mobile}</center><center>${ticket_type}</center></FS>
+<FS><center>${merchant_mobile}</center></FS>
+<FS><center>${ticket_type}</center></FS>
 订单编号：${order_sn}
  退单号：${refund_sn}
 交易类型：${trade_type}
 退款时间：${refund_time}
 收银员：${cashier_name}
 --------------------------------
-优惠金额：-${discount_amount}   应收金额：${receivables}
-实收金额：${order_amount}       退款金额：${refund_amount}
+优惠金额：-${discount_amount}   
+应收金额：${receivables}
+实收金额：${order_amount}       
+退款金额：${refund_amount}
 --------------------------------
 支付渠道：${payment}
 支付流水号：${trade_no}
 --------------------------------            		            		
-<center>地址：${address}</center>
-<center>电话：${contact_mobile}</center>                           		
+<FS><center>地址：${address}</center></FS>
+<FS><center>电话：${contact_mobile}</center></FS>                           		
 <QR>${qrcode}</QR>
 ${tail_content}';
         }

@@ -15,8 +15,10 @@
 		<div class="ticket-item">收银员：{$data.cashier}</div>
 	</div>
 	<div class="ticket_content">
-		<div class="ticket-item"><span class="amount">优惠金额：-{$data.discount_amount}</span>应收金额：{$data.receivables}</div>
-		<div class="ticket-item"><span class="amount">实收金额：{$data.order_amount}</span>退款金额：{$data.refund_amount}</div>
+		<div class="ticket-item">优惠金额：-{$data.discount_amount}</div>
+		<div class="ticket-item">应收金额：{$data.receivables}</div>
+		<div class="ticket-item">实收金额：{$data.order_amount}</div>
+		<div class="ticket-item">退款金额：{$data.refund_amount}</div>
 	</div>
 	<div class="ticket_content">
 		<div class="ticket-item">支付渠道：{$data.payment}</div>
