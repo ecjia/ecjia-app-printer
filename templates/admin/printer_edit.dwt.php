@@ -20,7 +20,7 @@
         <!-- {ecjia:hook id=display_admin_store_menus} -->
     </div>
     <div class="span9">
-		<form id="form-privilege" class="form-horizontal" name="theForm"  method="post" action="{$form_action}">
+		<form id="form-privilege" class="form-horizontal" name="theForm" method="post" action="{$form_action}">
 			<fieldset>
 				<div class="control-group formSep">
 					<label class="control-label">打印机名称：</label>
