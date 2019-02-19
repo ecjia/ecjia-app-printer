@@ -50,8 +50,8 @@ defined('IN_ECJIA') or exit('No permission resources.');
  * ECJIA 应用语言包
  */
 return array(
-	'printer'      => '小票机',
-	'printer_desc' => '用来管理商家订单打印使用的小票打印机。',
+    'printer'      => '小票机',
+    'printer_desc' => '用来管理商家订单打印使用的小票打印机。',
 );
 
 // end
