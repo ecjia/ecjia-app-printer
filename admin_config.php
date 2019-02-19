@@ -82,9 +82,9 @@ class admin_config extends ecjia_admin
     {
         $this->admin_priv('printer_manage');
         
-        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here('打印机设置'));
+        ecjia_screen::get_current_screen()->add_nav_here(new admin_nav_here(__('打印机设置', 'printer')));
         
-        $this->assign('ur_here', '打印机设置');
+        $this->assign('ur_here', __('打印机设置', 'printer'));
         $this->assign('form_action', RC_Uri::url('printer/admin_config/update'));
         
         $this->assign('printer_key', ecjia::config('printer_key'));
@@ -106,11 +106,11 @@ class admin_config extends ecjia_admin
     	$app_secret = !empty($_POST['app_secret']) 	? trim($_POST['app_secret'])	: '';
     	
     	if (empty($app_key)) {
-    		return $this->showmessage('App Key不能为空', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+    		return $this->showmessage(__('App Key不能为空', 'printer'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
     	}
     	
     	if (empty($app_secret)) {
-    		return $this->showmessage('App Secret不能为空', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
+    		return $this->showmessage(__('App Secret不能为空', 'printer'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
     	}
     	
     	ecjia_config::instance()->write_config('printer_key', $app_key);
@@ -133,7 +133,7 @@ class admin_config extends ecjia_admin
     	ecjia_config::instance()->write_config('printer_status_push', $printer_status_push);
     	ecjia_config::instance()->write_config('printer_order_push', $printer_order_push);
     	
-    	return $this->showmessage('保存成功', ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_config/init')));
+    	return $this->showmessage(__('保存成功', 'printer'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_SUCCESS, array('pjaxurl' => RC_Uri::url('printer/admin_config/init')));
     }
 
 }
