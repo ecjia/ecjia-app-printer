@@ -29,8 +29,8 @@
 
             $('.toggle-printer-button').toggleButtons({
                 label: {
-                    enabled: "开启",
-                    disabled: "关闭"
+                    enabled: js_lang.enabled,
+                    disabled: js_lang.disabled
                 },
                 style: {
                     enabled: "info",
@@ -57,19 +57,19 @@
                 },
                 messages: {
                     machine_name: {
-                        required: "请输入打印机名称"
+                        required: js_lang.machine_name_required
                     },
                     machine_code: {
-                        required: "请输入终端编号"
+                        required: js_lang.machine_code_required
                     },
                     machine_key: {
-                        required: "请输入终端密钥"
+                        required: js_lang.machine_key_required
                     },
                     app_key: {
-                        required: "请输入App Key"
+                        required: js_lang.app_key_required
                     },
                     app_secret: {
-                        required: "请输入App Secret"
+                        required: js_lang.app_secret_required
                     }
                 },
                 submitHandler: function () {
@@ -91,8 +91,8 @@
             //响铃类型
             $('.info-toggle-button').toggleButtons({
                 label: {
-                    enabled: "蜂鸣器",
-                    disabled: "喇叭"
+                    enabled: js_lang.buzzer,
+                    disabled: js_lang.horn
                 },
                 style: {
                     enabled: "info",
@@ -119,8 +119,8 @@
             //按键打印
             $('.info-toggle-print-type').toggleButtons({
                 label: {
-                    enabled: "开启",
-                    disabled: "关闭"
+                    enabled: js_lang.enabled,
+                    disabled: js_lang.disabled
                 },
                 style: {
                     enabled: "info",
@@ -146,8 +146,8 @@
             //订单确认
             $('.info-toggle-getorder').toggleButtons({
                 label: {
-                    enabled: "开启",
-                    disabled: "关闭"
+                    enabled: js_lang.enabled,
+                    disabled: js_lang.disabled,
                 },
                 style: {
                     enabled: "info",

@@ -76,6 +76,7 @@ class admin_store_printer extends ecjia_admin
 
         RC_Style::enqueue_style('printer', RC_App::apps_url('statics/css/printer.css', __FILE__), array());
         RC_Script::enqueue_script('printer', RC_App::apps_url('statics/js/printer.js', __FILE__), array(), false, false);
+        RC_Script::localize_script('printer', 'js_lang', config('app-printer::jslang.admin_store_printer_page'));
 
         $store_id   = intval($_GET['store_id']);
         $store_info = RC_DB::table('store_franchisee')->where('store_id', $store_id)->first();

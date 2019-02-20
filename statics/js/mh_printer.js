@@ -23,10 +23,10 @@
                 },
                 messages: {
                     machine_code: {
-                        required: "请输入终端编号"
+                        required: js_lang.machine_code_required
                     },
                     machine_key: {
-                        required: "请输入终端密钥"
+                        required: js_lang.machine_key_required
                     }
                 },
                 submitHandler: function () {
