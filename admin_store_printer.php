@@ -112,7 +112,7 @@ class admin_store_printer extends ecjia_admin
         if ($store['manage_mode'] == 'self') {
             $this->assign('action_link', array('href' => RC_Uri::url('store/admin/init'), 'text' => __('自营店铺列表', 'printer')));
         } else {
-            $this->assign('action_link', array('href' => RC_Uri::url('store/admin/join'), 'text' => RC_Lang::get('store::store.store_list')));
+            $this->assign('action_link', array('href' => RC_Uri::url('store/admin/join'), 'text' => __('入驻商家列表', 'printer')));
         }
         $this->assign('ur_here', sprintf(__('%s - 小票机', 'printer'), $store['merchants_name']));
         $this->assign('add_url', RC_Uri::url('printer/admin_store_printer/add', array('store_id' => $store_id)));
@@ -606,7 +606,7 @@ class admin_store_printer extends ecjia_admin
         if ($store['manage_mode'] == 'self') {
             $this->assign('action_link', array('href' => RC_Uri::url('store/admin/init'), 'text' => __('自营店铺列表', 'printer')));
         } else {
-            $this->assign('action_link', array('href' => RC_Uri::url('store/admin/join'), 'text' => RC_Lang::get('store::store.store_list')));
+            $this->assign('action_link', array('href' => RC_Uri::url('store/admin/join'), 'text' => __('入驻商家列表', 'printer')));
         }
         $this->assign('ur_here', sprintf(__('%s - 打印记录', 'printer'), $store['merchants_name']));
 
