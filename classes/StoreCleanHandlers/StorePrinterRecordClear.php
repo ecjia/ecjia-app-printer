@@ -33,7 +33,7 @@ class StorePrinterRecordClear extends StoreCleanAbstract
      * 排序
      * @var int
      */
-    protected $sort = 110;
+    protected $sort = 31;
 
     /**
      * 数据描述及输出显示内容
