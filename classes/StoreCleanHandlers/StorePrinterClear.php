@@ -41,12 +41,10 @@ class StorePrinterClear extends StoreCleanAbstract
     public function handlePrintData()
     {
         $text = __('店铺内添加的所有小票机全部删除', 'printer');
+
         return <<<HTML
-
-<span class="controls-info w400">$text</span>
-
+<span class="controls-info w400">{$text}</span>
 HTML;
-
     }
 
     /**
