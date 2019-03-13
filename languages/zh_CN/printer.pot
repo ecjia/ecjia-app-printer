@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ecjia App printer 1.27.4\n"
 "Report-Msgid-Bugs-To: https://make.ecjia.com/polyglots/\n"
-"POT-Creation-Date: 2019-03-06 09:04:42+00:00\n"
+"POT-Creation-Date: 2019-03-13 05:24:29+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -291,16 +291,16 @@ msgstr ""
 msgid "小票机logo"
 msgstr ""
 
-#: classes/StoreCleanHandlers/StorePrinterClear.php:43
+#: classes/StoreCleanHandlers/StorePrinterClear.php:45
 msgid "店铺内添加的所有小票机全部删除"
 msgstr ""
 
-#: classes/StoreCleanHandlers/StorePrinterClear.php:95
+#: classes/StoreCleanHandlers/StorePrinterClear.php:105
 #: classes/StoreCleanHandlers/StorePrinterRecordClear.php:95
 msgid "店铺名是%s"
 msgstr ""
 
-#: classes/StoreCleanHandlers/StorePrinterClear.php:95
+#: classes/StoreCleanHandlers/StorePrinterClear.php:105
 #: classes/StoreCleanHandlers/StorePrinterRecordClear.php:95
 msgid "店铺ID是%s"
 msgstr ""
