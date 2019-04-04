@@ -4,19 +4,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ecjia App printer 1.27.4\n"
 "Report-Msgid-Bugs-To: https://make.ecjia.com/polyglots/\n"
-"POT-Creation-Date: 2019-03-20 07:33:54+00:00\n"
+"POT-Creation-Date: 2019-04-04 09:54+0800\n"
+"PO-Revision-Date: 2019-04-04 09:54+0800\n"
+"Last-Translator: \n"
+"Language-Team: LANGUAGE <ecjia@ecjia.com>\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2019-03-27 10:29+0800\n"
-"Language-Team: LANGUAGE <ecjia@ecjia.com>\n"
-"X-Generator: Poedit 2.2\n"
-"Last-Translator: \n"
+"X-Generator: Poedit 1.8.7\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"Language: zh_TW\n"
 
 #: admin_config.php:86 admin_config.php:88
-#: classes/hooks/admin_printer.class.php:57
+#: classes/hooks/admin_printer.class.php:55
 msgid "打印机设置"
 msgstr "打印機設置"
 
@@ -214,7 +214,7 @@ msgid "打印记录更新"
 msgstr "打印記錄更新"
 
 #: apis/printer_merchant_printer_menu_api.class.php:59
-#: classes/hooks/admin_printer.class.php:56
+#: classes/hooks/admin_printer.class.php:54
 msgid "小票打印"
 msgstr "小票打印"
 
