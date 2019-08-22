@@ -84,7 +84,7 @@ class printer_merchant_hooks
 
     public static function printer_merchant_menu_api($menus)
     {
-        $menu = ecjia_merchant::make_admin_menu('10_merchant_printer', __('小票机', 'printer'), RC_Uri::url('printer/mh_print/init'), 10)->add_purview('mh_printer_manage')->add_icon('fa-print');
+        $menu = ecjia_merchant::make_admin_menu('07_merchant_printer', __('小票机', 'printer'), RC_Uri::url('printer/mh_print/init'), 7)->add_purview('mh_printer_manage')->add_icon('fa-print');
 
         $menus->add_submenu($menu);
         return $menus;
